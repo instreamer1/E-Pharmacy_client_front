@@ -1,0 +1,82 @@
+.mobileMenu {
+  position: absolute; /* Абсолютное позиционирование относительно Header */
+  top: 0; /* Меню начинается с верхнего края Header */
+  right: 0; /* Скрыть меню за пределами Header */
+  width: 0;
+  height: 100vh; /* Меню занимает всю высоту экрана */
+  background-color: white;
+  transition: right 0.3s ease; /* Анимация открытия/закрытия */
+  z-index: 1000;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1); /* Тень для красивого эффекта */
+  visibility: hidden; /* Скрыть меню, но оставить его в DOM */
+  opacity: 0; /* Плавное исчезновение */
+}
+
+.mobileMenu.open {
+  right: 0; /* Показывать меню, когда оно открыто */
+  width: 210px;
+  visibility: visible; /* Показать меню */
+  opacity: 1; /* Плавное появление */
+  background: #59b17a;
+}
+
+.closeButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 20px;
+  top: 31px;
+  cursor: pointer;
+}
+
+.closeModal {
+  width: 18px;
+  height: 18px;
+  stroke: #fff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 260px 38px 40px;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.navLinks {
+  display: block;
+  margin-bottom: auto
+}
+
+.authLinks {
+  display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .mobileMenu.open {
+    width: 334px;
+  }
+
+  .container {
+    padding: 350px 82px 64px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  /* .mobileMenu {
+    visibility: hidden; 
+    opacity: 0;
+    width: 0;
+  } */
+
+  .navLinks {
+    display: none;
+  }
+  .authLinks {
+    display: none;
+  }
+}

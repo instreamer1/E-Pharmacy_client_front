@@ -1,0 +1,80 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* CSS-переменные */
+  --font-family: Inter, system-ui, sans-serif;
+  --background-color: D4D4D4;
+ 
+  /* Непосредственные стили */
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  font-weight: 400;
+}
+
+#root {
+  min-width: 320px;
+  max-width: 375px;
+  margin: 0 auto;
+  background: #f9f9f9;
+}
+
+@media screen and (min-width: 768px) {
+  #root {
+    max-width: 768px;
+ 
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  #root {
+    max-width: 1440px;
+  }
+}
+
+body {
+  font-family: var(--font-family);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+li,
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  list-style-type: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+img {
+  display: block;
+  height: auto;
+}

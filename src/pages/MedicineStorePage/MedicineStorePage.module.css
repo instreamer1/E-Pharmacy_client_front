@@ -1,0 +1,74 @@
+.medicineStorePage {
+    padding: 80px 0 120px;
+    background: #f7f8fa;
+  }
+
+  .container{
+    padding: 0 32px;
+  }
+  
+  .title {
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 114%;
+    color: #1d1e21;
+    margin-bottom: 32px;
+  }
+  
+  .storeList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .storeCard {
+    border: 1.15px solid #f1f1f1;
+    border-radius: 27px;
+    padding: 40px;
+    width: 344px;
+    height: 276px;
+    background: #e7f1ed;
+  }
+  
+  .storeName {
+    font-size: 1.5em;
+    margin: 0;
+  }
+  
+  .storeAddress, .storePhone {
+    font-size: 1em;
+    color: #666;
+  }
+  
+  .storeStatus {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .open {
+    color: green;
+  }
+  
+  .close {
+    color: red;
+  }
+  
+  .rating {
+    color: gold;
+  }
+  
+  .visitButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .visitButton:hover {
+    background-color: #0056b3;
+  }

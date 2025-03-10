@@ -1,0 +1,46 @@
+.authLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 127px;
+  height: 68px;
+  gap: 14px;
+}
+
+.register {
+  border: 1px solid rgba(241, 241, 241, 0.5);
+  border-radius: 60px;
+  padding: 13px 32px;
+  width: 119px;
+  height: 40px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  color: #f1f1f1;
+}
+
+.login {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #f1f1f1;
+}
+
+@media screen and (min-width: 768px) {
+  .authLinks {
+    flex-direction: row;
+    width: 170px;
+    height: 46px;
+    justify-content: space-between;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .authLinks {
+    display: block;
+  }
+}

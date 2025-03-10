@@ -1,0 +1,63 @@
+.addPharmacyPromo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f0f8ff; /* Светло-голубой фон */
+    border-radius: 10px;
+    margin: 20px 0;
+  }
+  
+  .content {
+    max-width: 50%;
+  }
+  
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .description {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 30px;
+  }
+  
+  .button {
+    padding: 12px 24px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #3498db; /* Синий цвет кнопки */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #2980b9; /* Темно-синий при наведении */
+  }
+  
+  .features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .featureItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .featureIcon {
+    font-size: 1.2rem;
+    color: #2ecc71; /* Зеленый цвет для иконок */
+  }
+  
+  .featureText {
+    font-size: 1rem;
+    color: #333;
+  }
