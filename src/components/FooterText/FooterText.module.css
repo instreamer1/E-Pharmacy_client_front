@@ -1,0 +1,19 @@
+.footerText {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #f7f8fa;
+}
+
+@media screen and (min-width: 768px) {
+  .footerText {
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .footerText {
+    line-height: 125%;
+  }
+}

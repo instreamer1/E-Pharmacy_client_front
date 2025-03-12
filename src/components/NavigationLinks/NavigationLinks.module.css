@@ -17,12 +17,15 @@
   font-size: 14px;
   line-height: 100%;
   color: #93939a;
+  border-radius: 24px;
+  padding: 8px 12px;
+  height: 30px;
+  background: #fff;
 }
 .active {
   border-radius: 24px;
   padding: 8px 12px;
-  /* width: 80px;
-height: 30px; */
+  height: 30px;
   background: #59b17a;
   font-family: var(--font-family);
   font-weight: 400;
@@ -44,11 +47,27 @@ height: 30px; */
   }
 
   .navLinksList {
+    display: flex;
     flex-direction: row;
-    width: 344px;
-    /* align-self: center; */
-    justify-items: center;
-    /* padding: 0 28px; */
-    gap: 33px;
+    width: 100%;
+    align-items: center;
+    gap: 23px;
+    list-style: none;
+    padding: 8px 13px 8px 16px;
   }
+
+  .link {
+  
+    background: #fff;
+  }
+
+  .active {
+    background: #59b17a;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    color: #fff;
+  }
+
 }

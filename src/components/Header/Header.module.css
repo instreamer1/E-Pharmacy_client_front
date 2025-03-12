@@ -1,11 +1,11 @@
 .header {
-  position: relative; /* Для абсолютного позиционирования MobileMenu */
+  position: relative; 
   padding: 25px 0;
-  background-color: green; /* Пример цвета для HomePage */
-  z-index: 1001; /* Убедитесь, что Header выше MobileMenu */
+  background: #59b17a;
+  z-index: 1001; 
 }
 
-.container{
+.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,13 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* width: 32px;
-  height: 26px; */
-  /* background: none;
-  border: none;
-  font-size: 1.5em; */
   cursor: pointer;
-  /* display: block; */
 }
 
 .burger {
@@ -38,13 +32,12 @@
   height: 26px;
 }
 
-.burgerWhite{
-  stroke:white;
-
+.burgerWhite {
+  stroke: white;
 }
 
-.burgerGreen{
-  stroke:#59B17A;
+.burgerGreen {
+  stroke: #59b17a;
 }
 
 .navLinks {
@@ -56,22 +49,24 @@
 }
 
 @media screen and (min-width: 768px) {
-
 }
 
 @media screen and (min-width: 1440px) {
-
+  .header {
+    padding: 28px 0;
+  }
+  .container {
+    padding: 0 128px;
+  }
 
   .navLinks {
     display: block;
   }
-  
+
   .authLinks {
     display: block;
   }
   .menuButton {
     display: none;
   }
-
-
 }

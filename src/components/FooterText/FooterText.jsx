@@ -3,9 +3,8 @@ import css from './FooterText.module.css'
 
 const FooterText = () => {
     return (
-      <p>
-        Получить медицину для того, чтобы помочь ей заботиться, получить обратно к
-        своему жизненному стилю, и хороший момент.
+      <p className={css.footerText}>
+     Get the medicine to help you feel better, get back to your active life, and enjoy every moment.
       </p>
     );
   };

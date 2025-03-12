@@ -1,3 +1,44 @@
-.footer{
-    background: #59b17a;
+.footer {
+  background: #59b17a;
+  padding: 20px 0;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+.footerLogo{
+
+}
+
+.footerText{
+    width: 261px;
+    height: 54px;
+}
+
+.footerSocial {
+  display: none;
+}
+
+.footerNavigation{
+    width: 268px;
+    height: 18px;
+}
+
+.footerBottom {
+
+}
+
+.footerLinks {
+
+}
+
+@media screen and (min-width: 768px) {
+  .footerSocial {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+
 }

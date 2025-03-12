@@ -88,3 +88,101 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
+
+
+// import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
+// import { toast, ToastContainer } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css'; // Стили для уведомлений
+// import axios from 'axios'; // Или другой HTTP-клиент
+
+// const RegistrationPage = () => {
+//   const [formData, setFormData] = useState({
+//     username: '',
+//     email: '',
+//     password: '',
+//   });
+//   const [error, setError] = useState(null); // Состояние для ошибки
+//   const navigate = useNavigate(); // Хук для навигации
+
+//   // Обработчик изменения полей формы
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   // Обработчик отправки формы
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+
+//     try {
+//       // Отправка данных на бэкенд
+//       const response = await axios.post('/api/register', formData);
+
+//       // Если регистрация успешна
+//       if (response.status === 201) {
+//         toast.success('Регистрация прошла успешно!'); // Уведомление об успехе
+//         navigate('/login'); // Перенаправление на страницу входа
+//       }
+//     } catch (err) {
+//       // Обработка ошибки
+//       setError(err.response?.data?.message || 'Произошла ошибка при регистрации');
+//       toast.error(error); // Показ уведомления с ошибкой
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h2>Регистрация</h2>
+//       <form onSubmit={handleSubmit}>
+//         <div>
+//           <label>Имя пользователя:</label>
+//           <input
+//             type="text"
+//             name="username"
+//             value={formData.username}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+//         <div>
+//           <label>Email:</label>
+//           <input
+//             type="email"
+//             name="email"
+//             value={formData.email}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+//         <div>
+//           <label>Пароль:</label>
+//           <input
+//             type="password"
+//             name="password"
+//             value={formData.password}
+//             onChange={handleChange}
+//             required
+//           />
+//         </div>
+//         <button type="submit">Зарегистрироваться</button>
+//       </form>
+
+//       {/* Компонент для отображения уведомлений */}
+//       <ToastContainer
+//         position="top-right"
+//         autoClose={5000}
+//         hideProgressBar={false}
+//         newestOnTop={false}
+//         closeOnClick
+//         rtl={false}
+//         pauseOnFocusLoss
+//         draggable
+//         pauseOnHover
+//       />
+//     </div>
+//   );
+// };
+
+// export default RegistrationPage;
