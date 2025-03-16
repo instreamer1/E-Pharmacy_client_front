@@ -9,17 +9,15 @@ const links = [
   { to: "/medicine", text: "Medicine" },
 ];
 
-const FooterNavigationLinks = ({ closeSidebar }) => {
-  const buildLinkClass = ({ isActive }) => {
-    return `${css.link} ${isActive ? css.active : ""}`;
-  };
+const FooterNavigationLinks = () => {
+
 
   return (
     <nav className={css.navLinks}>
       <ul className={css.navLinksList}>
         {links.map((link, index) => (
           <li key={index}>
-            <NavLink className={buildLinkClass} to={link.to} onClick={closeSidebar}>
+            <NavLink className={css.link} to={link.to} >
               {link.text}
             </NavLink>
           </li>

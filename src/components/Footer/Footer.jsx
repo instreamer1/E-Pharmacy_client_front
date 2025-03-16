@@ -4,8 +4,8 @@ import FooterLogo from '../FooterLogo/FooterLogo';
 import FooterSocialMediaIcons from '../FooterSocialMediaIcons/FooterSocialMediaIcons';
 import FooterText from '../FooterText/FooterText';
 import FooterNavigationLinks from '../FooterNavigationLinks/FooterNavigationLinks';
-
 import css from './Footer.module.css';
+import iconSprite from '../../assets/sprite.svg';
 
 const Footer = () => {
   return (
@@ -23,11 +23,18 @@ const Footer = () => {
         <div className={css.footerNavigation}>
           <FooterNavigationLinks />
         </div>
-        <div className={css.footerBottom}>
-          <FooterBottom />
-        </div>
-        <div className={css.footerLinks}>
-          <FooterLinks />
+        <span className={css.footerLine}>
+          <svg className={css.lineSeparator}>
+            <use href={`${iconSprite}#lineSeparator`}></use>
+          </svg>
+        </span>
+        <div className={css.footerWrapper}>
+          {/* <div className={css.footerBottom}> */}
+            <FooterBottom />
+          {/* </div> */}
+          {/* <div className={css.footerLinks}> */}
+            <FooterLinks />
+          {/* </div> */}
         </div>
       </div>
     </footer>

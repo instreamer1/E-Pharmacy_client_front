@@ -1,12 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg">
-
-
-
-<symbol id="burger" viewBox="0 0 32 26">
+  <symbol id="burger" viewBox="0 0 32 26">
     <path d="M28.3379 13.207H4.33789"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M28.3379 8.00684H4.33789"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M28.3379 18.4072H4.33789"  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-</symbol>
+  </symbol>
+  <symbol id="lineSeparator" viewBox="0 0 335 2">
+    <path d="M0 1H335" stroke="#F7F8FA" stroke-opacity="0.3"/>
+  </symbol>
 
 
 

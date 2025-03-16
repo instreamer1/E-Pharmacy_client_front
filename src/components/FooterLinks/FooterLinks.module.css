@@ -1,0 +1,40 @@
+.linksList {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 100%;
+  color: #f7f8fa;
+  display: block;
+}
+
+.line {
+  position: relative;
+  display: block;
+  padding-right: 10px;
+}
+
+.line::after {
+  content: '';
+  display: inline-block;
+  width: 1px;
+  height: 10px;
+  border-radius: 8px;
+  background: #f7f8fa;
+  opacity: 0.2;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media screen and (min-width: 768px) {
+  .link {
+    font-size: 14px;
+    line-height: 129%;
+  }
+}

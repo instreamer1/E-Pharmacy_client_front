@@ -1,74 +1,43 @@
 .navLinks {
-    /* background: url(../../assets/images/Union.png); */
-    height: 142px;
-    width: 134px;
+}
+.navLinksList {
+  display: flex;
+  width: 268px;
+  height: 18px;
+  align-items: center;
+  gap: 32px;
+}
+
+.link {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 129%;
+  color: #f7f8fa;
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1440px) {
+  .navLinks {
+    display: flex;
+    width: 344px;
+    height: 46px;
   }
+
   .navLinksList {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    width: 100%;
     align-items: center;
-    padding: 14px 0 14px;
-    gap: 29px;
+    gap: 23px;
+    list-style: none;
+    padding: 8px 13px 8px 16px;
   }
-  
+
   .link {
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 100%;
-    color: #93939a;
-    border-radius: 24px;
-    padding: 8px 12px;
-    height: 30px;
-    background: #fff;
+    font-size: 16px;
+    line-height: 125%;
   }
-  .active {
-    border-radius: 24px;
-    padding: 8px 12px;
-    /* width: 80px; */
-    height: 30px;
-    background: #59b17a;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 100%;
-    color: #fff;
-  }
-  
-  @media screen and (min-width: 768px) {
-  }
-  
-  @media screen and (min-width: 1440px) {
-    .navLinks {
-      display: flex;
-      width: 344px;
-      height: 46px;
-      /* background: url(../../assets/images/union_desk.png) center center / cover
-        no-repeat; */
-    }
-  
-    .navLinksList {
-      display: flex;
-      flex-direction: row;
-      width: 100%;
-      align-items: center;
-      gap: 23px;
-      list-style: none;
-      padding: 8px 13px 8px 16px;
-    }
-  
-    .link {
-    
-      background: #fff;
-    }
-  
-    .active {
-      background: #59b17a;
-      font-family: var(--font-family);
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 100%;
-      color: #fff;
-    }
-  
-  }
+}

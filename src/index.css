@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}
+
+body {
+  font-family: var(--font-family);
+}
+
 :root {
   /* CSS-переменные */
   --font-family: Inter, system-ui, sans-serif;
@@ -35,9 +45,7 @@
   }
 }
 
-body {
-  font-family: var(--font-family);
-}
+
 
 h1,
 h2,

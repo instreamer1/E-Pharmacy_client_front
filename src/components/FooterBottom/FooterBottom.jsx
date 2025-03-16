@@ -3,10 +3,9 @@ import css from './FooterBottom.module.css';
 
 const FooterBottom = () => {
   return (
-    <div>
-      <p>© E-Pharmacy 2023. All Rights Reserved</p>
-     
-    </div>
+    <>
+      <p className={css.text}>© E-Pharmacy 2023. All Rights Reserved</p>
+    </>
   );
 };
 
