@@ -1,5 +1,5 @@
 import css from './MedicineStores.module.css'
-
+import iconSprite from '../../assets/sprite.svg';
 import { useNavigate } from 'react-router-dom'; 
 
 
@@ -59,14 +59,14 @@ const MedicineStores = () => {
 
   return (
     <div className={css.medicineStores}>
-      {/* Заголовок и описание */}
+    
       <div className={css.header}>
         <h1 className={css.title}>Your Nearest Medicine Store</h1>
         <p className={css.description}>Search for Medicine, Filter by your location</p>
       </div>
 
       {/* Список магазинов */}
-      <div className={css.storeList}>
+      {/* <div className={css.storeList}>
         {stores.map((store) => (
           <div
             key={store.id}
@@ -85,7 +85,59 @@ const MedicineStores = () => {
             </p>
           </div>
         ))}
-      </div>
+      </div> */}
+
+ <ul className={css.storeList}>
+          {stores.map(store => (
+            <li key={store.id} className={css.storeCard}>
+              <div className={css.blockOne}>
+                <h2 className={css.storeName}>{store.name}</h2>
+                <div className={css.addrWrapper}>
+                  <svg className={css.addrIcon}>
+                    <use href={`${iconSprite}#icon-map-pin`}></use>
+                  </svg>
+                  <div className={css.locationWrapper}>
+                    <p className={css.storeAddress}>{store.address}</p>
+                    <p className={css.storeCity}>{store.city}</p>
+                  </div>
+                </div>
+                <div className={css.phoneWrapper}>
+                  <svg className={css.addrIcon}>
+                    <use href={`${iconSprite}#icon-phone`}></use>
+                  </svg>
+                  <p className={css.storePhone}>{store.phone}</p>
+                </div>
+              </div>
+              <div className={css.blockTwo}>
+                <button
+                  className={css.visitButton}
+                  // onClick={() => (window.location.href = store.url)}
+                  onClick={() => handleStoreClick(store.id)}
+                  >
+                  Visit Store
+                </button>
+                <svg className={css.starIcon}>
+                  <use href={`${iconSprite}#icon-star`}></use>
+                </svg>
+                <p className={css.rating}>{store.rating}</p>
+                <div
+                  className={`${css.storeStatus} ${
+                    store.status === 'OPEN' ? css.openStore : css.closeStore
+                  }`}>
+                  <p
+                    className={store.status === 'OPEN' ? css.open : css.close}>
+                    {store.status}
+                  </p>
+                </div>
+              </div>
+              <div className={css.linesContainer}>
+                <div className={css.line}></div>
+                <div className={css.line}></div>
+                <div className={css.line}></div>
+              </div>
+            </li>
+          ))}
+        </ul>
     </div>
   );
 };

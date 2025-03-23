@@ -11,30 +11,28 @@ const Footer = () => {
   return (
     <footer className={css.footer}>
       <div className={css.container}>
-        <div className={css.footerLogo}>
-          <FooterLogo />
+        <div className={css.footerGrid}>
+          <div className={css.footerLogo}>
+            <FooterLogo />
+          </div>
+          <div className={css.footerText}>
+            <FooterText />
+          </div>
+          <div className={css.footerSocial}>
+            <FooterSocialMediaIcons />
+          </div>
+          <div className={css.footerNavigation}>
+            <FooterNavigationLinks />
+          </div>
         </div>
-        <div className={css.footerText}>
-          <FooterText />
-        </div>
-        <div className={css.footerSocial}>
-          <FooterSocialMediaIcons />
-        </div>
-        <div className={css.footerNavigation}>
-          <FooterNavigationLinks />
-        </div>
-        <span className={css.footerLine}>
+        <div className={css.footerLine}>
           <svg className={css.lineSeparator}>
             <use href={`${iconSprite}#lineSeparator`}></use>
           </svg>
-        </span>
+        </div>
         <div className={css.footerWrapper}>
-          {/* <div className={css.footerBottom}> */}
-            <FooterBottom />
-          {/* </div> */}
-          {/* <div className={css.footerLinks}> */}
-            <FooterLinks />
-          {/* </div> */}
+          <FooterBottom />
+          <FooterLinks />
         </div>
       </div>
     </footer>

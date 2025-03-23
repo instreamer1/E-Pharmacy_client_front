@@ -1,8 +1,3 @@
-.linksList {
-  display: flex;
-  flex-direction: column;
-}
-
 .link {
   font-family: var(--font-family);
   font-weight: 400;
@@ -36,5 +31,11 @@
   .link {
     font-size: 14px;
     line-height: 129%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .line {
+    padding-right: 24px;
   }
 }

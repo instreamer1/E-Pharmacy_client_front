@@ -29,3 +29,9 @@
     line-height: 129%;
   }
 }
+
+@media screen and (min-width:1440px) {
+  .text {
+    padding-right: 24px;
+  }
+}

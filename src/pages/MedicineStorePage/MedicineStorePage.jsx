@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import css from './MedicineStorePage.module.css';
+import iconSprite from '../../assets/sprite.svg';
 
 const MedicineStorePage = () => {
   //   const [stores, setStores] = useState([]);
@@ -11,6 +10,7 @@ const MedicineStorePage = () => {
       city: 'Lviv',
       phone: '0322-45-67-89',
       rating: 4,
+      status: 'OPEN',
     },
     {
       name: 'Pharmakor',
@@ -18,6 +18,7 @@ const MedicineStorePage = () => {
       city: 'Kharkiv',
       phone: '0572-58-22-12',
       rating: 3,
+      status: 'Close',
     },
     {
       name: 'Aesculap',
@@ -25,6 +26,7 @@ const MedicineStorePage = () => {
       city: 'Dnipro',
       phone: '056-744-55-66',
       rating: 5,
+      status: 'Close',
     },
     {
       name: 'Balsam',
@@ -32,6 +34,7 @@ const MedicineStorePage = () => {
       city: 'Rivne',
       phone: '0362-62-33-44',
       rating: 3,
+      status: 'OPEN',
     },
     {
       name: 'Med-Service',
@@ -39,6 +42,7 @@ const MedicineStorePage = () => {
       city: 'Zaporizhzhia',
       phone: '0612-34-56-78',
       rating: 4,
+      status: 'OPEN',
     },
     {
       name: 'Pharmacy',
@@ -46,6 +50,7 @@ const MedicineStorePage = () => {
       city: 'Ternopil',
       phone: '0352-52-43-21',
       rating: 3,
+      status: 'OPEN',
     },
   ];
   //   useEffect(() => {
@@ -66,22 +71,49 @@ const MedicineStorePage = () => {
         <ul className={css.storeList}>
           {stores.map(store => (
             <li key={store.name} className={css.storeCard}>
-              <h2 className={css.storeName}>{store.name}</h2>
-              <p className={css.storeAddress}>{store.address}</p>
-              <p className={css.storeAddress}>{store.city}</p>
-              <p className={css.storePhone}>{store.phone}</p>
-              <div className={css.storeStatus}>
-                <span
-                  className={store.status === 'OPEN' ? css.open : css.close}>
-                  {store.status}
-                </span>
-                <span className={css.rating}>{'★'.repeat(store.rating)}</span>
+              <div className={css.blockOne}>
+                <h2 className={css.storeName}>{store.name}</h2>
+                <div className={css.addrWrapper}>
+                  <svg className={css.addrIcon}>
+                    <use href={`${iconSprite}#icon-map-pin`}></use>
+                  </svg>
+                  <div className={css.locationWrapper}>
+                    <p className={css.storeAddress}>{store.address}</p>
+                    <p className={css.storeCity}>{store.city}</p>
+                  </div>
+                </div>
+                <div className={css.phoneWrapper}>
+                  <svg className={css.addrIcon}>
+                    <use href={`${iconSprite}#icon-phone`}></use>
+                  </svg>
+                  <p className={css.storePhone}>{store.phone}</p>
+                </div>
               </div>
-              <button
-                className={css.visitButton}
-                onClick={() => (window.location.href = store.url)}>
-                Visit Store
-              </button>
+              <div className={css.blockTwo}>
+                <button
+                  className={css.visitButton}
+                  onClick={() => (window.location.href = store.url)}>
+                  Visit Store
+                </button>
+                <svg className={css.starIcon}>
+                  <use href={`${iconSprite}#icon-star`}></use>
+                </svg>
+                <p className={css.rating}>{store.rating}</p>
+                <div
+                  className={`${css.storeStatus} ${
+                    store.status === 'OPEN' ? css.openStore : css.closeStore
+                  }`}>
+                  <p
+                    className={store.status === 'OPEN' ? css.open : css.close}>
+                    {store.status}
+                  </p>
+                </div>
+              </div>
+              <div className={css.linesContainer}>
+                <div className={css.line}></div>
+                <div className={css.line}></div>
+                <div className={css.line}></div>
+              </div>
             </li>
           ))}
         </ul>

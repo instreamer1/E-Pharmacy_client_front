@@ -1,0 +1,290 @@
+.medicineStores {
+  padding: 39px 0 80px;
+  background: #f7f8fa;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 114%;
+  color: #1d1e21;
+  margin-bottom: 40px;
+}
+
+.storeList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.storeCard {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border: 1.15px solid #f1f1f1;
+  border-radius: 27px;
+  padding: 32px 32px 40px 32px;
+  width: 335px;
+  height: 202px;
+  background: #e7f1ed;
+  overflow: hidden;
+}
+
+.storeName {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  color: #1d1e21;
+  margin-bottom: 32px;
+}
+
+.addrWrapper {
+  display: flex;
+  height: 44px;
+  margin-bottom: 16px;
+}
+
+.addrIcon {
+  grid-area: i;
+  stroke-width: 1.5px;
+  stroke: #59b17a;
+  width: 16px;
+  height: 18px;
+  fill: none;
+  margin-right: 8px;
+}
+
+.storeAddress {
+  margin-bottom: 4px;
+}
+
+.locationWrapper {
+}
+
+.storeCity {
+}
+
+.phoneWrapper {
+  display: flex;
+}
+.storeAddress,
+.storeCity,
+.storePhone {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #93939a;
+}
+
+.blockTwo {
+  display: flex;
+  align-items: center;
+  width: 114px;
+  height: 34px;
+}
+
+.visitButton {
+  display: none;
+}
+
+.starIcon {
+  width: 16px;
+  height: 16px;
+  fill: #ffc531;
+  margin-right: 6px;
+}
+
+.rating {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  color: #1d1e21;
+}
+
+.storeStatus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 14px;
+  border-radius: 8px;
+  width: 65px;
+  height: 34px;
+}
+
+.openStore {
+  background: rgba(89, 177, 122, 0.1);
+}
+.closeStore {
+  background: rgba(232, 80, 80, 0.1);
+}
+
+.open,
+.close {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 150%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.open {
+  color: #59b17a;
+}
+
+.close {
+  color: #e85050;
+}
+
+.linesContainer {
+  position: absolute;
+  top: 112px;
+  left: 209px;
+  display: flex;
+  flex-direction: column;
+  height: 119px;
+  transform: rotate(22deg);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.line {
+  border-radius: 20px 0 0 20px;
+  width: 166px;
+  height: 35px;
+  background: rgba(89, 177, 122, 0.08);
+}
+
+.line:first-child {
+  margin-left: 54px;
+}
+
+.line:last-child {
+  margin-left: 28px;
+}
+
+@media screen and (min-width: 768px) {
+  .medicineStorePage {
+    padding: 55px 0 120px;
+  }
+  .container {
+    padding: 0 32px;
+  }
+
+  .blockOne {
+    margin-bottom: 36px;
+  }
+
+  .title {
+    margin-bottom: 32px;
+  }
+
+  .storeList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: 32px;
+    column-gap: 16px;
+  }
+
+  .storeCard {
+    display: block;
+    padding: 40px;
+    width: 344px;
+    height: 276px;
+  }
+
+  .storeName {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  .storeAddress,
+  .storeCity,
+  .storePhone {
+    font-size: 16px;
+    line-height: 125%;
+  }
+
+  .blockTwo {
+    width: 100%;
+  }
+
+  .visitButton {
+    display: block;
+    border-radius: 24px;
+    width: 102px;
+    height: 34px;
+    background: #59b17a;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 100%;
+    text-align: center;
+    color: #fff;
+    margin-right: 51px;
+  }
+  .visitButton:hover {
+    background-color: #0056b3;
+  }
+
+  .linesContainer {
+    position: absolute;
+    top: -16px;
+    left: 209px;
+    display: flex;
+    flex-direction: column;
+    height: 146px;
+    transform: rotate(22deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .line {
+    width: 198px;
+    height: 42px;
+    background: rgba(89, 177, 122, 0.08);
+  }
+  .line:first-child {
+    margin-left: 54px;
+  }
+  
+  .line:last-child {
+    margin-left: 35px;
+  }
+  
+}
+
+@media screen and (min-width: 1440px) {
+  .medicineStorePage {
+    padding: 75px 0 120px;
+  }
+  .container {
+    padding: 0 128px;
+  }
+
+  .title {
+    margin-bottom: 40px;
+  }
+
+
+  .storeCard {
+    width: 381px;
+    height: 276px;
+  }
+
+  .visitButton {
+    margin-right: 89px;
+  }
+}

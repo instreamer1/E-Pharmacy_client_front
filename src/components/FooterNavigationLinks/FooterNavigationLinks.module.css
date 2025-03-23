@@ -2,7 +2,7 @@
 }
 .navLinksList {
   display: flex;
-  width: 268px;
+  /* width: 268px; */
   height: 18px;
   align-items: center;
   gap: 32px;
@@ -22,7 +22,7 @@
 @media screen and (min-width: 1440px) {
   .navLinks {
     display: flex;
-    width: 344px;
+    /* width: 344px; */
     height: 46px;
   }
 
@@ -31,9 +31,7 @@
     flex-direction: row;
     width: 100%;
     align-items: center;
-    gap: 23px;
-    list-style: none;
-    padding: 8px 13px 8px 16px;
+    gap: 50px;
   }
 
   .link {
