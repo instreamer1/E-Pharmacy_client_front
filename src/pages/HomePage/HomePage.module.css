@@ -7,25 +7,27 @@
 .mainBanner {
   background: #59b17a;
   padding: 40px 0;
+  margin-bottom: 40px;
 }
 
 .promoBanners {
-  background-color: #fff;
-  padding: 20px 0;
+  background-color: #f7f8fa;
+  /* padding: 20px 0; */
+  margin-bottom: 80px;
 }
 
 .medicineStores {
-  background-color: #f9f9f9;
-  padding: 30px 0;
+  background-color: #f7f8fa;
+ margin-bottom: 80px;
 }
 
 .addPharmacyPromo {
-  background-color: #e0f7fa;
-  padding: 25px 0;
+  background-color: #f7f8fa;
+ 
 }
 
 .reviewsSection {
-  background-color: #fff;
+  background-color: #f7f8fa;
   padding: 50px 0;
 }
 

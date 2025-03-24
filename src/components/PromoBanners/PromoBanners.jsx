@@ -28,6 +28,9 @@ const PromoBanners = () => {
     <div className={css.promoBanners}>
       {/* Banner 1 */}
       <div className={css.banner}>
+        <div className={css.numberWrap}>
+          <p className={css.number}>1</p>
+        </div>
         <h2 className={css.title}>Huge Sale</h2>
         <p className={css.discount}>70%</p>
         <button className={css.button} onClick={handleShopNow70}>
@@ -37,6 +40,9 @@ const PromoBanners = () => {
 
       {/* Banner 2 */}
       <div className={css.banner}>
+      <div className={css.numberWrap}>
+          <p className={css.number}>2</p>
+        </div>
         <h2 className={css.title}>Secure delivery</h2>
         <p className={css.guarantee}>100%</p>
         <button className={css.button} onClick={handleReadMore}>
@@ -46,6 +52,9 @@ const PromoBanners = () => {
 
       {/* Banner 3 */}
       <div className={css.banner}>
+      <div className={css.numberWrap}>
+          <p className={css.number}>3</p>
+        </div>
         <h2 className={css.title}>Off</h2>
         <p className={css.discount}>35%</p>
         <button className={css.button} onClick={handleShopNow35}>

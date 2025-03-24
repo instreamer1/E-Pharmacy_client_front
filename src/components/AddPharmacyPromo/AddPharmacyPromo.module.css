@@ -1,63 +1,80 @@
 .addPharmacyPromo {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px 20px;
-    background-color: #f0f8ff; /* Светло-голубой фон */
-    border-radius: 10px;
-    margin: 20px 0;
-  }
-  
-  .content {
-    max-width: 50%;
-  }
-  
-  .title {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
-  .description {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 30px;
-  }
-  
-  .button {
-    padding: 12px 24px;
-    font-size: 1rem;
-    color: #fff;
-    background-color: #3498db; /* Синий цвет кнопки */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button:hover {
-    background-color: #2980b9; /* Темно-синий при наведении */
-  }
-  
-  .features {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .featureItem {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  
-  .featureIcon {
-    font-size: 1.2rem;
-    color: #2ecc71; /* Зеленый цвет для иконок */
-  }
-  
-  .featureText {
-    font-size: 1rem;
-    color: #333;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 32px;
+  padding: 20px;
+  width: 100%;
+  height: 674px;
+  background: #59b17a;
+  margin-bottom: 64px;
+}
+
+.content {
+  /* max-width: 50%; */
+  padding: 20px 0;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 114%;
+  letter-spacing: -0.01em;
+  color: #f1f1f1;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #f1f1f1;
+  margin-bottom: 40px;
+}
+
+.button {
+  border: 1px solid rgba(241, 241, 241, 0.5);
+  border-radius: 60px;
+  padding: 13px 24px;
+  width: 154px;
+  height: 44px;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  color: #f1f1f1;
+  transition: font-size 0.3s ease;
+}
+
+.button:hover {
+  font-size: 16px;
+}
+
+.features {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 120px;
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.featureIcon {
+  /* font-size: 1.2rem;
+  color: #2ecc71;  */
+
+  width: 20px;
+  height: 21px;
+}
+
+.featureText {
+  font-size: 1rem;
+  color: #333;
+}

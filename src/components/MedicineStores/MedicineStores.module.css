@@ -1,5 +1,4 @@
 .medicineStores {
-  padding: 39px 0 80px;
   background: #f7f8fa;
 }
 
@@ -12,14 +11,26 @@
   font-weight: 600;
   font-size: 28px;
   line-height: 114%;
+  text-align: center;
   color: #1d1e21;
-  margin-bottom: 40px;
+  margin-bottom: 14px;
+}
+
+.description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  text-align: center;
+  color: #93939a;
+ 
 }
 
 .storeList {
   display: flex;
   flex-direction: column;
   row-gap: 20px;
+  margin-top: 40px;
 }
 
 .storeCard {
@@ -29,7 +40,7 @@
   border: 1.15px solid #f1f1f1;
   border-radius: 27px;
   padding: 32px 32px 40px 32px;
-  width: 335px;
+  width: 100%;
   height: 202px;
   background: #e7f1ed;
   overflow: hidden;
@@ -259,11 +270,10 @@
   .line:first-child {
     margin-left: 54px;
   }
-  
+
   .line:last-child {
     margin-left: 35px;
   }
-  
 }
 
 @media screen and (min-width: 1440px) {
@@ -277,7 +287,6 @@
   .title {
     margin-bottom: 40px;
   }
-
 
   .storeCard {
     width: 381px;
