@@ -51,7 +51,7 @@
 }
 
 .addrIcon {
-  grid-area: i;
+  /* grid-area: i; */
   stroke-width: 1.5px;
   stroke: #59b17a;
   width: 16px;

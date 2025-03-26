@@ -53,11 +53,25 @@
   font-size: 16px;
 }
 
+.imgWrapper {
+  max-width: 295px;
+  height: 634px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.imgWrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
 .features {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin-bottom: 120px;
 }
 
 .featureItem {
@@ -67,14 +81,26 @@
 }
 
 .featureIcon {
-  /* font-size: 1.2rem;
-  color: #2ecc71;  */
-
   width: 20px;
   height: 21px;
 }
 
 .featureText {
-  font-size: 1rem;
-  color: #333;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 129%;
+  letter-spacing: -0.02em;
+  color: #1d1e21;
+}
+
+@media screen and (min-width: 768px) {
+  .imgWrapper {
+    max-width: 608px;
+    height: 406px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+
 }

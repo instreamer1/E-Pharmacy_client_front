@@ -1,6 +1,13 @@
 import css from './AddPharmacyPromo.module.css';
 import { useNavigate } from 'react-router-dom';
 import iconSprite from '../../assets/sprite.svg';
+import imageMobile from '../../assets/images/Image_home.png';
+import imageMobile1x from '../../assets/images/Image_home_mobile_1x.webp';
+import imageMobile2x from '../../assets/images/Image_home_mobile_2x.webp';
+import imageTablet1x from '../../assets/images/Image_home_tablet_1x.webp';
+import imageTablet2x from '../../assets/images/Image_home_tablet_2x.webp';
+import imageDesktop1x from '../../assets/images/Image_home_tablet_1x.webp';
+import imageDesktop2x from '../../assets/images/Image_home_tablet_2x.webp';
 
 const AddPharmacyPromo = () => {
   const navigate = useNavigate();
@@ -13,7 +20,7 @@ const AddPharmacyPromo = () => {
   return (
     <>
       <div className={css.addPharmacyPromo}>
-        {/* Заголовок и описание */}
+    
         <div className={css.content}>
           <h1 className={css.title}>Add your local pharmacy online now</h1>
           <p className={css.description}>
@@ -22,14 +29,39 @@ const AddPharmacyPromo = () => {
             platform.
           </p>
 
-          {/* Кнопка */}
           <button className={css.button} onClick={handleBuyMedicineClick}>
             Buy medicine
           </button>
         </div>
+        <div className={css.imgWrapper}>
+          <picture>
+          
+            <source
+              media='(min-width: 1440px)'
+              srcSet={`${imageDesktop1x} 1x, ${imageDesktop2x} 2x`}
+              type='image/webp'
+            />
+
+         
+            <source
+              media='(min-width: 768px)'
+              srcSet={`${imageTablet1x} 1x, ${imageTablet2x} 2x`}
+              type='image/webp'
+            />
+
+          
+            <img
+              src={imageMobile}
+              srcSet={`${imageMobile1x} 1x, ${imageMobile2x} 2x`}
+              alt='Add the medicines you need online now'
+              loading='lazy'
+              // width='295'
+              // height='634'
+            />
+          </picture>
+        </div>
       </div>
 
-      {/* Список возможностей */}
       <div className={css.features}>
         <div className={css.featureItem}>
           <svg className={css.featureIcon}>

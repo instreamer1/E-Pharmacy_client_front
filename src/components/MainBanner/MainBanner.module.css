@@ -1,5 +1,76 @@
 .mainBanner {
-  background: url(../../assets/images/pill_mobail.png) center center / cover
+  /* Для старых браузеров */
+  background: url(../../assets/images/pill_mobail.png) center center/auto
     no-repeat;
-    /* background-size: 331px, 312px ; */
+
+  /* Для современных */
+  background: -webkit-image-set(
+      url(../../assets/images/pill_mobail_1x.webp) 1x,
+      url(../../assets/images/pill_mobail_2x.webp) 2x
+    )
+    center/auto no-repeat;
+
+  min-height: 312px;
+  max-width: 375px;
+  padding: 0 20px;
+  justify-self: center;
+}
+
+.mainBannerTitle {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 100%;
+  color: #fff;
+  text-shadow: 0 4px 85px 0 rgba(29, 30, 33, 0.3);
+  padding-top: 18px;
+  margin-bottom: 20px;
+}
+.mainBannerSubtitle {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 133%;
+  color: #fff;
+  margin-left: 179px;
+}
+
+@media screen and (min-width: 768px) {
+  .mainBanner {
+    background-image: -webkit-image-set(
+      url(../../assets/images/pill_tablet_1x.webp) 1x,
+      url(../../assets/images/pill_tablet_2x.webp) 2x
+    );
+    min-height: 508px;
+    min-width: 704px;
+    padding: 140px 83px 0 31px;
+  }
+
+  .mainBannerTitle {
+    font-size: 74px;
+    padding-top: 0;
+    margin-bottom: 24px;
+  }
+
+  .mainBannerSubtitle {
+    font-size: 16px;
+    line-height: 125%;
+    margin-left: 390px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .mainBanner {
+    background-image: -webkit-image-set(
+      url(../../assets/images/pill_tablet_1x.webp) 1x,
+      url(../../assets/images/pill_tablet_2x.webp) 2x
+    );
+    min-height: 508px;
+    min-width: 749px;
+    padding: 140px 86px 0 54px;
+  }
+
+  .mainBannerSubtitle {
+    margin-left: 383px;
+  }
 }
