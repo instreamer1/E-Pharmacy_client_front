@@ -1,19 +1,17 @@
 .addPharmacyPromo {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  margin-bottom: 40px;
+  padding: 0 20px;
+}
+
+.promoWrapper {
   border-radius: 32px;
-  padding: 20px;
-  width: 100%;
-  height: 674px;
+  padding: 20px 20px;
   background: #59b17a;
-  margin-bottom: 64px;
 }
 
 .content {
-  /* max-width: 50%; */
   padding: 20px 0;
+  margin-bottom: 19px;
 }
 
 .title {
@@ -55,7 +53,7 @@
 
 .imgWrapper {
   max-width: 295px;
-  height: 634px;
+  height: 335px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,22 +65,39 @@
   max-height: 100%;
   object-fit: contain;
 }
+/* marquee */
+.marqueeWrapper {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.marqueeContent {
+  display: inline-flex;
+  animation: marquee 20s linear infinite;
+  will-change: transform;
+  white-space: nowrap;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
 
 .features {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  flex-shrink: 0;
 }
 
 .featureItem {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  padding: 8px 29px 8px 0;
+  height: 39px;
+  white-space: nowrap;
 }
 
 .featureIcon {
   width: 20px;
-  height: 21px;
+  height: 20px;
 }
 
 .featureText {
@@ -94,13 +109,113 @@
   color: #1d1e21;
 }
 
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-100% / 3));
+  }
+}
+
+/*  */
+
 @media screen and (min-width: 768px) {
+  .addPharmacyPromo {
+    padding: 0 32px;
+    margin-bottom: 64px;
+  }
+
+  .promoWrapper {
+    padding: 40px 48px;
+    /* width: 704px;
+    height: 911px; */
+  }
+  .content {
+    padding: 64px 0;
+    margin-bottom: 19px;
+  }
+
+  .title {
+    font-size: 48px;
+    line-height: 115%;
+    margin-bottom: 24px;
+  }
+
+  .description {
+    font-size: 16px;
+    line-height: 125%;
+    padding-right: 120px;
+    margin-bottom: 40px;
+  }
+
+  .button {
+    width: 190px;
+  }
+
   .imgWrapper {
     max-width: 608px;
     height: 406px;
   }
+
+  .marqueeContent {
+    animation-duration: 30s;
+  }
+  .featureText {
+    font-size: 16px;
+    line-height: 125%;
+  }
 }
 
 @media screen and (min-width: 1440px) {
+  .addPharmacyPromo {
+    padding: 0 96px;
+    margin-bottom: 64px;
+  }
 
+  .promoWrapper {
+    display: flex;
+    padding: 40px 80px;
+    gap: 19px;
+    /* width: 704px;
+    height: 911px; */
+  }
+
+  .content {
+    width: 501px;
+    height: 194px;
+    margin-bottom: 0;
+  }
+
+  .description {
+    padding-right: 0px;
+  }
+
+  .marqueeWrapper {
+    overflow: visible; 
+  }
+  
+  .marqueeContent {
+    animation: none; 
+    display: flex; 
+    justify-content: center; 
+    width: 100%;
+    flex-wrap: wrap; 
+  }
+ 
+  
+  .features {
+    flex-wrap: wrap; 
+    justify-content: center;
+    gap: 20px; 
+  }
+
+  .featureItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 36.5px 8px 0;
+    height: 39px;
+    white-space: nowrap;
+  }
 }
