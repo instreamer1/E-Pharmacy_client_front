@@ -51,7 +51,6 @@
 }
 
 .addrIcon {
-  /* grid-area: i; */
   stroke-width: 1.5px;
   stroke: #59b17a;
   width: 16px;
@@ -278,9 +277,15 @@
     margin-bottom: 40px;
   }
 
+  .storeList {
+  
+    row-gap: 40px;
+    column-gap: 20px;
+  }
+
 
   .storeCard {
-    width: 381px;
+    flex-basis: calc((100% - 40px) / 3);
     height: 276px;
   }
 

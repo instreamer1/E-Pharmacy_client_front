@@ -1,3 +1,36 @@
-.loginPage{
-    background: #f7f8fa;
+.loginPage {
+  background: #f7f8fa;
+  padding: 25px 0;
+  height: 100vh;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+.titleBlock {
+  margin-bottom: 25px;
+}
+
+@media screen and (min-width: 768px) {
+  .loginPage {
+    padding: 28px 0;
+  }
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    padding: 0 100px;
+    display: grid;
+    grid-template-columns: 614px 1fr;
+    gap: 52px;
+  }
+  .descriptionBlock {
+  }
+  .form {
+    padding-top: 270px;
+  }
 }

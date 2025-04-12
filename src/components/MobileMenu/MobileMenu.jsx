@@ -17,7 +17,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
           <NavigationLinks closeSidebar={onClose}/>
         </div>
         <div className={css.authLinks}>
-          <AuthLinks />
+          <AuthLinks closeSidebar={onClose}/>
         </div>
       </div>
     </div>

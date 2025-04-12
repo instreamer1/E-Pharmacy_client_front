@@ -1,3 +1,79 @@
 .mainContent {
-    
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
+.promo {
+  /* Для старых браузеров */
+  background: url(../../assets/images/white_round_pill_1x.png) center
+    center/auto no-repeat;
+
+  /* Для современных */
+  background: -webkit-image-set(
+      url(../../assets/images/white_round_pill_1x.webp) 1x,
+      url(../../assets/images/white_round_pill_2x.webp) 2x
+    )
+    center/auto no-repeat;
+
+  width: 95px;
+  height: 93px;
+  margin-right: 20px;
+  justify-self: end;
+}
+
+.description {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 121%;
+  color: #1d1e21;
+  margin-top: -37px;
+}
+.description span {
+  color: #59b17a;
+}
+
+@media screen and (min-width: 768px) {
+  .mainContent {
+    margin-top: 64px;
+    margin-bottom: 54px;
+  }
+  
+  .promo {
+      /* Для старых браузеров */
+  background: url(../../assets/images/white_round_pill_tab2x.png) center
+  center/auto no-repeat;
+
+/* Для современных */
+background: -webkit-image-set(
+    url(../../assets/images/white_round_pill_tab1x.webp) 1x,
+    url(../../assets/images/white_round_pill_tab2x.webp) 2x
+  )
+  center/auto no-repeat;
+    width: 179px;
+    height: 175px;
+    margin-right: 109px;
+  }
+  .description {
+    font-size: 54px;
+    line-height: 111%;
+    color: #1d1e21;
+    margin-top: -71px;
+    margin-right: 90px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .mainContent {
+    margin-top: 122px;
+    margin-bottom:0;
+  }
+
+  .promo{
+    margin-right: 19px;
+  }
+
+  .description {
+    margin-right:0;
+  }
 }

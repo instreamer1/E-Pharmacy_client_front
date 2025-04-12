@@ -1,0 +1,33 @@
+.medicinePage {
+  padding: 39px 0 80px;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+.medicineList {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 20px;
+}
+
+@media screen and (min-width: 768px) {
+  .container {
+    padding: 0 32px;
+    margin: 0 auto;
+  }
+
+  .medicineList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 13px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    padding: 0 96px;
+    margin: 0 auto;
+  }
+}

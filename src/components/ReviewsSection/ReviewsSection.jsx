@@ -5,29 +5,27 @@ import { useEffect, useRef, useState } from 'react';
 const ReviewsSection = () => {
   const listRef = useRef();
 
-  const smoothScroll = e => {
-    e.preventDefault();
-    listRef.current.scrollBy({
-      left: e.deltaY > 0 ? 200 : -200,
-      behavior: 'smooth',
-    });
-  };
-  //   const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    const listElement = listRef.current;
 
-  // Запрос на API для получения отзывов (пример)
-  //   useEffect(() => {
-  //     const fetchReviews = async () => {
-  //       try {
-  //         const response = await fetch('/api/reviews'); // Замените на ваш API
-  //         const data = await response.json();
-  //         setReviews(data);
-  //       } catch (error) {
-  //         console.error('Ошибка при загрузке отзывов:', error);
-  //       }
-  //     };
+    const smoothScroll = e => {
+      e.preventDefault();
+      listElement.scrollBy({
+        left: e.deltaY > 0 ? 200 : -200,
+        behavior: 'smooth',
+      });
+    };
 
-  //     fetchReviews();
-  //   }, []);
+    // Добавляем слушатель с passive: false
+    listElement.addEventListener('wheel', smoothScroll, { passive: false });
+
+    // Удаляем слушатель при размонтировании
+    return () => {
+      listElement.removeEventListener('wheel', smoothScroll);
+    };
+  }, []);
+
+
 
   const reviews = [
     {
@@ -58,7 +56,7 @@ const ReviewsSection = () => {
           Search for Medicine, Filter by your location
         </p>
       </div>
-      <ul className={css.reviewsList} ref={listRef} onWheel={smoothScroll}>
+      <ul className={css.reviewsList} ref={listRef} >
         {reviews.map(review => (
           <li key={review.id} className={css.reviewCard}>
             <div className={css.photoWrapper}>

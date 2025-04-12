@@ -2,7 +2,7 @@
   position: relative; 
   padding: 25px 0;
   background: #59b17a;
-  z-index: 1001; 
+  z-index: 10; 
 }
 
 .container {
@@ -67,6 +67,17 @@
     display: block;
   }
   .menuButton {
-    display: none;
+    position: absolute;
+	  width: 0px;
+	  height: 0px;
+	  margin: -1px;
+	  border: 0;
+	  padding: 0;
+	  
+	  white-space: nowrap;
+	  clip-path: inset(100%);
+	  clip: rect(0 0 0 0);
+	  overflow: hidden;
+
   }
 }

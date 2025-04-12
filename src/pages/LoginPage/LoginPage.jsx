@@ -47,31 +47,35 @@ const LoginPage = () => {
 
   return (
     <section className={css.loginPage}>
+      <div className={css.container}>
+        <div className={css.descriptionBlock}>
           <Logo />
-          <p> заголовок з логотипом "E-Pharmacy".</p>
-      <MainContent  />
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type='email'
-          name='email'
-          placeholder='Email'
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <input
-          type='password'
-          name='password'
-          placeholder='Пароль'
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {error && <p className='error'>{error}</p>}
-        <button type='submit'>Log in</button>
-        <p>
-          Нет аккаунта? <Link to='/register'>Зарегистрироваться</Link>
-        </p>
-      </form>
+          <MainContent />
+        </div>
+
+        <form className={css.form} onSubmit={handleSubmit}>
+          <input
+            type='email'
+            name='email'
+            placeholder='Email'
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <input
+            type='password'
+            name='password'
+            placeholder='Пароль'
+            value={formData.password}
+            onChange={handleChange}
+          />
+          {error && <p className='error'>{error}</p>}
+          <button type='submit'>Log in</button>
+          <p>
+            Нет аккаунта? <Link to='/register'>Зарегистрироваться</Link>
+          </p>
+        </form>
+      </div>
     </section>
   );
 };
