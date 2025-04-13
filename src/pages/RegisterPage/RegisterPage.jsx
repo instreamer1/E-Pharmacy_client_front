@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import MainContent from '../../components/MainContent/MainContent';
+import LineContainer from '../../components/LineContainer/LineContainer';
 import css from './RegisterPage.module.css';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
@@ -10,7 +11,6 @@ import { useForm } from 'react-hook-form';
 import { registerUser } from '../../redux/authSlice/operations';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
-import LineContainer from '../../components/lineContainer/lineContainer';
 
 const registrationSchema = yup.object().shape({
   name: yup

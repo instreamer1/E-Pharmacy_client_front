@@ -10,7 +10,7 @@ import { logInUser } from '../../redux/authSlice/operations';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { useDispatch } from 'react-redux';
 import toast from 'react-hot-toast';
-import LineContainer from '../../components/lineContainer/lineContainer';
+import LineContainer from '../../components/LineContainer/LineContainer';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -45,7 +45,7 @@ const LoginPage = () => {
   const onSubmit = async data => {
     const { email, password } = data;
     try {
-      await dispatch(logInUser({ email, password})).unwrap();
+      await dispatch(logInUser({ email, password })).unwrap();
       toast.success('User registered successfully!');
       reset();
       navigate('/card-page');
