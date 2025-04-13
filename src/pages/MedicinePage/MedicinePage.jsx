@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Pagination from '../../components/Pagination/Pagination';
 
 import css from './MedicinePage.module.css';
-import MedicineCard from '../../MedicineCard/MedicineCard';
+import MedicineCard from '../../components/MedicineCard/MedicineCard';
+
 
 const medicines = [
   {

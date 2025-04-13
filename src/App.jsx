@@ -9,6 +9,7 @@ import MedicineStorePage from './pages/MedicineStorePage/MedicineStorePage';
 import MedicinePage from './pages/MedicinePage/MedicinePage';
 import ChangePasswordPage from './components/ChangePasswordPage/ChangePasswordPage';
 import { Toaster } from 'react-hot-toast';
+import CardPage from './pages/CardPage/CardPage';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path='medicine-store' element={<MedicineStorePage />} />
           <Route path='medicine' element={<MedicinePage />} />
+          <Route path='card-page' element={<CardPage/>}/>
         </Route>
         <Route path='register' element={<RegisterPage />} />
         <Route path='login' element={<LoginPage />} />
