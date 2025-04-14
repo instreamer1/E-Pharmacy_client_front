@@ -165,9 +165,9 @@ const MedicinePage = () => {
   return (
     <section className={css.medicinePage}>
       <div className={css.container}>
-        <h1 className='page-title'>Medicine</h1>
+        <h1 className={css.pageTitle}>Medicine</h1>
 
-        <div className={css.searchPane}>
+        <div className={css.searchPanel}>
           <select
             name='category'
             //   value={searchParams.category}

@@ -1,0 +1,96 @@
+.userCart {
+  display: flex;
+}
+
+.cartLink {
+  display: inline-flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: #fff;
+  padding: 12px;
+  margin-right: 8px;
+  /* stroke: #f1f1f1;
+  box-shadow: 0 -1px 7px 0 rgba(71, 71, 71, 0.05); */
+}
+
+.cartIcon {
+  /* width: 24px;
+  height: 24px; */
+  transition: transform 0.2s;
+  border-radius: 100%;
+  fill: #fff;
+  stroke-width: 1px;
+  stroke: #f1f1f1;
+  box-shadow: 0 -1px 7px 0 rgba(71, 71, 71, 0.05);
+  stroke-width: 1.5px;
+  stroke: #59b17a;
+}
+
+.cartIconHome {
+  fill: white; /* Пример для главной страницы */
+}
+
+.cartLink:hover .cartIcon {
+  transform: scale(1.1);
+}
+
+.cartBadge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background: #e7f1ed;
+  color: #59b17a;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: #e7f1ed;
+  margin-right: 10px;
+}
+.userIndex {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 140%;
+  color: #59b17a;
+}
+
+@media screen and (min-width: 768px) {
+  .userCart {
+  }
+  .cartLink {
+    width: 46px;
+    height: 46px;
+  }
+  .cartBadge {
+  }
+
+  .user {
+    width: 46px;
+    height: 46px;
+    margin-right: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .user {
+    margin-right: 12px;
+  }
+}

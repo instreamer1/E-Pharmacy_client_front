@@ -1,0 +1,55 @@
+.button {
+  border-radius: 60px;
+  padding: 13px 20px;
+  width: 107px;
+  height: 40px;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 100%;
+}
+
+/* .button:hover {
+    transform: scale(1.1);
+  } */
+.buttonHome {
+  border: 1px solid rgba(241, 241, 241, 0.5);
+  color: #f1f1f1;
+}
+
+.buttonHeader {
+  /* background: #f6b83d;
+    color: #fff; */
+  /* color: #f6b83d;
+  background: #fff4df; */
+}
+
+@media screen and (min-width: 768px) {
+  .button {
+    padding: 15px 20px;
+    width: 115px;
+    height: 44px;
+  }
+
+  .button.buttonHeader {
+    border: 1px solid rgba(241, 241, 241, 0.5);
+    color: #f1f1f1;
+  }
+
+  .button.buttonHome {
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .button {
+    padding: 15px 20px;
+    width: 115px;
+    height: 44px;
+  }
+
+  .buttonHome {
+    border: 1px solid rgba(89, 177, 122, 0.5);
+    color: #59b17a;
+  }
+}

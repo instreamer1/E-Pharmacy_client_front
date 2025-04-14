@@ -2,14 +2,16 @@
   position: relative; 
   padding: 25px 0;
   background: #59b17a;
-  z-index: 10; 
+  /* z-index: 10;  */
 }
 
 .container {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   padding: 0 20px;
+ /* flex-shrink: 1; */
+  /* width: 300px; */
 }
 
 .homeHeader {
@@ -22,9 +24,12 @@
 
 .menuButton {
   display: flex;
+  justify-self: flex-end;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  /* cursor: pointer; */
+  /* flex-shrink: 1; */
+  
 }
 
 .burger {
@@ -42,10 +47,11 @@
 
 .navLinks {
   display: none;
+  
 }
 
 .authLinks {
-  display: none;
+  margin-left: auto;
 }
 
 @media screen and (min-width: 768px) {
@@ -61,10 +67,12 @@
 
   .navLinks {
     display: block;
+    margin-left: auto;
   }
 
   .authLinks {
     display: block;
+    
   }
   .menuButton {
     position: absolute;

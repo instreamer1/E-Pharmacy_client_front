@@ -2,14 +2,19 @@ import './App.css';
 import { lazy, Suspense } from 'react';
 import SharedLayout from './components/SharedLayout/SharedLayout';
 import { Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage/HomePage';
-import RegisterPage from './pages/RegisterPage/RegisterPage';
-import LoginPage from './pages/LoginPage/LoginPage';
-import MedicineStorePage from './pages/MedicineStorePage/MedicineStorePage';
-import MedicinePage from './pages/MedicinePage/MedicinePage';
-import ChangePasswordPage from './components/ChangePasswordPage/ChangePasswordPage';
 import { Toaster } from 'react-hot-toast';
-import CardPage from './pages/CardPage/CardPage';
+import PrivateRoute from './pages/PrivateRoute';
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
+const MedicineStorePage = lazy(() =>
+  import('./pages/MedicineStorePage/MedicineStorePage')
+);
+const MedicinePage = lazy(() => import('./pages/MedicinePage/MedicinePage'));
+const ChangePasswordPage = lazy(() =>
+  import('./components/ChangePasswordPage/ChangePasswordPage')
+);
+const CardPage = lazy(() => import('./pages/CardPage/CardPage'));
 
 const App = () => {
   return (
@@ -19,7 +24,24 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path='medicine-store' element={<MedicineStorePage />} />
           <Route path='medicine' element={<MedicinePage />} />
-          <Route path='card-page' element={<CardPage/>}/>
+          {/* <Route path='card-page' element={<CardPage/>}/> */}
+
+          <Route
+            path='card-page'
+            element={
+              <PrivateRoute redirectTo='/login'>
+                <CardPage />
+              </PrivateRoute>
+            }
+          />
+          {/* <Route
+            path='/register'
+            element={
+              <RestrictedRoute redirectTo='/profile'>
+                <RegistrationPage />
+              </RestrictedRoute>
+            }
+          /> */}
         </Route>
         <Route path='register' element={<RegisterPage />} />
         <Route path='login' element={<LoginPage />} />

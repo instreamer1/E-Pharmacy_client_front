@@ -11,7 +11,10 @@ const MedicineCard = ({ medicine, onAddToCart, onDetails }) => {
         />
       </div>
       <div className={css.infoWrapper}>
-        <h3 className={css.medicineName}>{medicine.name}</h3>
+        <div className={css.medicineNameBlock}>
+          <h3 className={css.medicineName}>{medicine.name}</h3>
+          <p className={css.medicineText}>{medicine.suppliers} (Fabrication)</p>
+        </div>
         <p className={css.medicinePrice}>
           $
           {
@@ -19,14 +22,14 @@ const MedicineCard = ({ medicine, onAddToCart, onDetails }) => {
             //   .toFixed(2)
           }
         </p>
-        <div className={css.medicineActions}>
+        {/* <div className={css.medicineActions}> */}
           <button onClick={onAddToCart} className={css.addButton}>
             Add to cart
           </button>
           <button onClick={onDetails} className={css.detailsButton}>
             Details
           </button>
-        </div>
+        {/* </div> */}
       </div>
     </li>
   );

@@ -1,0 +1,228 @@
+.cartPage{
+
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cartTitle {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #2c3e50;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+  padding: 1.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sectionTitle {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #34495e;
+}
+
+.sectionDescription {
+  color: #7f8c8d;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+.paymentMethods {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.paymentMethod {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radioInput {
+  margin-right: 0.5rem;
+}
+
+.radioLabel {
+  font-size: 1rem;
+  color: #2c3e50;
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.itemInfo {
+  flex: 1;
+}
+
+.itemName {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.itemDescription {
+  color: #7f8c8d;
+  margin-bottom: 0.5rem;
+}
+
+.itemPrice {
+  font-weight: 600;
+  color: #e74c3c;
+}
+
+.itemActions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.quantityButton {
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.quantityButton:hover {
+  background: #e0e0e0;
+}
+
+.quantityValue {
+  padding: 0 1rem;
+  min-width: 2rem;
+  text-align: center;
+}
+
+.removeButton {
+  padding: 0.5rem 1rem;
+  background: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.removeButton:hover {
+  background: #c0392b;
+}
+
+.orderSummary {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.totalLabel {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.totalAmount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e74c3c;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 1rem;
+  background: #2ecc71;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin-top: 2rem;
+}
+
+.submitButton:hover {
+  background: #27ae60;
+}
+
+@media screen and (min-width: 768px) {
+  .cartContainer {
+    padding: 1rem;
+  }
+  
+  .cartItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .itemActions {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .paymentMethods {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+
+}

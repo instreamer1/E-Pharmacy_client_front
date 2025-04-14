@@ -1,33 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+
+
+
 import { handleAxiosError } from '../../utils/errorUtils';
-
-const apiUrl = import.meta.env.VITE_API_BASE_URL;
-console.log(apiUrl);
-axios.defaults.baseURL = apiUrl;
-
-axios.defaults.withCredentials = true;
-
-axios.defaults.headers.common.Accept = 'application/json';
-axios.defaults.headers.common['Content-Type'] = 'application/json';
-
-const setAuthHeader = token => {
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-};
-
-const clearAuthHeader = () => {
-  delete axios.defaults.headers.common.Authorization;
-};
+import axios from 'axios';
+import { clearToken, instance, setToken } from '../../utils/axios'
 
 export const registerUser = createAsyncThunk(
   'users/signup',
   async (newUser, thunkAPI) => {
     console.log('newUser', newUser);
     try {
-      const response = await axios.post('/users/signup', newUser);
-
-      setAuthHeader(response.data.token);
-      localStorage.setItem('authToken', response.data.token);
+      const response =  await axios.post('/users/signup', newUser);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -40,9 +24,9 @@ export const logInUser = createAsyncThunk(
   'users/signin',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/users/signin', credentials);
-      setAuthHeader(response.data.token);
-      localStorage.setItem('authToken', response.data.accessToken);
+      const response = await instance.post('/users/signin', credentials);
+      // localStorage.setItem('authToken', response.data.accessToken);
+      setToken(response.data.accessToken)
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -52,10 +36,11 @@ export const logInUser = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('users/signout', async (_, thunkAPI) => {
+export const logOutUser = createAsyncThunk('users/logout', async (_, thunkAPI) => {
   try {
-    const response = await axios.post('/users/signout');
-    clearAuthHeader();
+    const response = await instance.post('/users/logout');
+    clearToken();
+    // localStorage.removeItem('authToken')
     return response.data;
   } catch (error) {
     const errorMessage = handleAxiosError(error);
@@ -66,7 +51,7 @@ export const logOut = createAsyncThunk('users/signout', async (_, thunkAPI) => {
 
 export const refresh = createAsyncThunk('users/refresh', async (_, thunkAPI) => {
   try {
-    const { data } = await axios.post('/users/refresh');
+    const { data } = await instance.post('/users/refresh');
     return data.data;
   } catch (error) {
     const errorMessage = handleAxiosError(error);
