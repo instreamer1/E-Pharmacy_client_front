@@ -2,7 +2,7 @@ import axios from 'axios';
 import { logOutUser, refresh } from '../redux/authSlice/operations'; // Ваши действия для обновления токена
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
-
+console.log(apiUrl);
 export const instance = axios.create({
   baseURL: apiUrl,
   withCredentials: true,

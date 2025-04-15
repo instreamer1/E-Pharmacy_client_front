@@ -48,7 +48,7 @@ const LoginPage = () => {
       await dispatch(logInUser({ email, password })).unwrap();
       toast.success('User registered successfully!');
       reset();
-      navigate('/card-page');
+      navigate('/medicine');
     } catch (error) {
       toast.error(error);
     }

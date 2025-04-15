@@ -23,9 +23,16 @@ const App = () => {
         <Route path='/' element={<SharedLayout />}>
           <Route index element={<HomePage />} />
           <Route path='medicine-store' element={<MedicineStorePage />} />
-          <Route path='medicine' element={<MedicinePage />} />
+          {/* <Route path='medicine' element={<MedicinePage />} /> */}
           {/* <Route path='card-page' element={<CardPage/>}/> */}
-
+          <Route
+            path='medicine'
+            element={
+              <PrivateRoute redirectTo='/register'>
+                <MedicinePage />
+              </PrivateRoute>
+            }
+          />
           <Route
             path='card-page'
             element={
