@@ -64,10 +64,10 @@ export const refresh = createAsyncThunk(
 );
 
 export const getUser = createAsyncThunk(
-  'users/current',
+  'users/user-info',
   async (_, thunkAPI) => {
     try {
-      const { data } = await instance.get('/users/current');
+      const { data } = await instance.get('/users/user-info');
       return data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);

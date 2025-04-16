@@ -17,7 +17,7 @@ const Header = () => {
   const isHomePage = location.pathname === '/';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1440px)' });
-console.log(isLoggedIn);
+
   return (
     <header
       className={`${css.header} ${

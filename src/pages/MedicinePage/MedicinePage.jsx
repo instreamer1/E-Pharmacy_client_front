@@ -5,141 +5,59 @@ import { useSelector, useDispatch } from 'react-redux';
 // import { addToCart } from '../redux/cartSlice';
 // import AuthModal from '../components/AuthModal';
 import Pagination from '../../components/Pagination/Pagination';
-
+import { useSearchParams } from 'react-router-dom';
 import css from './MedicinePage.module.css';
 import MedicineCard from '../../components/MedicineCard/MedicineCard';
-
-
-const medicines = [
-  {
-    id: '0',
-    photo: 'https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg',
-    name: 'Aspirin',
-    suppliers: 'Square',
-    stock: '12',
-    price: '89.66',
-    category: 'Medicine',
-  },
-  {
-    id: '1',
-    photo: 'https://i.ibb.co/Hg0zZkQ/shop-4-7-1000x1000-min.jpg',
-    name: 'Paracetamol',
-    suppliers: 'Acme',
-    stock: '19',
-    price: '34.16',
-    category: 'Heart',
-  },
-  {
-    id: '2',
-    photo: 'https://i.ibb.co/02WmJdc/5-19-1000x1000-min.jpg',
-    name: 'Ibuprofen',
-    suppliers: 'Beximco',
-    stock: '09',
-    price: '53.76',
-    category: 'Head',
-  },
-  {
-    id: '3',
-    photo: 'https://i.ibb.co/GxTVSVk/shop-4-9-1000x1000-min.jpg',
-    name: 'Acetaminophen',
-    suppliers: 'ACI',
-    stock: '14',
-    price: '28.57',
-    category: 'Hand',
-  },
-  {
-    id: '4',
-    photo: 'https://i.ibb.co/X330FTj/shop-4-10-1000x1000-min.jpg',
-    name: 'Naproxen',
-    suppliers: 'Uniliver',
-    stock: '10',
-    price: '56.34',
-    category: 'Leg',
-  },
-  {
-    id: '5',
-    photo: 'https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg',
-    name: 'Amoxicillin',
-    suppliers: 'Square',
-    stock: '25',
-    price: '45.99',
-    category: 'Medicine',
-  },
-  {
-    id: '6',
-    photo: 'https://i.ibb.co/Hg0zZkQ/shop-4-7-1000x1000-min.jpg',
-    name: 'Lisinopril',
-    suppliers: 'Acme',
-    stock: '17',
-    price: '29.88',
-    category: 'Heart',
-  },
-  {
-    id: '7',
-    photo: 'https://i.ibb.co/02WmJdc/5-19-1000x1000-min.jpg',
-    name: 'Ciprofloxacin',
-    suppliers: 'Beximco',
-    stock: '11',
-    price: '38.45',
-    category: 'Head',
-  },
-  {
-    id: '8',
-    photo: 'https://i.ibb.co/GxTVSVk/shop-4-9-1000x1000-min.jpg',
-    name: 'Hydrochlorothiazide',
-    suppliers: 'ACI',
-    stock: '22',
-    price: '24.76',
-    category: 'Hand',
-  },
-  {
-    id: '9',
-    photo: 'https://i.ibb.co/X330FTj/shop-4-10-1000x1000-min.jpg',
-    name: 'Prednisone',
-    suppliers: 'Uniliver',
-    stock: '15',
-    price: '48.99',
-    category: 'Leg',
-  },
-  {
-    id: '10',
-    photo: 'https://i.ibb.co/bLKP624/5-15-1000x1000-min.jpg',
-    name: 'Propranolol',
-    suppliers: 'Square',
-    stock: '18',
-    price: '35.66',
-    category: 'Medicine',
-  },
-];
+import {
+  selectLimit,
+  selectPage,
+  selectProducts,
+  selectProductsError,
+  selectProductsLoading,
+  selectTotalPages,
+} from '../../redux/productsSlice/selectors';
+import { getProducts } from '../../redux/productsSlice/operations';
+import { SearchFilterPanel } from '../../components/SearchFilterPanel/SearchFilterPanel';
+import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
+import { setPage } from '../../redux/productsSlice/slice';
 
 const MedicinePage = () => {
-  //   const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+
+  const products = useSelector(selectProducts);
+  const totalPages = useSelector(selectTotalPages);
+  const page = useSelector(selectPage);
+  const limit = useSelector(selectLimit);
+  const isLoading = useSelector(selectProductsLoading);
+  const error = useSelector(selectProductsError);
+
   //   const navigate = useNavigate();
 
-  const totalPages = 3;
-  //   const { isAuthenticated } = useSelector(state => state.auth);
-  //   const { medicines, totalPages, loading, error } = useSelector(state => state.medicines);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  //   const [searchParams, setSearchParams] = useState({
-  //     category: '',
-  //     searchTerm: '',
-  //     page: 1,
-  //     limit: 12
-  //   });
-  //   const [showAuthModal, setShowAuthModal] = useState(false);
+  useEffect(() => {
+    const params = {
+      category: searchParams.get('category') || 'All',
+      search: searchParams.get('search') || '',
+      page: Number(searchParams.get('page')) || 1,
+      limit,
+    };
 
-  //   useEffect(() => {
-  //     dispatch(searchMedicines(searchParams));
-  //   }, [searchParams, dispatch]);
+    dispatch(getProducts(params));
+  }, [searchParams, limit, dispatch]);
 
-  //   const handleFilterChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setSearchParams(prev => ({ ...prev, [name]: value, page: 1 }));
-  //   };
+  const handlePageChange = newPage => {
+    const currentParams = Object.fromEntries(searchParams);
+    setSearchParams({ ...currentParams, page: newPage });
+    dispatch(setPage(newPage));
 
-    // const handlePageChange = (page) => {
-    //   setSearchParams(prev => ({ ...prev, page }));
-    // };
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   //   const handleAddToCart = (medicine) => {
   //     if (!isAuthenticated) {
@@ -153,14 +71,8 @@ const MedicinePage = () => {
   //     navigate(`/medicine/${id}`);
   //   };
 
-  const categories = [
-    'All',
-    'Antibiotics',
-    'Painkillers',
-    'Vitamins',
-    'Antihistamines',
-    'Other',
-  ];
+  // if (isLoading) return <Loader />;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <section className={css.medicinePage}>
@@ -168,56 +80,32 @@ const MedicinePage = () => {
         <h1 className={css.pageTitle}>Medicine</h1>
 
         <div className={css.searchPanel}>
-          <select
-            name='category'
-            //   value={searchParams.category}
-            //   onChange={handleFilterChange}
-            className={css.categorySelect}>
-            <option value=''>Product category</option>
-            {categories.map(cat => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-
-          <input
-            type='text'
-            name='searchTerm'
-            placeholder='Search medicine'
-            //   value={searchParams.searchTerm}
-            //   onChange={handleFilterChange}
-            className={css.searchInput}
-          />
-
-          <button className={css.filterButton}>Filter</button>
+          <SearchFilterPanel />
         </div>
 
-        {/* {loading && <div className={css.loading}>Loading...</div>} */}
+        {products.length > 0 ? (
+          <>
+            <ul className={css.medicineList}>
+              {products.map(medicine => (
+                <MedicineCard
+                  key={medicine._id}
+                  medicine={medicine}
+                  // onAddToCart={() => handleAddToCart(medicine)}
+                  // onDetails={() => handleDetails(medicine.id)}
+                />
+              ))}
+            </ul>
 
-        {/* {error && <div className={css.error}>{error}</div>} */}
-
-        {/* {!loading && !error && medicines.length === 0 && (
-        <div className={css.noResults}>Nothing was found for your request</div>
-      )} */}
-
-        <ul className={css.medicineList}>
-          {medicines.map(medicine => (
-            <MedicineCard
-              key={medicine.id}
-              medicine={medicine}
-              // onAddToCart={() => handleAddToCart(medicine)}
-              // onDetails={() => handleDetails(medicine.id)}
-            />
-          ))}
-        </ul>
-
-        {totalPages > 1 && (
-          <Pagination
-            //   currentPage={searchParams.page}
-            totalPages={totalPages}
-            //   onPageChange={handlePageChange}
-          />
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={page}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </>
+        ) : (
+          <p className={css.noProducts}>No products found</p>
         )}
 
         {/* <AuthModal

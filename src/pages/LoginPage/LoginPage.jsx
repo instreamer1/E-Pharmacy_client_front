@@ -108,7 +108,7 @@ const LoginPage = () => {
               <button
                 aria-label='Sign up'
                 type='submit'
-                disabled={!isValid}
+                disabled={!isValid }
                 className={css.submitBtn}>
                 Sign up
               </button>
