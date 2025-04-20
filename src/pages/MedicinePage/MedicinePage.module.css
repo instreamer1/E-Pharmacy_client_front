@@ -15,7 +15,7 @@
   margin-bottom: 40px;
 }
 
-.searchPanel{
+.searchPanel {
   margin-bottom: 40px;
 }
 
@@ -26,21 +26,38 @@
 }
 
 @media screen and (min-width: 768px) {
+  .medicinePage {
+    padding: 55px 0 120px;
+  }
+
   .container {
     padding: 0 32px;
+  }
+
+  /* .medicineList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 13px;
+  } */
+
+  .medicineList {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(226px, 1fr));
+    gap: 32px 13px;
+  }
+
+
+}
+
+@media screen and (min-width: 1440px) {
+  .container {
+    padding: 0 128px;
     margin: 0 auto;
   }
 
   .medicineList {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px 13px;
-  }
-}
-
-@media screen and (min-width: 1440px) {
-  .container {
-    padding: 0 96px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 40px 21px;
   }
 }

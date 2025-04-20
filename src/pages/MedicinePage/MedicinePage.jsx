@@ -33,7 +33,7 @@ const MedicinePage = () => {
   const isLoading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
 
-  //   const navigate = useNavigate();
+    const navigate = useNavigate();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -67,9 +67,9 @@ const MedicinePage = () => {
   //     dispatch(addToCart(medicine));
   //   };
 
-  //   const handleDetails = (id) => {
-  //     navigate(`/medicine/${id}`);
-  //   };
+    const handleDetails = (id) => {
+      navigate(`/product/${id}`);
+    };
 
   // if (isLoading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
@@ -91,7 +91,7 @@ const MedicinePage = () => {
                   key={medicine._id}
                   medicine={medicine}
                   // onAddToCart={() => handleAddToCart(medicine)}
-                  // onDetails={() => handleDetails(medicine.id)}
+                  onDetails={() => handleDetails(medicine._id)}
                 />
               ))}
             </ul>

@@ -1,4 +1,7 @@
 .medicineCard {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .imgWrapper {
@@ -25,21 +28,26 @@
   background: #fff;
   padding: 20px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  row-gap: 17px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .medicineNameBlock {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-shrink: 1;
+  margin-bottom: 4px;
 }
 
-.medicineName {
+.medicineName,
+.medicinePrice {
   font-family: var(--font-family);
   font-weight: 600;
   font-size: 16px;
   line-height: 140%;
   color: #1d1e21;
-  margin-bottom: 4px;
 }
 
 .medicineText {
@@ -48,14 +56,10 @@
   font-size: 12px;
   line-height: 150%;
   color: rgba(29, 30, 33, 0.6);
-}
-
-.medicinePrice {
-  justify-self: flex-end;
+  margin-bottom: 14px;
 }
 
 .medicineActions {
-  align-self: flex-end;
   display: flex;
   justify-content: space-between;
 }
@@ -82,4 +86,11 @@
   text-decoration: underline;
   text-decoration-skip-ink: none;
   color: #1d1e21;
+}
+
+@media screen and (min-width: 768px) {
+  .medicineName,
+  .medicinePrice {
+    font-size: 18px;
+  }
 }

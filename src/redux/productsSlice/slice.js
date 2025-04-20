@@ -58,7 +58,9 @@ const productsSlice = createSlice({
         state.error = null;
       })
       .addCase(getProductById.fulfilled, (state, action) => {
-        state.accessToken = action.payload.accessToken;
+        // state.accessToken = action.payload.accessToken;
+        console.log(action.payload);
+        state.product = action.payload
         state.isLoggedIn = true;
         state.isLoading = false;
       })

@@ -4,6 +4,7 @@ import SharedLayout from './components/SharedLayout/SharedLayout';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute';
+const ProductPage = lazy(() => import('./pages/ProductPage/ProductPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage'));
@@ -24,6 +25,7 @@ const App = () => {
           <Route index element={<HomePage />} />
           <Route path='medicine-store' element={<MedicineStorePage />} />
           <Route path='medicine' element={<MedicinePage />} />
+          <Route path='product/:id' element={<ProductPage />} />
           {/* <Route path='card-page' element={<CardPage/>}/> */}
           {/* <Route
             path='medicine'
