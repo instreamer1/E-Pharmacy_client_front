@@ -4,6 +4,8 @@ import iconSprite from '../../assets/sprite.svg';
 import { useEffect } from 'react';
 
 const Modal = ({ isOpen, onClose, children }) => {
+
+
   useEffect(() => {
     if (!isOpen) return;
 
@@ -26,6 +28,9 @@ const Modal = ({ isOpen, onClose, children }) => {
       window.scrollTo(0, scrollY);
     };
   }, [isOpen]);
+
+
+
   return (
     <ReactModal
       isOpen={isOpen}
@@ -38,7 +43,7 @@ const Modal = ({ isOpen, onClose, children }) => {
         className={css.closeBtn}
         onClick={onClose}
         aria-label='Close modal'>
-        {' '}
+      
         <svg className={css.icon}>
           <use href={`${iconSprite}#closeModal`}></use>
         </svg>

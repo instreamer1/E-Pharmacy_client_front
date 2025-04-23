@@ -21,7 +21,7 @@ useEffect(() => {
   
   }, [dispatch, id]);
   if (!product) {
-    return <div className={css.loader}>Loading...</div>; // или просто `return null;`
+    return <div className={css.loader}>Loading...</div>; 
   }
 
   return (
