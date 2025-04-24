@@ -2,20 +2,17 @@ import { useState } from 'react';
 import css from './ProductOverview.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
-import   Modal  from "../Modal/Modal";
-import ReactModal from '../RegisterModal/RegisterModal'
-
-
+import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 
 export const ProductOverview = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
-  const [showModal, setShowModal] = useState(false);
+
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
     if (!isLoggedIn) {
-      setShowModal(true);
+      dispatch(setOpenRegisterModal());
       return;
     }
     // dispatch(addToCart(product));
@@ -60,10 +57,6 @@ export const ProductOverview = ({ product }) => {
           </div>
         </div>
       </div>
-
-      <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-        <ReactModal />
-      </Modal>
     </>
   );
 };

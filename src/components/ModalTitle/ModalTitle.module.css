@@ -1,0 +1,28 @@
+.modalTitle{
+    margin-bottom: 25px;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 114%;
+  text-align: center;
+  color: #1d1e21;
+  margin-bottom: 14px;
+}
+.description {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  text-align: center;
+  color: #6a6a6f;
+}
+
+@media screen and (min-width: 768px) {
+  .description {
+    font-size: 16px;
+    line-height: 125%;
+  }
+}

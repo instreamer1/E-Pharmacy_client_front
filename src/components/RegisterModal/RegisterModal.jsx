@@ -1,5 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,14 +6,19 @@ import * as yup from 'yup';
 import toast from 'react-hot-toast';
 
 import { registerUser } from '../../redux/authSlice/operations';
-import MainContent from '../MainContent/MainContent';
 
 import InputField from '../InputField/InputField';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-
 import css from './RegisterModal.module.css';
-import LoginModal from '../LoginModal/LoginModal';
-import Modal from '../Modal/Modal';
+
+// import LoginModal from '../LoginModal/LoginModal';
+// import Modal from '../Modal/Modal';
+import { setCloseModals, setOpenLoginModal } from '../../redux/authSlice/slice';
+import ModalTitle from '../ModalTitle/ModalTitle';
+// import {
+//   selectIsOpenLoginModal,
+//   selectIsOpenRegisterModal,
+// } from '../../redux/authSlice/selectors';
 
 const schema = yup.object().shape({
   name: yup.string().min(2).max(50).required('Name is required'),
@@ -32,10 +36,13 @@ const schema = yup.object().shape({
 });
 
 const RegisterModal = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
+  // const isOpenLoginModal = useSelector(selectIsOpenLoginModal);
+  // const isOpenRegisterModal = useSelector(selectIsOpenRegisterModal);
+
+  // const navigate = useNavigate();
 
   const {
     register,
@@ -54,22 +61,30 @@ const RegisterModal = () => {
       await dispatch(registerUser(data)).unwrap();
       toast.success('Successfully registered!');
       reset();
-      // navigate('/login');
-      setShowModal(false)
     } catch (err) {
       toast.error(err.message || 'Registration failed');
+    } finally {
+      dispatch(setCloseModals());
     }
   };
 
-  const handleOpenLoginModal = ()=>{
-   setShowModal(true)
-  }
+  const handleOpenLoginModal = () => {
+    dispatch(setCloseModals());
+    dispatch(setOpenLoginModal());
+  };
 
+  // useEffect(() => {
+  //   if (isOpenLoginModal) dispatch(setCloseModals());
+  // }, [isOpenLoginModal, dispatch]);
 
+  // if (!isOpenRegisterModal) return null;
 
   return (
-    <>
     <section className={css.registerPage}>
+      <ModalTitle
+        title={'Sign Up'}
+        description={'Before proceeding, please register on our site.'}
+      />
       <div className={css.container}>
         {/* <div className={css.descriptionBlock}>
        
@@ -99,6 +114,7 @@ const RegisterModal = () => {
               name='password'
               type={showPassword ? 'text' : 'password'}
               placeholder='Password'
+              autoComplete='new-password'
               error={errors.password?.message}
               icon={
                 showPassword ? (
@@ -119,20 +135,11 @@ const RegisterModal = () => {
         </form>
       </div>
       <div className={css.navWrapper}>
-        {/* <Link to='/login' className={css.navLink}>
-          Already have an account?
-        </Link> */}
-
-        <button onClick={handleOpenLoginModal}>
-    
+        <button type='button' onClick={handleOpenLoginModal}>
           Already have an account?
         </button>
       </div>
     </section>
-       <Modal isOpen={showModal} onClose={() => setShowModal(false)}>
-       <LoginModal />
-     </Modal>
-     </>
   );
 };
 

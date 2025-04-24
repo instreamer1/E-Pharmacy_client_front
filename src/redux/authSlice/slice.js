@@ -17,6 +17,8 @@ const initialState = {
   accessToken: null,
   isLoggedIn: false,
   isRefreshing: false,
+  registerModalOpen: false,
+  loginModalOpen: false,
   isLoading: false,
   error: null,
 };
@@ -24,7 +26,20 @@ const initialState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setOpenRegisterModal: state => {
+      state.registerModalOpen = true;
+      state.loginModalOpen = false;
+    },
+    setOpenLoginModal: state => {
+      state.loginModalOpen = true;
+      state.registerModalOpen = false;
+    },
+    setCloseModals: state => {
+      state.loginModalOpen = false;
+      state.registerModalOpen = false;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(registerUser.pending, state => {
@@ -92,5 +107,11 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const {
+  setOpenRegisterModal,
+  setOpenLoginModal,
+  setCloseModals,
+} = authSlice.actions;
 
 export const authReducer = authSlice.reducer;

@@ -1,16 +1,20 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import toast from 'react-hot-toast';
 
+import { logInUser } from '../../redux/authSlice/operations';
+import {
+  setCloseModals,
+  setOpenRegisterModal,
+} from '../../redux/authSlice/slice';
 
 import InputField from '../../components/InputField/InputField';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import css from './LoginModal.module.css';
-import { logInUser } from '../../redux/authSlice/operations';
+import ModalTitle from '../ModalTitle/ModalTitle';
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -27,10 +31,10 @@ const loginSchema = yup.object().shape({
     .matches(/^\S+$/, 'Password cannot contain spaces')
     .required('Password is required!'),
 });
+
 const LoginModal = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -48,14 +52,27 @@ const LoginModal = () => {
       await dispatch(logInUser({ email, password })).unwrap();
       toast.success('User registered successfully!');
       reset();
-      navigate('/medicine');
     } catch (error) {
       toast.error(error);
+    } finally {
+      dispatch(setCloseModals());
     }
   };
 
+  const handleOpenRegisterModal = () => {
+    dispatch(setCloseModals());
+    dispatch(setOpenRegisterModal());
+  };
+
+  // useEffect(() => {
+  //   if (isOpenRegisterModal) dispatch(setCloseModals());
+  // }, [isOpenRegisterModal, dispatch]);
+
+  // if (!isOpenLoginModal) return null;
+
   return (
     <section className={css.loginPage}>
+      <ModalTitle  title={'Log in to your account'} description={'Please login to your account before continuing.'}/>
       <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
         <InputField
           name='email'
@@ -80,10 +97,11 @@ const LoginModal = () => {
         <button type='submit' disabled={!isValid} className={css.submitBtn}>
           Log In
         </button>
-        <Link to='/register' className={css.link}>
-          Don’t have an account? Sign up
-        </Link>
       </form>
+      <button type='button' onClick={handleOpenRegisterModal}>
+        {' '}
+        Don’t have an account? Sign up
+      </button>
     </section>
   );
 };

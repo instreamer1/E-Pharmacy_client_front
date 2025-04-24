@@ -1,9 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-// import { searchMedicines } from '../redux/medicineSlice';
-// import { addToCart } from '../redux/cartSlice';
-// import AuthModal from '../components/AuthModal';
 import Pagination from '../../components/Pagination/Pagination';
 import { useSearchParams } from 'react-router-dom';
 import css from './MedicinePage.module.css';
@@ -20,11 +17,11 @@ import { getProducts } from '../../redux/productsSlice/operations';
 import { SearchFilterPanel } from '../../components/SearchFilterPanel/SearchFilterPanel';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 import { setPage } from '../../redux/productsSlice/slice';
+import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 
 const MedicinePage = () => {
   const dispatch = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-
 
   const products = useSelector(selectProducts);
   const totalPages = useSelector(selectTotalPages);
@@ -33,7 +30,7 @@ const MedicinePage = () => {
   const isLoading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
@@ -59,17 +56,17 @@ const MedicinePage = () => {
     });
   };
 
-  //   const handleAddToCart = (medicine) => {
-  //     if (!isAuthenticated) {
-  //       setShowAuthModal(true);
-  //       return;
-  //     }
-  //     dispatch(addToCart(medicine));
-  //   };
+  const handleAddToCart = medicine => {
+    if (!isLoggedIn) {
+      dispatch(setOpenRegisterModal());
+      return;
+    }
+    // dispatch(addToCart(medicine));
+  };
 
-    const handleDetails = (id) => {
-      navigate(`/product/${id}`);
-    };
+  const handleDetails = id => {
+    navigate(`/product/${id}`);
+  };
 
   // if (isLoading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
@@ -90,7 +87,7 @@ const MedicinePage = () => {
                 <MedicineCard
                   key={medicine._id}
                   medicine={medicine}
-                  // onAddToCart={() => handleAddToCart(medicine)}
+                  onAddToCart={() => handleAddToCart(medicine._id)}
                   onDetails={() => handleDetails(medicine._id)}
                 />
               ))}
@@ -107,12 +104,6 @@ const MedicinePage = () => {
         ) : (
           <p className={css.noProducts}>No products found</p>
         )}
-
-        {/* <AuthModal
-        show={showAuthModal}
-        onClose={() => setShowAuthModal(false)}
-        onLoginSuccess={() => setShowAuthModal(false)}
-      /> */}
       </div>
     </section>
   );

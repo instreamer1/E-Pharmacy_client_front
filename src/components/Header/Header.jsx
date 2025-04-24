@@ -18,6 +18,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1440px)' });
 
+ 
   return (
     <header
       className={`${css.header} ${
@@ -31,7 +32,9 @@ const Header = () => {
           <NavigationLinks />
         </div>
         <div className={css.authLinks}>
-          {isLoggedIn && <UserCart isDesktop= {isDesktop} isHomePage={isHomePage} />}
+          {isLoggedIn && (
+            <UserCart isDesktop={isDesktop} isHomePage={isHomePage} />
+          )}
           {isDesktop && !isLoggedIn && (
             <AuthLinks isDesktop={isDesktop} isHomePage={isHomePage} />
           )}
@@ -45,7 +48,7 @@ const Header = () => {
           </svg>
         </button>
       </div>
-      {!isDesktop && (
+      {!isDesktop && isMenuOpen && (
         <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       )}
     </header>

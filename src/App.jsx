@@ -4,6 +4,7 @@ import SharedLayout from './components/SharedLayout/SharedLayout';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute';
+import AuthModalSwitcher from './components/AuthModalSwitcher/AuthModalSwitcher';
 const ProductPage = lazy(() => import('./pages/ProductPage/ProductPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
@@ -56,6 +57,7 @@ const App = () => {
         <Route path='login' element={<LoginPage />} />
         <Route path='change-password' element={<ChangePasswordPage />} />
       </Routes>
+      <AuthModalSwitcher />
       <Toaster />
     </Suspense>
   );
