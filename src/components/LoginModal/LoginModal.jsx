@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
@@ -64,44 +64,47 @@ const LoginModal = () => {
     dispatch(setOpenRegisterModal());
   };
 
-  // useEffect(() => {
-  //   if (isOpenRegisterModal) dispatch(setCloseModals());
-  // }, [isOpenRegisterModal, dispatch]);
-
-  // if (!isOpenLoginModal) return null;
-
   return (
     <section className={css.loginPage}>
-      <ModalTitle  title={'Log in to your account'} description={'Please login to your account before continuing.'}/>
-      <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
-        <InputField
-          name='email'
-          placeholder='Email address'
-          error={errors.email?.message}
-          {...register('email')}
+      <div className={css.container}>
+        <ModalTitle
+          title={'Log in to your account'}
+          description={'Please login to your account before continuing.'}
         />
-        <InputField
-          name='password'
-          type={showPassword ? 'text' : 'password'}
-          placeholder='Password'
-          error={errors.password?.message}
-          icon={
-            showPassword ? (
-              <FiEyeOff onClick={() => setShowPassword(false)} />
-            ) : (
-              <FiEye onClick={() => setShowPassword(true)} />
-            )
-          }
-          {...register('password')}
-        />
-        <button type='submit' disabled={!isValid} className={css.submitBtn}>
-          Log In
+        <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
+          <InputField
+            name='email'
+            placeholder='Email address'
+            error={errors.email?.message}
+            {...register('email')}
+          />
+          <InputField
+            name='password'
+            type={showPassword ? 'text' : 'password'}
+            placeholder='Password'
+            error={errors.password?.message}
+            icon={
+              showPassword ? (
+                <FiEyeOff onClick={() => setShowPassword(false)} />
+              ) : (
+                <FiEye onClick={() => setShowPassword(true)} />
+              )
+            }
+            {...register('password')}
+          />
+          <button type='submit' disabled={!isValid} className={css.submitBtn}>
+            Log In
+          </button>
+        </form>
+      </div>
+      <div className={css.navWrapper}>
+        <button
+          className={css.navLink}
+          type='button'
+          onClick={handleOpenRegisterModal}>
+          Don’t have an account?
         </button>
-      </form>
-      <button type='button' onClick={handleOpenRegisterModal}>
-        {' '}
-        Don’t have an account? Sign up
-      </button>
+      </div>
     </section>
   );
 };

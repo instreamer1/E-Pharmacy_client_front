@@ -3,6 +3,7 @@ import css from './ProductOverview.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
+import iconSprite from '../../assets/sprite.svg';
 
 export const ProductOverview = ({ product }) => {
   const [quantity, setQuantity] = useState(1);
@@ -42,16 +43,34 @@ export const ProductOverview = ({ product }) => {
             </p>
           </div>
           <p className={css.brand}>Brand: {product.suppliers}</p>
-          <div className={css.priceRating}>
-            {/* <span className={css.rating}>⭐ {product.rating}</span> */}
-          </div>
+
           <div className={css.controls}>
-            <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>
-              -
-            </button>
-            <span>{quantity}</span>
-            <button onClick={() => setQuantity(quantity + 1)}>+</button>
-            <button onClick={handleAddToCart} className={css.addToCart}>
+            <div className={css.cart}>
+              <button
+                className={css.buttonQuantity}
+                type='button'
+                aria-label='decrease'
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+                <svg className={css.increase}>
+                  <use href={`${iconSprite}#icon-minus`}></use>
+                </svg>
+              </button>
+              <span className={css.quantity}>{quantity}</span>
+              <button
+                className={css.buttonQuantity}
+                type='button'
+                aria-label='increase'
+                onClick={() => setQuantity(quantity + 1)}>
+                <svg className={css.increase}>
+                  <use href={`${iconSprite}#icon-plus`}></use>
+                </svg>
+              </button>
+            </div>
+            <button
+              type='button'
+              aria-label='Add to cart'
+              onClick={handleAddToCart}
+              className={css.addToCart}>
               Add to cart
             </button>
           </div>

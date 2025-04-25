@@ -81,11 +81,12 @@ const RegisterModal = () => {
 
   return (
     <section className={css.registerPage}>
+        <div className={css.container}>
       <ModalTitle
         title={'Sign Up'}
         description={'Before proceeding, please register on our site.'}
       />
-      <div className={css.container}>
+    
         {/* <div className={css.descriptionBlock}>
        
           <MainContent />
@@ -135,7 +136,7 @@ const RegisterModal = () => {
         </form>
       </div>
       <div className={css.navWrapper}>
-        <button type='button' onClick={handleOpenLoginModal}>
+        <button className={css.navLink} type='button' onClick={handleOpenLoginModal}>
           Already have an account?
         </button>
       </div>

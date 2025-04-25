@@ -29,14 +29,15 @@ const InputField = forwardRef(
     }`;
 
     return (
-      <div className={wrapperClassName}>
+      <div className={css.wrapperClassName}>
         {label && (
           <label htmlFor={name} className={css.label}>
             {label}
           </label>
         )}
 
-        <div className={css.inputGroup}>
+      {/* <div className={css.inputGroup}>  */}
+         <div className={wrapperClassName}>
           <input
             id={name}
             name={name}
