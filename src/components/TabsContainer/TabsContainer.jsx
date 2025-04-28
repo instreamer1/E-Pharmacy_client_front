@@ -8,12 +8,12 @@ export const TabsContainer = ({ product }) => {
     <div className={css.tabsContainer}>
       <div className={css.tabs}>
         <button
-          className={activeTab === 'description' ? css.active : ''}
+          className={`${css.text} ${activeTab === 'description' ? css.active : css.tab}`}
           onClick={() => setActiveTab('description')}>
           Description
         </button>
         <button
-          className={activeTab === 'reviews' ? css.active : ''}
+          className={`${css.text} ${activeTab === 'reviews' ? css.active : css.tab}`}
           onClick={() => setActiveTab('reviews')}>
           Reviews
         </button>
@@ -22,12 +22,12 @@ export const TabsContainer = ({ product }) => {
       <div className={css.content}>
         {activeTab === 'description' ? (
           <div className={css.description}>
-            {product?.description && <p>{product.description.general}</p>}
+            {product?.description && <p className={css.descGeneral} >{product.description.general}</p>}
             {product?.description && (
-              <ul>
+              <ul className={css.list} >
                 {product.description.medicinalUses.map((item, i) => (
-                  <li key={i}>
-                    <strong>{item.title}</strong>: {item.text}
+                  <li className={css.item} key={i}>
+                    <strong className={css.title} >{item.title}</strong>: {item.text}
                   </li>
                 ))}
               </ul>

@@ -27,4 +27,21 @@
   }
 
 }
+
+@media screen and (min-width: 1440px) {
+  .container {
+    display: flex;
+    column-gap: 20px;
+    padding: 0 20px;
+  }
+  .productPage {
+    padding: 72px 0 120px;
+    background: #f7f8fa;
+  }
+  
+  .container {
+    padding: 0 128px;
+  }
+
+}
   

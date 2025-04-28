@@ -69,7 +69,7 @@
   .footerGrid {
     display: grid;
     grid-template-areas:
-      ' l n'
+      'l n'
       't s';
     margin-bottom: 88px;
   }
@@ -115,7 +115,7 @@
       't . .';
     margin-bottom: 64px;
   }
-  .footerLogo{
+  .footerLogo {
     margin-right: 254px;
   }
   .footerNavigation {
@@ -127,7 +127,7 @@
   .footerLine {
     margin-bottom: 40px;
   }
-  .footerWrapper{
+  .footerWrapper {
     justify-self: center;
     column-gap: 24px;
   }

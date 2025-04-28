@@ -41,8 +41,9 @@ export const ProductOverview = ({ product }) => {
                 //   .toFixed(2)
               }
             </p>
+            <p className={css.brand}>Brand: {product.suppliers}</p>
           </div>
-          <p className={css.brand}>Brand: {product.suppliers}</p>
+         
 
           <div className={css.controls}>
             <div className={css.cart}>
