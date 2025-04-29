@@ -9,29 +9,23 @@ import { selectProduct } from '../../redux/productsSlice/selectors';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 
 const ProductPage = () => {
+  const { id } = useParams();
+  const product = useSelector(selectProduct);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
 
-const { id } = useParams();
-const product = useSelector(selectProduct)
- const isLoggedIn = useSelector(selectIsLoggedIn);
-const dispatch = useDispatch();
-
-useEffect(() => {
-    dispatch(getProductById(id))
-
-  
+  useEffect(() => {
+    dispatch(getProductById(id));
   }, [dispatch, id]);
   if (!product) {
-    return <div className={css.loader}>Loading...</div>; 
+    return <div className={css.loader}>Loading...</div>;
   }
 
   return (
     <section className={css.productPage}>
       <div className={css.container}>
         <ProductOverview product={product} />
-        <TabsContainer
-        product={product}
- 
-        />
+        <TabsContainer product={product} />
       </div>
     </section>
   );

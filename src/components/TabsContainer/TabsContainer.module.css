@@ -31,7 +31,8 @@
   color: #59b17a;
 }
 
-.text {
+.text,
+.addReview {
   font-family: var(--font-family);
   font-weight: 500;
   font-size: 14px;
@@ -47,7 +48,7 @@
   font-size: 14px;
   line-height: 129%;
   color: #6a6a6f;
- 
+
   margin-bottom: 20px;
 }
 
@@ -72,5 +73,106 @@
   font-size: 14px;
   line-height: 129%;
   color: #6a6a6f;
+}
+.leaveReview{
+  display: flex;
 
+    border: 1px solid #f1f1f1;
+  border-radius: 20px;
+  padding: 14px 28px;
+  width: 100%;
+  height: 100%;
+  padding: 14px 14px;
+  background: #fff;
+  justify-content: space-between;
+   align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+@media screen and (max-width:369px) {
+  .leaveReview{
+ flex-direction: column;
+     justify-items: center;
+  }
+}
+.review {
+  border: 1px solid #f1f1f1;
+  border-radius: 20px;
+  padding: 14px 28px;
+  width: 100%;
+  /* height: 213px; */
+  height: 100%;
+  padding: 14px 28px;
+  background: #fff;
+}
+
+.addReview{
+    border-radius: 40px;
+  padding: 8px 8px;
+  /* width: 120px; */
+  height: 33px;
+  background: #59b17a;
+  color: #fff;
+}
+.wrapper {
+  display: flex;
+  margin-bottom: 14px;
+}
+
+.imgWrapper {
+  display: flex;
+  border-radius: 30px;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  margin-right: 20px;
+}
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.reviewUser {
+  display: flex;
+  flex-direction: column;
+}
+
+.reviewUserName {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  color: #1d1e21;
+}
+
+.reviewData {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: rgba(29, 30, 33, 0.6);
+}
+.rating {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 129%;
+  color: #1d1e21;
+  margin-left: auto;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: #ffc531;
+  /* border: 1.20px solid #ffc531; */
+}
+
+.reviewText{
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 14px;
+line-height: 129%;
+color: #6a6a6f;
 }

@@ -45,7 +45,7 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm({
     resolver: yupResolver(registrationSchema),
     mode: 'onChange',
@@ -145,9 +145,9 @@ const RegisterPage = () => {
               <button
                 aria-label='Sign up'
                 type='submit'
-                disabled={!isValid}
+                disabled={!isValid || isSubmitting}
                 className={css.submitBtn}>
-                Sign up
+               {isSubmitting ? 'Signing up...' : 'Sign up'}
               </button>
             </div>
           </form>

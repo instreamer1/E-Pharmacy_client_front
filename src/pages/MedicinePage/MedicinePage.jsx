@@ -67,7 +67,7 @@ const MedicinePage = () => {
   const handleDetails = id => {
     navigate(`/product/${id}`);
   };
-
+  if (isLoading) return <p>Loading ...</p>;
   // if (isLoading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
 

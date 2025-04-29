@@ -40,7 +40,7 @@ const LoginModal = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onChange',
@@ -92,8 +92,11 @@ const LoginModal = () => {
             }
             {...register('password')}
           />
-          <button type='submit' disabled={!isValid} className={css.submitBtn}>
-            Log In
+          <button
+            type='submit'
+            disabled={!isValid || isSubmitting}
+            className={css.submitBtn}>
+            {isSubmitting ? ' Log In...' : ' Log In'}
           </button>
         </form>
       </div>

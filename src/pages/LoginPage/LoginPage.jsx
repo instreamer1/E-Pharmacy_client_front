@@ -36,7 +36,7 @@ const LoginPage = () => {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
   } = useForm({
     resolver: yupResolver(loginSchema),
     mode: 'onChange',
@@ -108,9 +108,9 @@ const LoginPage = () => {
               <button
                 aria-label='Sign up'
                 type='submit'
-                disabled={!isValid }
+                disabled={!isValid || isSubmitting}
                 className={css.submitBtn}>
-                Sign up
+                {isSubmitting ? ' Log In...' : ' Log In'}
               </button>
             </div>
           </form>

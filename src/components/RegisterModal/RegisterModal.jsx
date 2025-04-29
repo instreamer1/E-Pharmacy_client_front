@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -10,15 +10,8 @@ import { registerUser } from '../../redux/authSlice/operations';
 import InputField from '../InputField/InputField';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import css from './RegisterModal.module.css';
-
-// import LoginModal from '../LoginModal/LoginModal';
-// import Modal from '../Modal/Modal';
 import { setCloseModals, setOpenLoginModal } from '../../redux/authSlice/slice';
 import ModalTitle from '../ModalTitle/ModalTitle';
-// import {
-//   selectIsOpenLoginModal,
-//   selectIsOpenRegisterModal,
-// } from '../../redux/authSlice/selectors';
 
 const schema = yup.object().shape({
   name: yup.string().min(2).max(50).required('Name is required'),
@@ -38,16 +31,11 @@ const schema = yup.object().shape({
 const RegisterModal = () => {
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
-  // const [showModal, setShowModal] = useState(false);
-  // const isOpenLoginModal = useSelector(selectIsOpenLoginModal);
-  // const isOpenRegisterModal = useSelector(selectIsOpenRegisterModal);
-
-  // const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitting },
     reset,
   } = useForm({
     resolver: yupResolver(schema),
@@ -73,24 +61,14 @@ const RegisterModal = () => {
     dispatch(setOpenLoginModal());
   };
 
-  // useEffect(() => {
-  //   if (isOpenLoginModal) dispatch(setCloseModals());
-  // }, [isOpenLoginModal, dispatch]);
-
-  // if (!isOpenRegisterModal) return null;
-
   return (
     <section className={css.registerPage}>
-        <div className={css.container}>
-      <ModalTitle
-        title={'Sign Up'}
-        description={'Before proceeding, please register on our site.'}
-      />
-    
-        {/* <div className={css.descriptionBlock}>
-       
-          <MainContent />
-        </div> */}
+      <div className={css.container}>
+        <ModalTitle
+          title={'Sign Up'}
+          description={'Before proceeding, please register on our site.'}
+        />
+
         <form onSubmit={handleSubmit(onSubmit)} className={css.form}>
           <div className={css.inputsWrapper}>
             <InputField
@@ -129,14 +107,20 @@ const RegisterModal = () => {
           </div>
 
           <div className={css.btnWrapper}>
-            <button type='submit' disabled={!isValid} className={css.submitBtn}>
-              Sign up
+            <button
+              type='submit'
+              disabled={!isValid || isSubmitting}
+              className={css.submitBtn}>
+              {isSubmitting ? 'Signing up...' : 'Sign up'}
             </button>
           </div>
         </form>
       </div>
       <div className={css.navWrapper}>
-        <button className={css.navLink} type='button' onClick={handleOpenLoginModal}>
+        <button
+          className={css.navLink}
+          type='button'
+          onClick={handleOpenLoginModal}>
           Already have an account?
         </button>
       </div>
