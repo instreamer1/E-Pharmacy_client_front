@@ -12,7 +12,6 @@ export const getProducts = createAsyncThunk(
       const response = await instance.get('/products',  {
         params: searchParams, 
       });
-      console.log('products', response.data);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -24,6 +23,7 @@ export const getProducts = createAsyncThunk(
 export const getProductById = createAsyncThunk(
   'products/productId',
   async (productId, thunkAPI) => {
+    console.log( 'productId', productId);
     try {
       const response = await instance.get(`/products/${productId}`);
       return response.data;

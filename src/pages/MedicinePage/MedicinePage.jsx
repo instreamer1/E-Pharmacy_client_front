@@ -18,6 +18,7 @@ import { SearchFilterPanel } from '../../components/SearchFilterPanel/SearchFilt
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 import { setPage } from '../../redux/productsSlice/slice';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
+import { getUser } from '../../redux/authSlice/operations';
 
 const MedicinePage = () => {
   const dispatch = useDispatch();
@@ -33,8 +34,14 @@ const MedicinePage = () => {
   const navigate = useNavigate();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getUser());
+    }
+  }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
+
     const params = {
       category: searchParams.get('category') || 'All',
       search: searchParams.get('search') || '',
@@ -43,6 +50,8 @@ const MedicinePage = () => {
     };
 
     dispatch(getProducts(params));
+
+ 
   }, [searchParams, limit, dispatch]);
 
   const handlePageChange = newPage => {
@@ -70,7 +79,7 @@ const MedicinePage = () => {
   if (isLoading) return <p>Loading ...</p>;
   // if (isLoading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
-
+console.log(products);
   return (
     <section className={css.medicinePage}>
       <div className={css.container}>
@@ -80,15 +89,15 @@ const MedicinePage = () => {
           <SearchFilterPanel />
         </div>
 
-        {products.length > 0 ? (
+        {products && products.length > 0 ? (
           <>
             <ul className={css.medicineList}>
-              {products.map(medicine => (
+              {products.map(product => (
                 <MedicineCard
-                  key={medicine._id}
-                  medicine={medicine}
-                  onAddToCart={() => handleAddToCart(medicine._id)}
-                  onDetails={() => handleDetails(medicine._id)}
+                  key={product._id}
+                  medicine={product}
+                  onAddToCart={() => handleAddToCart(product._id)}
+                  onDetails={() => handleDetails(product._id)}
                 />
               ))}
             </ul>

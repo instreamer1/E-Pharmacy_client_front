@@ -19,6 +19,12 @@ const ChangePasswordPage = lazy(() =>
 const CardPage = lazy(() => import('./pages/CardPage/CardPage'));
 
 const App = () => {
+
+  //  useEffect(() => {
+  //     if (isLoggedIn) {
+  //       dispatch(getUser());
+  //     }
+  //   },[ dispatch, isLoggedIn]);
   return (
     <Suspense fallback={<div className='loading'>Loading...</div>}>
       <Routes>

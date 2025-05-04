@@ -40,8 +40,6 @@ const productsSlice = createSlice({
         state.error = null;
       })
       .addCase(getProducts.fulfilled, (state, action) => {
-        console.log(action.payload);
-
         state.products = action.payload.products;
         state.total = action.payload.total;
         state.page = action.payload.page;
@@ -60,7 +58,7 @@ const productsSlice = createSlice({
       .addCase(getProductById.fulfilled, (state, action) => {
         // state.accessToken = action.payload.accessToken;
         console.log(action.payload);
-        state.product = action.payload
+        state.product = action.payload.product
         state.isLoggedIn = true;
         state.isLoading = false;
       })

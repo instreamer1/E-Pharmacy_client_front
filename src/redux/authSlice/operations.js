@@ -23,7 +23,6 @@ export const logInUser = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const response = await instance.post('/users/signin', credentials);
-      // localStorage.setItem('authToken', response.data.accessToken);
       setToken(response.data.accessToken);
       console.log(response.data);
       return response.data;
@@ -37,15 +36,17 @@ export const logInUser = createAsyncThunk(
 export const logOutUser = createAsyncThunk(
   'users/logout',
   async (_, thunkAPI) => {
+
+    console.log('Access token before logout:', localStorage.getItem('accessToken'));
     try {
-       await instance.post('/users/logout');
+      await instance.post('/users/logout');
       clearToken();
-      // localStorage.removeItem('authToken')
-      return { message: 'Logged out successfully' };
+      localStorage.removeItem('persist:auth');
+     
+      // return { message: 'Logged out successfully' };
     } catch (error) {
       const errorMessage = handleAxiosError(error);
       return thunkAPI.rejectWithValue(errorMessage);
-      // return thunkAPI.rejectWithValue(error.response ? error.response.data.message : error.message);
     }
   }
 );

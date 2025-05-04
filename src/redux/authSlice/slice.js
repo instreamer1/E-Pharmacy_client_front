@@ -58,6 +58,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logInUser.fulfilled, (state, action) => {
+        console.log(action.payload.accessToken);
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
         state.isLoading = false;
@@ -71,7 +72,9 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logOutUser.fulfilled, (state, action) => {
+        console.log('Access token after logout:', localStorage.getItem('accessToken'));
         return initialState;
+       
         // state.accessToken = null;
         // state.isLoggedIn = false;
         // state.isLoading = false;

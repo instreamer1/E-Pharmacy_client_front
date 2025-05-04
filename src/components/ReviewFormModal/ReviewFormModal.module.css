@@ -1,0 +1,60 @@
+.reviewModal {
+ padding: 40px 32px;
+}
+
+.title{
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 114%;
+    text-align: center;
+    color: #1d1e21;
+    margin-bottom: 14px;
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+}
+.label{
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 129%;
+    text-align: center;
+    color: #6a6a6f;
+    padding: 0 8px;   
+}
+
+.ratingBlock{
+    display: flex;
+     gap: 5px;  
+}
+
+.rating{
+    cursor: pointer;
+    text-align: center;
+}
+
+.icon{
+   width: 16px; 
+   height: 16px;
+}
+
+.default{
+    fill: #f1f1f1;  
+    stroke: 1.20px solid #f1f1f1; 
+}
+.orange{
+    fill: #ffc531;
+    stroke: 1.20px solid #ffc531;
+}
+
+@media screen and (min-width: 768px) {
+    .reviewModal {
+      padding: 50px 70px;
+    }
+}
+   
+    

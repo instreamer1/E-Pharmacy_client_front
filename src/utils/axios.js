@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { logOutUser, refresh } from '../redux/authSlice/operations'; // Ваши действия для обновления токена
+import { refresh } from '../redux/authSlice/operations'; // Ваши действия для обновления токена
 
 const apiUrl = import.meta.env.VITE_API_BASE_URL;
 console.log(apiUrl);
@@ -40,7 +40,7 @@ const processQueue = (error, token = null) => {
 // Перехватчик запросов для добавления токена
 
 const getToken = () => {
-  return localStorage.getItem('authToken'); // Получаем токен из localStorage
+  return localStorage.getItem('accessToken'); // Получаем токен из localStorage
 };
 
 instance.interceptors.request.use(
@@ -76,7 +76,7 @@ instance.interceptors.response.use(
       clearToken();
 
       // Обновляем состояние авторизации в localStorage
-      localStorage.setItem('authToken', null);
+      localStorage.setItem('accessToken', null);
       localStorage.setItem('isLoggedIn', 'false'); // Убираем информацию о пользователе
 
       window.localStorage.removeItem('persist:auth'); // Очищаем persist
