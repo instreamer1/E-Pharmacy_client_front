@@ -13,7 +13,7 @@ import {
   selectProductsLoading,
   selectTotalPages,
 } from '../../redux/productsSlice/selectors';
-import { getProducts } from '../../redux/productsSlice/operations';
+import { getProducts, getCategories } from '../../redux/productsSlice/operations';
 import { SearchFilterPanel } from '../../components/SearchFilterPanel/SearchFilterPanel';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 import { setPage } from '../../redux/productsSlice/slice';
