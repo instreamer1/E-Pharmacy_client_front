@@ -122,27 +122,27 @@ instance.interceptors.response.use(
 
       return new Promise((resolve, reject) => {
         // Предположим, что refreshToken() - это действие в вашем store
-        refresh()
-          .then(resultAction => {
-            if (resultAction.payload && resultAction.payload.accessToken) {
-              setToken(resultAction.payload.accessToken);
-              originalRequest.headers.Authorization = `Bearer ${resultAction.payload.accessToken}`;
-              processQueue(null, resultAction.payload.accessToken);
-              resolve(instance(originalRequest));
-            } else {
-              clearToken();
-              processQueue(resultAction.payload, null);
-              reject(resultAction.payload);
-            }
-          })
-          .catch(refreshError => {
-            clearToken();
-            processQueue(refreshError, null);
-            reject(refreshError);
-          })
-          .finally(() => {
-            isRefreshing = false;
-          });
+refreshToken()
+  .then(newAccessToken => {
+    if (newAccessToken) {
+      setToken(newAccessToken);
+      originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+      processQueue(null, newAccessToken);
+      resolve(instance(originalRequest));
+    } else {
+      clearToken();
+      processQueue('No access token returned', null);
+      reject('No access token returned');
+    }
+  })
+  .catch(refreshError => {
+    clearToken();
+    processQueue(refreshError, null);
+    reject(refreshError);
+  })
+  .finally(() => {
+    isRefreshing = false;
+  });
       });
     }
 
