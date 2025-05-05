@@ -51,12 +51,36 @@ export const logOutUser = createAsyncThunk(
   }
 );
 
-export const refresh = createAsyncThunk(
+// export const refreshToken = createAsyncThunk(
+//   'users/refresh',
+//   async (_, thunkAPI) => {
+//     try {
+//       const { data } = await instance.post('/users/refresh');
+//       return data.data;
+//     } catch (error) {
+//       const errorMessage = handleAxiosError(error);
+//       return thunkAPI.rejectWithValue(errorMessage);
+//     }
+//   }
+// );
+
+export const refreshToken = createAsyncThunk(
   'users/refresh',
   async (_, thunkAPI) => {
     try {
-      const { data } = await instance.post('/users/refresh');
-      return data.data;
+      const response = await instance.post(
+        '/users/refresh',
+        {},
+        { withCredentials: true } // <--- включаем только здесь
+      );
+
+      const accessToken = response.data?.data?.accessToken || response.data?.accessToken;
+
+      if (!accessToken) {
+        throw new Error('Access token not found in response');
+      }
+
+      return accessToken;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
       return thunkAPI.rejectWithValue(errorMessage);
