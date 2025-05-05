@@ -80,7 +80,7 @@ instance.interceptors.response.use(
  // Если токен не обновился, очищаем состояние
     if (
       error.response &&
-      error.response.config.url.includes('/auth/refresh') &&
+      error.response.config.url.includes('/users/refresh') &&
       (error.response.status === 400 || error.response.status === 401)
     ) {
       // Если не удалось обновить токен, разлогиниваем пользователя
