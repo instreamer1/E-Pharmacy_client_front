@@ -39,8 +39,19 @@ const processQueue = (error, token = null) => {
 
 // Перехватчик запросов для добавления токена
 
-const getToken = () => {
-  return localStorage.getItem('accessToken'); // Получаем токен из localStorage
+// const getToken = () => {
+//   return localStorage.getItem('accessToken'); // Получаем токен из localStorage
+// };
+export const getToken = () => {
+  try {
+    const persistedAuth = localStorage.getItem('persist:auth');
+    if (!persistedAuth) return null;
+
+    const parsed = JSON.parse(persistedAuth);
+    return JSON.parse(parsed.accessToken); // теперь вернёт без лишних кавычек
+  } catch (error) {
+    return null;
+  }
 };
 
 instance.interceptors.request.use(
