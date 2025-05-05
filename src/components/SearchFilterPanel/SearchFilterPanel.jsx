@@ -17,10 +17,10 @@ export const SearchFilterPanel = () => {
   const category = useSelector(selectCategory);
   const categories = useSelector(selectCategories);
 
-  useEffect(() => {
-    // Загружаем категории только при первом рендере
-    dispatch(getCategories());
-  }, [dispatch])
+  // useEffect(() => {
+  //   // Загружаем категории только при первом рендере
+  //   dispatch(getCategories());
+  // }, [dispatch])
 
 //   useEffect(() => {
 //     dispatch(getCategories());
