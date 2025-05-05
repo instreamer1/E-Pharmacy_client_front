@@ -79,7 +79,7 @@ export const refreshToken = createAsyncThunk(
       if (!accessToken) {
         throw new Error('Access token not found in response');
       }
-
+      setToken(accessToken);
       return accessToken;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
