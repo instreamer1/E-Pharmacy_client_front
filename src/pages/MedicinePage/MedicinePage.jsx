@@ -41,6 +41,10 @@ const MedicinePage = () => {
   }, [dispatch, isLoggedIn]);
 
   useEffect(() => {
+    // Загружаем категории только при первом рендере
+    dispatch(getCategories());
+  }, [dispatch])
+  useEffect(() => {
 
     const params = {
       category: searchParams.get('category') || 'All',
