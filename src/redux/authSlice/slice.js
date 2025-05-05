@@ -3,7 +3,7 @@ import {
   registerUser,
   logInUser,
   logOutUser,
-  refresh,
+  refreshToken,
   getUser,
 } from './operations';
 
@@ -72,9 +72,12 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logOutUser.fulfilled, (state, action) => {
-        console.log('Access token after logout:', localStorage.getItem('accessToken'));
+        console.log(
+          'Access token after logout:',
+          localStorage.getItem('accessToken')
+        );
         return initialState;
-       
+
         // state.accessToken = null;
         // state.isLoggedIn = false;
         // state.isLoading = false;
@@ -84,13 +87,13 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       })
-      .addCase(refresh.fulfilled, (state, action) => {
+      .addCase(refreshToken.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isRefreshing = false;
         state.isLoggedIn = true;
         state.accessToken = action.payload.accessToken;
       })
-      .addCase(refresh.rejected, (state, action) => {
+      .addCase(refreshToken.rejected, (state, action) => {
         state.isRefreshing = true;
       })
       .addCase(getUser.pending, (state, action) => {
@@ -111,10 +114,7 @@ const authSlice = createSlice({
   },
 });
 
-export const {
-  setOpenRegisterModal,
-  setOpenLoginModal,
-  setCloseModals,
-} = authSlice.actions;
+export const { setOpenRegisterModal, setOpenLoginModal, setCloseModals } =
+  authSlice.actions;
 
 export const authReducer = authSlice.reducer;

@@ -1,12 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { instance } from '../../utils/axios';
+import { protectedInstance } from '../../utils/axios';
 import { handleAxiosError } from '../../utils/errorUtils';
 
 export const createUserReview = createAsyncThunk(
   'reviews/createUserReview',
   async (reviewData , thunkAPI) => {
     try {
-      const { data } = await instance.post('/customer-reviews', reviewData);
+      const { data } = await protectedInstance.post('/customer-reviews', reviewData);
       return data; 
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -20,7 +20,7 @@ export const updateUserReview = createAsyncThunk(
     'reviews/updateUserReview',
     async ({ productId, reviewData }, thunkAPI) => {
       try {
-        const { data } = await instance.patch('/customer-reviews', reviewData);
+        const { data } = await protectedInstance.patch('/customer-reviews', reviewData);
         return data; 
       } catch (error) {
         const errorMessage = handleAxiosError(error);

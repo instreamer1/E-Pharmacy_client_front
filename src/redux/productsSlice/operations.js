@@ -2,14 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { handleAxiosError } from '../../utils/errorUtils';
 
-import { clearToken, instance, setToken } from '../../utils/axios';
+import {  publicInstance} from '../../utils/axios';
 
 export const getProducts = createAsyncThunk(
   'products',
   async (searchParams, thunkAPI) => {
    
     try {
-      const response = await instance.get('/products',  {
+      const response = await publicInstance.get('/products',  {
         params: searchParams, 
       });
       return response.data;
@@ -25,7 +25,7 @@ export const getProductById = createAsyncThunk(
   async (productId, thunkAPI) => {
     console.log( 'productId', productId);
     try {
-      const response = await instance.get(`/products/${productId}`);
+      const response = await publicInstance.get(`/products/${productId}`);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);

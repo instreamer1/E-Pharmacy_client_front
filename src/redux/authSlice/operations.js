@@ -2,14 +2,20 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { handleAxiosError } from '../../utils/errorUtils';
 
-import { clearToken, instance, setToken } from '../../utils/axios';
+import {
+  clearToken,
+  // instance,
+  protectedInstance,
+  publicInstance,
+  // setToken,
+} from '../../utils/axios';
 
 export const registerUser = createAsyncThunk(
   'users/signup',
   async (newUser, thunkAPI) => {
     console.log('newUser', newUser);
     try {
-      const response = await instance.post('/users/signup', newUser);
+      const response = await publicInstance.post('/users/signup', newUser);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -22,8 +28,11 @@ export const logInUser = createAsyncThunk(
   'users/signin',
   async (credentials, thunkAPI) => {
     try {
-      const response = await instance.post('/users/signin', credentials);
-      setToken(response.data.accessToken);
+      const response = await protectedInstance.post(
+        '/users/signin',
+        credentials
+      );
+      // setToken(response.data.accessToken);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -36,13 +45,15 @@ export const logInUser = createAsyncThunk(
 export const logOutUser = createAsyncThunk(
   'users/logout',
   async (_, thunkAPI) => {
-
-    console.log('Access token before logout:', localStorage.getItem('accessToken'));
+    console.log(
+      'Access token before logout:',
+      localStorage.getItem('accessToken')
+    );
     try {
-      await instance.post('/users/logout');
+      await protectedInstance.post('/users/logout');
       clearToken();
       localStorage.removeItem('persist:auth');
-     
+
       // return { message: 'Logged out successfully' };
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -68,18 +79,16 @@ export const refreshToken = createAsyncThunk(
   'users/refresh',
   async (_, thunkAPI) => {
     try {
-      const response = await instance.post(
-        '/users/refresh',
-        {},
-        { withCredentials: true } // <--- включаем только здесь
-      );
+      const response = await protectedInstance.post('/users/refresh');
 
-      const accessToken = response.data?.data?.accessToken || response.data?.accessToken;
+      const accessToken =
+        response.data?.data?.accessToken || response.data?.accessToken;
 
       if (!accessToken) {
         throw new Error('Access token not found in response');
       }
-      setToken(accessToken);
+      console.log("accessToken",accessToken);
+      // setToken(accessToken);
       return accessToken;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -92,7 +101,7 @@ export const getUser = createAsyncThunk(
   'users/user-info',
   async (_, thunkAPI) => {
     try {
-      const { data } = await instance.get('/users/user-info');
+      const { data } = await protectedInstance.get('/users/user-info');
       return data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
