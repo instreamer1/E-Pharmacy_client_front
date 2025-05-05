@@ -98,7 +98,7 @@ instance.interceptors.response.use(
     // Обрабатываем ошибку 401 для остальных запросов
     if (
       error.response &&
-      !error.response.config.url.includes('/auth/refresh') &&
+      !error.response.config.url.includes('/users/refresh') &&
       error.response.status === 401 &&
       !originalRequest._retry // Если еще не пытались обновить токен
     ) {
