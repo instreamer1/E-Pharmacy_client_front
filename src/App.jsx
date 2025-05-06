@@ -1,10 +1,13 @@
 import './App.css';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import SharedLayout from './components/SharedLayout/SharedLayout';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute';
 import AuthModalSwitcher from './components/AuthModalSwitcher/AuthModalSwitcher';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsRefreshing } from './redux/authSlice/selectors';
+import { refresh } from './redux/authSlice/operations';
 const ProductPage = lazy(() => import('./pages/ProductPage/ProductPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
@@ -19,12 +22,16 @@ const ChangePasswordPage = lazy(() =>
 const CardPage = lazy(() => import('./pages/CardPage/CardPage'));
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
-  //  useEffect(() => {
-  //     if (isLoggedIn) {
-  //       dispatch(getUser());
-  //     }
-  //   },[ dispatch, isLoggedIn]);
+  // useEffect(() => {
+  //   dispatch(refresh()); // при монтировании приложения пытаемся восстановить сессию
+  // }, [dispatch]);
+
+  if (isRefreshing) {
+    return <p>Loading...</p>; // или ваш Loader
+  }
   return (
     <Suspense fallback={<div className='loading'>Loading...</div>}>
       <Routes>

@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import {authReducer} from './authSlice/slice';
+
+
 import {
   persistStore,
   persistReducer,
@@ -11,6 +12,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {authReducer} from './authSlice/slice';
 import { productsReducer } from './productsSlice/slice';
 import { reviewsReducer } from './reviewSlice/slice';
 
@@ -33,5 +35,7 @@ export const store = configureStore({
       },
     }),
 });
+
+
 
 export const persistor = persistStore(store);

@@ -1,21 +1,23 @@
+//authSlice/operations.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { handleAxiosError } from '../../utils/errorUtils';
-
 import {
-  clearToken,
-  // instance,
-  protectedInstance,
-  publicInstance,
-  // setToken,
-} from '../../utils/axios';
+  register,
+  signin,
+  logout,
+  refreshToken,
+  getUserInfo,
+} from '../../api/auth/auth.api';
+import { handleAxiosError } from '../../utils/errorUtils';
+import { clearAllCookies } from '../../utils/cookieUtils';
+import { purgePersistedState } from '../../utils/persistUtils';
 
+console.log('Loading operations.js');
+           
 export const registerUser = createAsyncThunk(
   'users/signup',
   async (newUser, thunkAPI) => {
-    console.log('newUser', newUser);
     try {
-      const response = await publicInstance.post('/users/signup', newUser);
+      const response = await register(newUser);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -28,12 +30,7 @@ export const logInUser = createAsyncThunk(
   'users/signin',
   async (credentials, thunkAPI) => {
     try {
-      const response = await protectedInstance.post(
-        '/users/signin',
-        credentials
-      );
-      // setToken(response.data.accessToken);
-      console.log(response.data);
+      const response = await signin(credentials);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
@@ -45,16 +42,71 @@ export const logInUser = createAsyncThunk(
 export const logOutUser = createAsyncThunk(
   'users/logout',
   async (_, thunkAPI) => {
-    console.log(
-      'Access token before logout:',
-      localStorage.getItem('accessToken')
-    );
     try {
-      await protectedInstance.post('/users/logout');
-      clearToken();
-      localStorage.removeItem('persist:auth');
+      // 1. Серверный logout
+      await logout();
+      
+      // 2. Очистка кук
+      clearAllCookies();
+      
+      // 3. Очистка persisted state
+      await purgePersistedState();
+      
+      // 4. Сброс Redux состояния
+      thunkAPI.dispatch({ type: 'RESET_STATE' });
+      
+      // 5. Дополнительная очистка (опционально)
+      localStorage.clear();
+      sessionStorage.clear();
+      
+      return null;
+    } catch (error) {
+      // Принудительная очистка даже при ошибке
+      clearAllCookies();
+      await purgePersistedState();
+      thunkAPI.dispatch({ type: 'RESET_STATE' });
+      
+      const errorMessage = handleAxiosError(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
 
-      // return { message: 'Logged out successfully' };
+
+
+let isRefreshing = false;
+let refreshPromise = null;
+
+export const refresh = createAsyncThunk(
+  'user/refresh',
+  async (_, thunkApi) => {
+    try {
+      if (isRefreshing && refreshPromise) {
+        const { data } = await refreshPromise;
+        return data;
+      }
+
+      isRefreshing = true;
+      refreshPromise = refreshToken();
+
+      const { data } = await refreshPromise;
+      console.log("Refreshing", data)
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
+    } finally {
+      isRefreshing = false;
+      refreshPromise = null;
+    }
+  }
+);
+
+export const getUser = createAsyncThunk(
+  'users/user-info',
+  async (_, thunkAPI) => {
+    try {
+      const response = await getUserInfo();
+      return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);
       return thunkAPI.rejectWithValue(errorMessage);
@@ -62,7 +114,7 @@ export const logOutUser = createAsyncThunk(
   }
 );
 
-// export const refreshToken = createAsyncThunk(
+// export const refresh = createAsyncThunk(
 //   'users/refresh',
 //   async (_, thunkAPI) => {
 //     try {
@@ -74,38 +126,3 @@ export const logOutUser = createAsyncThunk(
 //     }
 //   }
 // );
-
-export const refreshToken = createAsyncThunk(
-  'users/refresh',
-  async (_, thunkAPI) => {
-    try {
-      const response = await protectedInstance.post('/users/refresh');
-
-      const accessToken =
-        response.data?.data?.accessToken || response.data?.accessToken;
-
-      if (!accessToken) {
-        throw new Error('Access token not found in response');
-      }
-      console.log("accessToken",accessToken);
-      // setToken(accessToken);
-      return accessToken;
-    } catch (error) {
-      const errorMessage = handleAxiosError(error);
-      return thunkAPI.rejectWithValue(errorMessage);
-    }
-  }
-);
-
-export const getUser = createAsyncThunk(
-  'users/user-info',
-  async (_, thunkAPI) => {
-    try {
-      const { data } = await protectedInstance.get('/users/user-info');
-      return data;
-    } catch (error) {
-      const errorMessage = handleAxiosError(error);
-      return thunkAPI.rejectWithValue(errorMessage);
-    }
-  }
-);

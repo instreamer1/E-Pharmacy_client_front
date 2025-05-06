@@ -1,11 +1,14 @@
+//authSlice/slice.js
 import { createSlice } from '@reduxjs/toolkit';
 import {
   registerUser,
   logInUser,
   logOutUser,
-  refreshToken,
+  refresh,
   getUser,
 } from './operations';
+
+console.log('Loading authSlice.js');
 
 const initialState = {
   user: {
@@ -86,26 +89,41 @@ const authSlice = createSlice({
       .addCase(logOutUser.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
+        return initialState;
       })
-      .addCase(refreshToken.fulfilled, (state, action) => {
-        state.isLoading = false;
+      .addCase(refresh.pending, state => {
+        state.isRefreshing = true;
+        state.error = null;
+      })
+      .addCase(refresh.fulfilled, (state, action) => {
         state.isRefreshing = false;
         state.isLoggedIn = true;
+        console.log('isRefreshing', action.payload);
         state.accessToken = action.payload.accessToken;
       })
-      .addCase(refreshToken.rejected, (state, action) => {
-        state.isRefreshing = true;
+      .addCase(refresh.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.accessToken = null;
+        state.user = {
+          name: null,
+          email: null,
+          phone: null,
+          avatar: null,
+        };
       })
       .addCase(getUser.pending, (state, action) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(getUser.fulfilled, (state, action) => {
-        state.name = action.payload.name;
-        state.email = action.payload.email;
-        state.phone = action.payload.phone;
-        state.isLoggedIn = true;
         state.isLoading = false;
+        state.user = {
+          name: action.payload.name,
+          email: action.payload.email,
+          phone: action.payload.phone,
+          avatar: action.payload.avatar ?? null, // если он есть
+        };
       })
       .addCase(getUser.rejected, (state, action) => {
         state.error = action.payload;

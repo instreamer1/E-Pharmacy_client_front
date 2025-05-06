@@ -5,3 +5,4 @@ export const selectIsOpenLoginModal = state => state.auth.loginModalOpen;
 export const selectIsOpenRegisterModal = state => state.auth.registerModalOpen;
 export const selectIsLoading = state => state.auth.isLoading;
 export const selectError = state => state.auth.error;
+
