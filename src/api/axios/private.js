@@ -37,68 +37,82 @@ privateInstance.interceptors.request.use(config => {
 
 // Интерцептор для обработки 401 ошибок
 privateInstance.interceptors.response.use(
-  response => response, // Если ответ успешный - просто пропускаем его
+  response => response,
   async error => {
+    // Добавляем лог для диагностики
+    console.log('Interceptor error:', error);
+    
+    // Проверяем, что это действительно ошибка от axios
+    if (!error.config || !error.response) {
+      return Promise.reject(error);
+    }
+
     const originalRequest = error.config;
-     console.log("responseStatus", response.status);
-    // Если получили 401 ошибку И это не запрос на обновление токена
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    
+    // Логируем статус ошибки
+    console.log("Response status:", error.response.status);
+    
+    if (error.response.status === 401 && !originalRequest._retry) {
+      console.log('401 detected, attempting token refresh...');
       
-      // Если уже идёт обновление токена
       if (isRefreshing) {
+        console.log('Refresh already in progress, queuing request...');
         return new Promise((resolve, reject) => {
-          // Добавляем запрос в очередь
           failedRequests.push({ resolve, reject });
-        }).then(() => {
-          // Когда токен обновится - повторяем запрос
-          return privateInstance(originalRequest);
-        });
+        })
+          .then(() => privateInstance(originalRequest))
+          .catch(err => Promise.reject(err));
       }
 
-      originalRequest._retry = true; // Помечаем запрос как обработанный
-      isRefreshing = true; // Начинаем обновление токена
+      originalRequest._retry = true;
+      isRefreshing = true;
 
       try {
-        // 1. Пытаемся обновить токен
+        console.log('Refreshing token...');
         const { data } = await refresh();
         const newToken = data.accessToken;
-        console.log("newToken", newToken);
-        // 2. Сохраняем новый токен
-        const authData = JSON.parse(localStorage.getItem('persist:auth') || '{}');
-        const authState = JSON.parse(authData.auth || '{}');
-        authState.accessToken = newToken;
-        authData.auth = JSON.stringify(authState);
-        localStorage.setItem('persist:auth', JSON.stringify(authData));
-        
-        // 3. Обновляем заголовок оригинального запроса
+        console.log("New token received:", newToken);
+
+        // Обновляем токен в хранилище
+        try {
+          const authData = JSON.parse(localStorage.getItem('persist:auth') || '{}';
+          const authState = authData.auth ? JSON.parse(authData.auth) : {};
+          authState.accessToken = newToken;
+          localStorage.setItem(
+            'persist:auth',
+            JSON.stringify({ ...authData, auth: JSON.stringify(authState) })
+          );
+        } catch (e) {
+          console.error('Error updating auth in localStorage:', e);
+        }
+
+        // Обновляем заголовок
         originalRequest.headers.Authorization = `Bearer ${newToken}`;
         
-        // 4. Повторяем все запросы из очереди
+        // Повторяем запросы из очереди
+        console.log('Processing', failedRequests.length, 'queued requests');
         failedRequests.forEach(promise => promise.resolve());
         failedRequests = [];
         
-        // 5. Повторяем оригинальный запрос
         return privateInstance(originalRequest);
       } catch (refreshError) {
-        // Если не удалось обновить токен:
-        // - очищаем очередь с ошибкой
+        console.error('Refresh token failed:', refreshError);
+        
+        // Очищаем очередь с ошибкой
         failedRequests.forEach(promise => promise.reject(refreshError));
         failedRequests = [];
         
-        // - перенаправляем на страницу входа
+        // Перенаправляем на логин
         if (window.location.pathname !== '/login') {
           // window.location.href = '/login';
         }
         
         return Promise.reject(refreshError);
       } finally {
-        isRefreshing = false; // Снимаем флаг обновления
+        isRefreshing = false;
       }
     }
     
-    // Для всех других ошибок просто пробрасываем их дальше
     return Promise.reject(error);
   }
 );
-
-export default privateInstance;
