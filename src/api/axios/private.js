@@ -40,7 +40,7 @@ privateInstance.interceptors.response.use(
   response => response, // Если ответ успешный - просто пропускаем его
   async error => {
     const originalRequest = error.config;
-    
+     console.log("responseStatus", response.status);
     // Если получили 401 ошибку И это не запрос на обновление токена
     if (error.response?.status === 401 && !originalRequest._retry) {
       
@@ -62,7 +62,7 @@ privateInstance.interceptors.response.use(
         // 1. Пытаемся обновить токен
         const { data } = await refresh();
         const newToken = data.accessToken;
-        
+        console.log("newToken", newToken);
         // 2. Сохраняем новый токен
         const authData = JSON.parse(localStorage.getItem('persist:auth') || '{}');
         const authState = JSON.parse(authData.auth || '{}');
@@ -87,7 +87,7 @@ privateInstance.interceptors.response.use(
         
         // - перенаправляем на страницу входа
         if (window.location.pathname !== '/login') {
-          window.location.href = '/login';
+          // window.location.href = '/login';
         }
         
         return Promise.reject(refreshError);
