@@ -6,13 +6,13 @@ import {
   logout,
   refreshToken,
   getUserInfo,
-} from '../../api/auth/auth.api';
+} from '../../api/auth.api';
 import { handleAxiosError } from '../../utils/errorUtils';
 import { clearAllCookies } from '../../utils/cookieUtils';
 import { purgePersistedState } from '../../utils/persistUtils';
 
 console.log('Loading operations.js');
-           
+
 export const registerUser = createAsyncThunk(
   'users/signup',
   async (newUser, thunkAPI) => {
@@ -45,34 +45,32 @@ export const logOutUser = createAsyncThunk(
     try {
       // 1. Серверный logout
       await logout();
-      
+
       // 2. Очистка кук
       clearAllCookies();
-      
+
       // 3. Очистка persisted state
       await purgePersistedState();
-      
+
       // 4. Сброс Redux состояния
       thunkAPI.dispatch({ type: 'RESET_STATE' });
-      
+
       // 5. Дополнительная очистка (опционально)
       localStorage.clear();
       sessionStorage.clear();
-      
+
       return null;
     } catch (error) {
       // Принудительная очистка даже при ошибке
       clearAllCookies();
       await purgePersistedState();
       thunkAPI.dispatch({ type: 'RESET_STATE' });
-      
+
       const errorMessage = handleAxiosError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
-
-
 
 // let isRefreshing = false;
 // let refreshPromise = null;
@@ -119,8 +117,8 @@ export const refresh = createAsyncThunk(
   'users/refresh',
   async (_, thunkAPI) => {
     try {
-      const { data } = await instance.post('/users/refresh');
-      console.log("Refreshing", data)
+      const { data } = await refreshToken();
+      console.log('Refreshing', data);
       return data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);

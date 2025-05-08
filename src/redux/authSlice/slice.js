@@ -42,6 +42,11 @@ const authSlice = createSlice({
       state.loginModalOpen = false;
       state.registerModalOpen = false;
     },
+    setTokenRefreshed: (state, action) => {
+      state.accessToken = action.payload;
+      state.isLoggedIn = true;
+    },
+    // logout: () => initialState,
   },
   extraReducers: builder => {
     builder
@@ -134,7 +139,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setOpenRegisterModal, setOpenLoginModal, setCloseModals } =
+export const {  setTokenRefreshed, setOpenRegisterModal, setOpenLoginModal, setCloseModals } =
   authSlice.actions;
 
 export const authReducer = authSlice.reducer;

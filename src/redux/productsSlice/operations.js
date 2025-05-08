@@ -1,17 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import { handleAxiosError } from '../../utils/errorUtils';
-import publicInstance from '../../api/axios/public';
-
-
+import publicInstance from '../../api/axios/publicInstance';
 
 export const getProducts = createAsyncThunk(
   'products',
   async (searchParams, thunkAPI) => {
-   
     try {
-      const response = await publicInstance.get('/products',  {
-        params: searchParams, 
+      const response = await publicInstance.get('/products', {
+        params: searchParams,
       });
       return response.data;
     } catch (error) {
@@ -24,7 +21,7 @@ export const getProducts = createAsyncThunk(
 export const getProductById = createAsyncThunk(
   'products/productId',
   async (productId, thunkAPI) => {
-    console.log( 'productId', productId);
+    console.log('productId', productId);
     try {
       const response = await publicInstance.get(`/products/${productId}`);
       return response.data;
@@ -36,13 +33,13 @@ export const getProductById = createAsyncThunk(
 );
 
 export const getCategories = createAsyncThunk(
-    'products/getCategories',
-    async (_, thunkAPI) => {
-      try {
-        const response = await publicInstance.get('/products/categories');
-        return response.data;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(handleAxiosError(error));
-      }
+  'products/getCategories',
+  async (_, thunkAPI) => {
+    try {
+      const response = await publicInstance.get('/products/categories');
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(handleAxiosError(error));
     }
-  );
+  }
+);

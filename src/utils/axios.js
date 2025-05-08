@@ -1,37 +1,37 @@
-import axios from 'axios';
-// import { store } from '../redux/store';
+// import axios from 'axios';
+// // import { store } from '../redux/store';
 
 
-const apiUrl = import.meta.env.VITE_API_BASE_URL;
+// const apiUrl = import.meta.env.VITE_API_BASE_URL;
 
-// ========== PUBLIC INSTANCE (без cookies) ==========
-export const publicInstance = axios.create({
-  baseURL: apiUrl,
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
+// // ========== PUBLIC INSTANCE (без cookies) ==========
+// export const publicInstance = axios.create({
+//   baseURL: apiUrl,
+//   withCredentials: false,
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json',
+//   },
+// });
 
-// ========== PROTECTED INSTANCE (с cookies и токеном) ==========
-export const protectedInstance = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
+// // ========== PROTECTED INSTANCE (с cookies и токеном) ==========
+// export const protectedInstance = axios.create({
+//   baseURL: apiUrl,
+//   withCredentials: true,
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json',
+//   },
+// });
 
-export const instance = axios.create({
-  baseURL: apiUrl,
-  withCredentials: true,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-});
+// export const instance = axios.create({
+//   baseURL: apiUrl,
+//   withCredentials: true,
+//   headers: {
+//     Accept: 'application/json',
+//     'Content-Type': 'application/json',
+//   },
+// });
 
 // export const setToken = accessToken => {
 //   instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
