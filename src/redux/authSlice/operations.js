@@ -74,33 +74,33 @@ export const logOutUser = createAsyncThunk(
 
 
 
-let isRefreshing = false;
-let refreshPromise = null;
+// let isRefreshing = false;
+// let refreshPromise = null;
 
-export const refresh = createAsyncThunk(
-  'user/refresh',
-  async (_, thunkApi) => {
-    try {
-      if (isRefreshing && refreshPromise) {
-        const { data } = await refreshPromise;
-        return data;
-      }
+// export const refresh = createAsyncThunk(
+//   'user/refresh',
+//   async (_, thunkApi) => {
+//     try {
+//       if (isRefreshing && refreshPromise) {
+//         const { data } = await refreshPromise;
+//         return data;
+//       }
 
-      isRefreshing = true;
-      refreshPromise = refreshToken();
-      console.log("refreshPromise" , refreshPromise );
+//       isRefreshing = true;
+//       refreshPromise = refreshToken();
+//       console.log("refreshPromise" , refreshPromise );
 
-      const { data } = await refreshPromise;
-      console.log("Refreshing", data)
-      return data;
-    } catch (error) {
-      return thunkApi.rejectWithValue(error.message);
-    } finally {
-      isRefreshing = false;
-      refreshPromise = null;
-    }
-  }
-);
+//       const { data } = await refreshPromise;
+//       console.log("Refreshing", data)
+//       return data;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     } finally {
+//       isRefreshing = false;
+//       refreshPromise = null;
+//     }
+//   }
+// );
 
 export const getUser = createAsyncThunk(
   'users/user-info',
@@ -115,15 +115,16 @@ export const getUser = createAsyncThunk(
   }
 );
 
-// export const refresh = createAsyncThunk(
-//   'users/refresh',
-//   async (_, thunkAPI) => {
-//     try {
-//       const { data } = await instance.post('/users/refresh');
-//       return data.data;
-//     } catch (error) {
-//       const errorMessage = handleAxiosError(error);
-//       return thunkAPI.rejectWithValue(errorMessage);
-//     }
-//   }
-// );
+export const refresh = createAsyncThunk(
+  'users/refresh',
+  async (_, thunkAPI) => {
+    try {
+      const { data } = await instance.post('/users/refresh');
+      console.log("Refreshing", data)
+      return data;
+    } catch (error) {
+      const errorMessage = handleAxiosError(error);
+      return thunkAPI.rejectWithValue(errorMessage);
+    }
+  }
+);
