@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 import { store } from '../../redux/store';
-import { refresh } from '../../redux/auth/operations';
+import { refresh } from '../../redux/authSlice/operations';
 
 
 export const getAuthToken = () => {
