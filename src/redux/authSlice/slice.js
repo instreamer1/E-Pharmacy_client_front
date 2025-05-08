@@ -61,7 +61,9 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logInUser.fulfilled, (state, action) => {
-        console.log(action.payload.accessToken);
+        console.log('payload from login:', action.payload); // весь объект
+        console.log('accessToken type:', typeof action.payload.accessToken);
+        console.log('raw accessToken:', action.payload.accessToken);
         state.accessToken = action.payload.accessToken;
         state.isLoggedIn = true;
         state.isLoading = false;
