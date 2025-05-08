@@ -1,8 +1,9 @@
 // api/axios/private.js
 
 import axios from 'axios';
-import { refresh } from '../../redux/authSlice/operations';
-import { refreshToken } from '../auth/auth.api';
+import { store } from '../../redux/store';
+import { refresh } from '../../redux/auth/operations';
+
 
 export const getAuthToken = () => {
   try {
@@ -15,90 +16,147 @@ export const getAuthToken = () => {
     return null;
   }
 };
-
-// Переменные для управления очередью запросов
-let isRefreshing = false; // Флаг: идёт ли обновление токена
-let failedRequests = []; // Очередь запросов, ожидающих обновления токена
-
-// Создаём экземпляр axios для приватных запросов
+// Создание axios-инстанса
 const privateInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL, // Базовый URL из переменных окружения
-});
-// Интерцептор для добавления токена в заголовки
-privateInstance.interceptors.request.use(config => {
-  const token = getAuthToken();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  baseURL: import.meta.env.VITE_API_BASE_URL
 });
 
-// Интерцептор для обработки 401 ошибок
+// Установка токена
+const setToken = token => {
+  privateInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
+// Очистка токена
+const clearToken = () => {
+  delete privateInstance.defaults.headers.common.Authorization;
+};
+
+// Флаги и очередь запросов
+let isRefreshing = false;
+let pendingRequests = [];
+
+const processQueue = (error, token = null) => {
+  pendingRequests.forEach(promise => {
+    if (error) {
+      promise.reject(error);
+    } else {
+      promise.resolve(token);
+    }
+  });
+  pendingRequests = [];
+};
+
+// privateInstance.interceptors.request.use(
+//   async config => {
+//     if (!config.url.includes('/auth/register') && !config.url.includes('/auth/login')) {
+//       const state = store.getState();
+//       const token = state.auth.accessToken;
+//       if (token) {
+//         config.headers.Authorization = `Bearer ${token}`;
+//       }
+//     }
+//     return config;
+//   },
+//   error => {
+//     return Promise.reject(error);
+//   }
+// );
+
+privateInstance.interceptors.request.use(
+  config => {
+    const publicRoutes = ['/auth/register', '/auth/login'];
+    const isPublic = publicRoutes.some(route => config.url.includes(route));
+
+    if (!isPublic) {
+      const state = store.getState();
+      const token = state.auth.accessToken;
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+    }
+    return config;
+  },
+  error => Promise.reject(error)
+);
+
+
+
+
+
+
+
+
+// Response interceptor: обновление токена при 401
 privateInstance.interceptors.response.use(
-  response => response, // Если ответ успешный - просто пропускаем его
+  response => response,
   async error => {
     const originalRequest = error.config;
+  // Если получили 401 ошибку И это не запрос на обновление токена
+    if (
+      error.response &&
+      error.response.config.url.includes('/auth/refresh') &&
+      (error.response.status === 400 || error.response.status === 401)
+    ) {
+      clearToken();
+      // const state = store.getState();
+      // state.auth.accessToken = null;
+      // state.auth.isLoggedIn = false;
+      // localStorage.removeItem('persist:auth');
+      window.localStorage.removeItem('persist:auth');
+      return Promise.reject(error);
+    }
+ // 401 и не /refresh — нужно попробовать обновить токен
+    if (
+      error.response &&
+      !error.response.config.url.includes('/auth/refresh') &&
+      error.response.status === 401 &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
 
-    // Если получили 401 ошибку И это не запрос на обновление токена
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      console.log('response?.status', error.response?.status);
-      // Если уже идёт обновление токена
       if (isRefreshing) {
-        console.log("isRefreshing", isRefreshing);
         return new Promise((resolve, reject) => {
-          // Добавляем запрос в очередь
-          failedRequests.push({ resolve, reject });
-        }).then(() => {
-          // Когда токен обновится - повторяем запрос
+          pendingRequests.push({ resolve, reject });
+        })
+        .then(token => {
+          originalRequest.headers.Authorization = `Bearer ${token}`;
           return privateInstance(originalRequest);
+        })
+        .catch(err => {
+          return Promise.reject(err);
         });
       }
 
-      originalRequest._retry = true; // Помечаем запрос как обработанный
-      isRefreshing = true; // Начинаем обновление токена
+      isRefreshing = true;
 
-      try {
-        // 1. Пытаемся обновить токен
-        const response = await refreshToken();
-        console.log("data", response);
-        const newToken =response.data.accessToken;
-        console.log('newToken:', newToken);
-        // 2. Сохраняем новый токен
-        const authData = JSON.parse(
-          localStorage.getItem('persist:auth') || '{}'
-        );
-        const authState = JSON.parse(authData.auth || '{}');
-        authState.accessToken = newToken;
-        authData.auth = JSON.stringify(authState);
-        localStorage.setItem('persist:auth', JSON.stringify(authData));
-
-        // 3. Обновляем заголовок оригинального запроса
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-
-        // 4. Повторяем все запросы из очереди
-        failedRequests.forEach(promise => promise.resolve());
-        failedRequests = [];
-
-        // 5. Повторяем оригинальный запрос
-        return privateInstance(originalRequest);
-      } catch (refreshError) {
-        // Если не удалось обновить токен:
-        // - очищаем очередь с ошибкой
-        failedRequests.forEach(promise => promise.reject(refreshError));
-        failedRequests = [];
-
-        // - перенаправляем на страницу входа
-        if (window.location.pathname !== '/login') {
-          // window.location.href = '/login';
-        }
-
-        return Promise.reject(refreshError);
-      } finally {
-        isRefreshing = false; // Снимаем флаг обновления
-      }
+      return new Promise((resolve, reject) => {
+        store.dispatch(refresh()).then(resultAction => {
+          if (refresh.fulfilled.match(resultAction)) {
+            setToken(resultAction.payload.accessToken);
+            originalRequest.headers.Authorization = `Bearer ${resultAction.payload.accessToken}`;
+            processQueue(null, resultAction.payload.accessToken);
+            resolve(privateInstance(originalRequest));
+          } else {
+            clearToken();
+            processQueue(resultAction.payload, null);
+            reject(resultAction.payload);
+          }
+        })
+        .catch(refreshError => {
+          clearToken();
+          processQueue(refreshError, null);
+          reject(refreshError);
+          
+          if (window.location.pathname !== '/login') {
+            // window.location.href = '/login';
+          }
+        })
+        .finally(() => {
+          isRefreshing = false;
+        });
+      });
     }
 
-    // Для всех других ошибок просто пробрасываем их дальше
     return Promise.reject(error);
   }
 );
