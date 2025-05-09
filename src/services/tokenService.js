@@ -46,7 +46,7 @@ export const tokenService = {
   refreshToken: async () => {
     try {
       //   const response = await authInstance.post('/user/refresh');
-      const response = await store.dispatch(refresh());
+      const response = await store.dispatch(refresh()).unwrap();
       const newToken = response.data.accessToken;
       console.log('newToken', newToken);
       //   store.dispatch({ type: 'auth/tokenRefreshed', payload: newToken });
