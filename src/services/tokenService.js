@@ -37,28 +37,28 @@ export const tokenService = {
 
   getAccessToken: () => {
     if (!store) return null;
-    const accessToken = store.getState().auth.accessToken;
+    const state = store.getState();
+    const accessToken = state.auth.accessToken;
     console.log(' accessToken', accessToken);
-    return  accessToken
-    // return getAuthToken();
+    return accessToken;
   },
 
-refreshToken: async () => {
-  try {
-    console.log('Dispatching refresh action...');
-    
-    const response = await store.dispatch(refresh()).unwrap();
+  refreshToken: async () => {
+    try {
+      console.log('Dispatching refresh action...');
 
-    console.log('Received refreshed token from store dispatch:', response);
-    
-    const newToken = response.accessToken;
-    console.log('New token:', newToken);
-    return newToken;
-  } catch (error) {
-    console.error('Failed to refresh token in tokenService:', error);
-    throw new Error('Failed to refresh token');
-  }
-},
+      const response = await store.dispatch(refresh()).unwrap();
+
+      console.log('Received refreshed token from store dispatch:', response);
+
+      const newToken = response.accessToken;
+      console.log('New token:', newToken);
+      return newToken;
+    } catch (error) {
+      console.error('Failed to refresh token in tokenService:', error);
+      throw new Error('Failed to refresh token');
+    }
+  },
 
   clearTokens: () => {
     if (store) {

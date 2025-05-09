@@ -13,7 +13,10 @@ import {
   selectProductsLoading,
   selectTotalPages,
 } from '../../redux/productsSlice/selectors';
-import { getProducts, getCategories } from '../../redux/productsSlice/operations';
+import {
+  getProducts,
+  getCategories,
+} from '../../redux/productsSlice/operations';
 import { SearchFilterPanel } from '../../components/SearchFilterPanel/SearchFilterPanel';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 import { setPage } from '../../redux/productsSlice/slice';
@@ -43,9 +46,8 @@ const MedicinePage = () => {
   useEffect(() => {
     // Загружаем категории только при первом рендере
     dispatch(getCategories());
-  }, [dispatch])
+  }, [dispatch]);
   useEffect(() => {
-
     const params = {
       category: searchParams.get('category') || 'All',
       search: searchParams.get('search') || '',
@@ -54,8 +56,6 @@ const MedicinePage = () => {
     };
 
     dispatch(getProducts(params));
-
- 
   }, [searchParams, limit, dispatch]);
 
   const handlePageChange = newPage => {
@@ -83,7 +83,9 @@ const MedicinePage = () => {
   if (isLoading) return <p>Loading ...</p>;
   // if (isLoading) return <Loader />;
   if (error) return <div>Error: {error}</div>;
-console.log(products);
+
+  // console.log(products);
+
   return (
     <section className={css.medicinePage}>
       <div className={css.container}>
