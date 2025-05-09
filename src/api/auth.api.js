@@ -19,7 +19,9 @@ export const signin = credentials =>
   authInstance.post('/user/signin', credentials);
 export const logout = () => authInstance.post('/user/logout');
 
-export const refreshToken = () => authInstance.post('user/refresh');
+// export const refreshToken = () => authInstance.post('user/refresh');
+export const refreshToken = () => 
+  publicInstance.post('user/refresh', {}, { withCredentials: true });
 
 export const getUserInfo = () => authInstance.get('/user/user-info');
 
