@@ -43,18 +43,22 @@ export const tokenService = {
     // return getAuthToken();
   },
 
-  refreshToken: async () => {
-    try {
-      //   const response = await authInstance.post('/user/refresh');
-      const response = await store.dispatch(refresh()).unwrap();
-      const newToken = response.data.accessToken;
-      console.log('newToken', newToken);
-      //   store.dispatch({ type: 'auth/tokenRefreshed', payload: newToken });
-      return newToken;
-    } catch (error) {
-      throw new Error('Failed to refresh token');
-    }
-  },
+refreshToken: async () => {
+  try {
+    console.log('Dispatching refresh action...');
+    
+    const response = await store.dispatch(refresh()).unwrap();
+
+    console.log('Received refreshed token from store dispatch:', response);
+    
+    const newToken = response.accessToken;
+    console.log('New token:', newToken);
+    return newToken;
+  } catch (error) {
+    console.error('Failed to refresh token in tokenService:', error);
+    throw new Error('Failed to refresh token');
+  }
+},
 
   clearTokens: () => {
     if (store) {
