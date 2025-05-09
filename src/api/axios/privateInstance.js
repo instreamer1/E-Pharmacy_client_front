@@ -4,37 +4,34 @@ import axios from 'axios';
 import { tokenService } from '../../services/tokenService';
 
 const privateInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL,
-
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-  // timeout: 10000,
+ baseURL: import.meta.env.VITE_API_BASE_URL,
+  withCredentials: false,
 });
 
-let isRefreshing = false; // Флаг процесса обновления токена
-let pendingRequests = []; // Очередь запросов, ожидающих обновления токена
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach(promise => {
+    if (error) {
+      promise.reject(error);
+    } else {
+      promise.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
 
 privateInstance.interceptors.request.use(
   config => {
-console.log('Intercepted request error:', "Intercepted request error...");
-
-    if (
-      !config.url.includes('/auth/register') &&
-      !config.url.includes('/auth/login')
-    ) {
-      const token = tokenService.getAccessToken();
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+    const accessToken = tokenService.getAccessToken();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
   },
-  error => {
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
 privateInstance.interceptors.response.use(
@@ -42,46 +39,35 @@ privateInstance.interceptors.response.use(
   async error => {
     const originalRequest = error.config;
 
-    console.log('Intercepted response error:', error.response?.status);
-
-    if ((error.response.status === 400 ||error.response?.status === 401) && !originalRequest._retry) {
-      console.log('[privateInstance] 401 error - attempting to refresh token');
+    if ((error.response?.status === 401 || error.response?.status === 400) && !originalRequest._retry) {
+      originalRequest._retry = true;
 
       if (isRefreshing) {
-        console.log('[privateInstance] Token is being refreshed. Adding to pending requests.');
+        // Если уже обновляется — подождем токен
         return new Promise((resolve, reject) => {
-          pendingRequests.push({ resolve, reject });
-        })
-          .then(() => {
-             console.log('[privateInstance] originalRequest.headers', tokenService.getAccessToken());
-            originalRequest.headers.Authorization = `Bearer ${tokenService.getAccessToken()}`;
-            return privateInstance(originalRequest);
-          })
-          .catch(err => {
-            console.error('[privateInstance] Error while retrying request after token refresh:', err);
-            return Promise.reject(err);
+          failedQueue.push({
+            resolve: token => {
+              originalRequest.headers.Authorization = `Bearer ${token}`;
+              resolve(privateInstance(originalRequest));
+            },
+            reject: err => reject(err),
           });
+        });
       }
 
-      originalRequest._retry = true;
       isRefreshing = true;
 
       try {
-        console.log('[privateInstance] Trying to refresh token...');
-        const newToken = await tokenService.refreshToken();
-         console.log('[privateInstance] refresh response newToken}...', newToken );
-        originalRequest.headers.Authorization = `Bearer ${newToken}`;
-        
-        pendingRequests.forEach(({ resolve }) => resolve());
-        pendingRequests = [];
+        const newToken = await tokenService.refreshToken(); // должен обновить токен и сохранить
+        tokenService.setAccessToken(newToken); // если не делается в refreshToken
+        processQueue(null, newToken);
 
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return privateInstance(originalRequest);
-      } catch (refreshError) {
-        console.error('[privateInstance] Failed to refresh token:', refreshError);
-        tokenService.clearTokens();
-        pendingRequests.forEach(({ reject }) => reject(refreshError));
-        pendingRequests = [];
-        return Promise.reject(refreshError);
+      } catch (err) {
+        tokenService.clearTokensFast(); // если refresh не удался — удалим токены
+        processQueue(err, null);
+        return Promise.reject(err);
       } finally {
         isRefreshing = false;
       }
@@ -90,4 +76,117 @@ privateInstance.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
 export default privateInstance;
+
+
+// import axios from 'axios';
+// import { tokenService } from '../../services/tokenService';
+
+// const privateInstance = axios.create({
+//   baseURL: import.meta.env.VITE_API_BASE_URL,
+
+//   withCredentials: true,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     Accept: 'application/json',
+//   },
+//   timeout: 10000,
+// });
+
+// let isRefreshing = false; // Флаг процесса обновления токена
+// let pendingRequests = []; // Очередь запросов, ожидающих обновления токена
+
+// privateInstance.interceptors.request.use(
+//   config => {
+//     console.log('Intercepted request error:', 'Intercepted request error...');
+
+//     if (
+//       !config.url.includes('/auth/register') &&
+//       !config.url.includes('/auth/login')
+//     ) {
+//       const token = tokenService.getAccessToken();
+//       if (token) {
+//         config.headers.Authorization = `Bearer ${token}`;
+//       }
+//     }
+//     return config;
+//   },
+//   error => {
+//     return Promise.reject(error);
+//   }
+// );
+
+// privateInstance.interceptors.response.use(
+//   response => response,
+//   async error => {
+//     const originalRequest = error.config;
+
+//     console.log('Intercepted response error:', error.response?.status);
+
+//     if (
+//       (error.response.status === 400 || error.response?.status === 401) &&
+//       !originalRequest._retry
+//     ) {
+//       console.log('[privateInstance] 401 error - attempting to refresh token');
+      
+//       originalRequest._retry = true;
+
+//       if (isRefreshing) {
+//         console.log(
+//           '[privateInstance] Token is being refreshed. Adding to pending requests.'
+//         );
+//         return new Promise((resolve, reject) => {
+//           pendingRequests.push({ resolve, reject });
+//         })
+//           .then(() => {
+//             console.log(
+//               '[privateInstance] originalRequest.headers',
+//               tokenService.getAccessToken()
+//             );
+//             originalRequest.headers.Authorization = `Bearer ${tokenService.getAccessToken()}`;
+//             return privateInstance(originalRequest);
+//           })
+//           .catch(err => {
+//             console.error(
+//               '[privateInstance] Error while retrying request after token refresh:',
+//               err
+//             );
+//             return Promise.reject(err);
+//           });
+//       }
+
+//       originalRequest._retry = true;
+//       isRefreshing = true;
+
+//       try {
+//         console.log('[privateInstance] Trying to refresh token...');
+//         const newToken = await tokenService.refreshToken();
+//         console.log(
+//           '[privateInstance] refresh response newToken}...',
+//           newToken
+//         );
+//         originalRequest.headers.Authorization = `Bearer ${newToken}`;
+
+//         pendingRequests.forEach(({ resolve }) => resolve());
+//         pendingRequests = [];
+
+//         return privateInstance(originalRequest);
+//       } catch (refreshError) {
+//         console.error(
+//           '[privateInstance] Failed to refresh token:',
+//           refreshError
+//         );
+//         tokenService.clearTokens();
+//         pendingRequests.forEach(({ reject }) => reject(refreshError));
+//         pendingRequests = [];
+//         return Promise.reject(refreshError);
+//       } finally {
+//         isRefreshing = false;
+//       }
+//     }
+
+//     return Promise.reject(error);
+//   }
+// );
+// export default privateInstance;

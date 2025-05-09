@@ -1,7 +1,7 @@
 //tokenService.js
 
 import authInstance from '../api/axios/authInstance';
-import { refresh } from '../redux/authSlice/operations';
+import { logOutUser, refresh } from '../redux/authSlice/operations';
 
 let store;
 
@@ -60,9 +60,20 @@ export const tokenService = {
     }
   },
 
-  clearTokens: () => {
+  clearTokensFast: () => {
     if (store) {
       store.dispatch({ type: 'user/logout' });
+    }
+  },
+
+  clearTokensFull: async () => {
+    if (store) {
+      try {
+        await store.dispatch(logOutUser()).unwrap();
+      } catch (error) {
+        console.error('Full logout failed. Fallback to fast clear.');
+        store.dispatch({ type: 'auth/logout' });
+      }
     }
   },
 };

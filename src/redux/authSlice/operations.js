@@ -110,6 +110,7 @@ export const getUser = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await getUserInfo();
+      console.log(response.data);
       return response.data;
     } catch (error) {
       const errorMessage = handleAxiosError(error);

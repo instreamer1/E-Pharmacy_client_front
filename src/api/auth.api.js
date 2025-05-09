@@ -26,6 +26,9 @@ export const refreshToken = () => {
   return authInstance.post('user/refresh')}
  ;
 
-export const getUserInfo = () => privateInstance.get('/user/user-info');
+export const getUserInfo = () => {
+  console.log('[getUserInfo] called');
+  return privateInstance.get('/user/user-info');
+};
 
 //Например: /user/profile, /orders, /settings
