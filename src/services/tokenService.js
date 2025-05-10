@@ -1,34 +1,10 @@
 //tokenService.js
 
-import authInstance from '../api/axios/authInstance';
 import { logOutUser, refresh } from '../redux/authSlice/operations';
 
 let store;
 
-// export const getAuthToken = () => {
-//     try {
-//       const persistedAuth = localStorage.getItem('persist:auth');
-//       if (!persistedAuth) return null;
 
-//       const parsed = JSON.parse(persistedAuth);
-//       const auth = JSON.parse(parsed.auth || '{}');
-//       return auth.accessToken || null;
-//     } catch (error) {
-//       return null;
-//     }
-//   };
-
-export const getAuthToken = () => {
-  try {
-    const persistedAuth = localStorage.getItem('persist:auth');
-    if (!persistedAuth) return null;
-
-    const parsed = JSON.parse(persistedAuth);
-    return JSON.parse(parsed.accessToken); // теперь вернёт без лишних кавычек
-  } catch (error) {
-    return null;
-  }
-};
 
 export const tokenService = {
   setStore: reduxStore => {
@@ -39,11 +15,14 @@ export const tokenService = {
     if (!store) return null;
     const state = store.getState();
     const accessToken = state.auth.accessToken;
-    console.log(' accessToken', accessToken);
+    console.log('✅ Using token:', accessToken);
+
     return accessToken;
   },
 
   refreshToken: async () => {
+    console.log('🔄 Refreshing token...');
+
     try {
       console.log('Dispatching refresh action...');
 
@@ -76,4 +55,17 @@ export const tokenService = {
       }
     }
   },
+};
+
+
+export const getAuthToken = () => {
+  try {
+    const persistedAuth = localStorage.getItem('persist:auth');
+    if (!persistedAuth) return null;
+
+    const parsed = JSON.parse(persistedAuth);
+    return JSON.parse(parsed.accessToken); // теперь вернёт без лишних кавычек
+  } catch (error) {
+    return null;
+  }
 };

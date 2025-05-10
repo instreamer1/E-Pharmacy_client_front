@@ -5,7 +5,7 @@ const MedicineCard = ({ medicine, onAddToCart, onDetails }) => {
     <li className={css.medicineCard}>
       <div className={css.imgWrapper}>
         <img
-          src={medicine.photo || '/default-medicine.jpg'}
+          src={medicine.photo || null}
           alt={medicine.name}
           className={css.medicineImage}
         />

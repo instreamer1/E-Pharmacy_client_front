@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductById } from '../../redux/productsSlice/operations';
 import { selectProduct } from '../../redux/productsSlice/selectors';
-import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
+import { selectIsLoggedIn, selectUser } from '../../redux/authSlice/selectors';
 import ReviewFormModal from '../../components/ReviewFormModal/ReviewFormModal';
 import { selectReviews } from '../../redux/reviewSlice/selectors';
 import { createUserReview } from '../../redux/reviewSlice/operations';
@@ -34,7 +34,7 @@ const ProductPage = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-
+const user= useSelector(selectUser)
   useEffect(() => {
     dispatch(getProductById(id));
   }, [dispatch, id]);
@@ -54,7 +54,9 @@ const ProductPage = () => {
     if (product.userReview) {
       dispatch(updateUserReview({ productId: id, reviewData: data }));
     } else {
-      dispatch(createUserReview({ ...data, productId: id, userId: userId }));
+      const credentials = { ...data, productId: id, userId: user.userId };
+      console.log(credentials);
+      dispatch(createUserReview(credentials));
     }
   };
 
@@ -77,14 +79,7 @@ const ProductPage = () => {
         onClose={() => setIsReviewModalOpen(false)}
         onSubmit={handleReviewSubmit}
         initialReviewData={schema}
-        //   onSubmit={(data) => {
-        //     if (product.userReview) {
-        //       dispatch(updateUserReview({ productId: product._id, reviewData: data }));
-        //     } else {
-        //       dispatch(createUserReview({ productId: product._id, reviewData: data }));
-        //     }
-        //   }
-        // }
+        userName={user.name}
       />
     </>
   );

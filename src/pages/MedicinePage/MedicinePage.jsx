@@ -18,7 +18,7 @@ import {
   getCategories,
 } from '../../redux/productsSlice/operations';
 import { SearchFilterPanel } from '../../components/SearchFilterPanel/SearchFilterPanel';
-import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
+import { selectIsLoggedIn, selectIsRefreshing } from '../../redux/authSlice/selectors';
 import { setPage } from '../../redux/productsSlice/slice';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 import { getUser } from '../../redux/authSlice/operations';
@@ -37,11 +37,12 @@ const MedicinePage = () => {
   const navigate = useNavigate();
 
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isRefreshing = useSelector(selectIsRefreshing)
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && !isRefreshing) {
       dispatch(getUser());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn, isRefreshing]);;
 
   useEffect(() => {
     // Загружаем категории только при первом рендере

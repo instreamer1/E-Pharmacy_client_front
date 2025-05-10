@@ -4,7 +4,6 @@ import iconSprite from '../../assets/sprite.svg';
 
 export const TabsContainer = ({ product, reviews, openReviewModal }) => {
   const [activeTab, setActiveTab] = useState('description');
-  // const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   function timeAgo(dateString) {
     const date = new Date(dateString);
@@ -71,7 +70,7 @@ export const TabsContainer = ({ product, reviews, openReviewModal }) => {
                     <li key={review._id} className={css.review}>
                       <div className={css.wrapper}>
                         <div className={css.imgWrapper}>
-                          <img src='' alt='avatar' />
+                          <img src={review.avatar || null} alt='avatar' />
                         </div>
                         <div className={css.reviewUser}>
                           <p className={css.reviewUserName}>{review.name}</p>

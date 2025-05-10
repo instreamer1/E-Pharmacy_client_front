@@ -25,7 +25,7 @@ export const ProductOverview = ({ product }) => {
       <div className={css.medicineCard}>
         <div className={css.imgWrapper}>
           <img
-            src={product.photo || '/default-medicine.jpg'}
+            src={product.photo || null}
             alt={product.name}
             className={css.medicineImage}
           />

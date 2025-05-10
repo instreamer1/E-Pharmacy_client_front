@@ -113,8 +113,7 @@ export const getUser = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error);
-      return thunkAPI.rejectWithValue(errorMessage);
+      return thunkAPI.rejectWithValue(handleAxiosError(error));
     }
   }
 );

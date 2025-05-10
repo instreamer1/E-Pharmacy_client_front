@@ -16,6 +16,7 @@ const initialState = {
     email: null,
     phone: null,
     avatar: null,
+    userId: null,
   },
   accessToken: null,
   isLoggedIn: false,
@@ -42,11 +43,7 @@ const authSlice = createSlice({
       state.loginModalOpen = false;
       state.registerModalOpen = false;
     },
-    setTokenRefreshed: (state, action) => {
-      state.accessToken = action.payload;
-      state.isLoggedIn = true;
-    },
-    // logout: () => initialState,
+   
   },
   extraReducers: builder => {
     builder
@@ -66,7 +63,7 @@ const authSlice = createSlice({
         state.error = null;
       })
       .addCase(logInUser.fulfilled, (state, action) => {
-        console.log('payload from login:', action.payload); // весь объект
+        console.log('payload from login:', action.payload);
         console.log('accessToken type:', typeof action.payload.accessToken);
         console.log('raw accessToken:', action.payload.accessToken);
         state.accessToken = action.payload.accessToken;
@@ -117,6 +114,7 @@ const authSlice = createSlice({
           email: null,
           phone: null,
           avatar: null,
+          userId: null,
         };
       })
       .addCase(getUser.pending, (state, action) => {
@@ -130,6 +128,7 @@ const authSlice = createSlice({
           email: action.payload.email,
           phone: action.payload.phone,
           avatar: action.payload.avatar ?? null, // если он есть
+          userId: action.payload.userId,
         };
       })
       .addCase(getUser.rejected, (state, action) => {
