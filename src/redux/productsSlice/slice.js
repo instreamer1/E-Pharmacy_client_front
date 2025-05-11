@@ -19,16 +19,16 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    setCategory(state, action) {
-      state.category = action.payload;
-    },
+    // setCategory(state, action) {
+    //   state.category = action.payload;
+    // },
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
     },
-    resetFilters(state) {
-        state.category = 'All';
-        state.searchTerm = '';
-      },
+    // resetFilters(state) {
+    //     state.category = 'All';
+    //     state.searchTerm = '';
+    //   },
       setPage(state, action) {
         state.page = action.payload;
       },
@@ -72,5 +72,5 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setCategory, setSearchTerm, resetFilters, setPage} = productsSlice.actions;
+export const { setSearchTerm, setPage} = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

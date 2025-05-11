@@ -1,5 +1,4 @@
-import React, { forwardRef, useState } from 'react';
-// import clsx from 'clsx';
+import { forwardRef, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import css from './InputField.module.css';
 
