@@ -11,10 +11,12 @@ const SearchFilterPanel = ({
   isSubmitting,
   isValid,
   categories,
-   isAnyFilterSelected,
+  isAnyFilterSelected,
 }) => {
+
+   const inputWrapper=`${css.inputWrapper}`;
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form className={css.filter} onSubmit={handleSubmit(onSubmit)}>
       <div className={css.filterContainer}>
         <SelectField
           {...register('category')}
@@ -25,6 +27,7 @@ const SearchFilterPanel = ({
         <InputField
           {...register('search')}
           placeholder='Search products'
+          inputWrapper={inputWrapper}
           icon={
             <svg className={css.searchIcon}>
               <use href={`${iconSprite}#search`} />
@@ -32,22 +35,21 @@ const SearchFilterPanel = ({
           }
           iconAction={handleSubmit(onSubmit)}
         />
+      </div>
+      <div className={css.buttonWrapper}>
+        <button
+          type='submit'
+          className={css.filterButton}
+          disabled={!isValid || isSubmitting}
+          aria-label='Apply filters'>
+          {isSubmitting ? 'Filter...' : 'Filter'}
+        </button>
 
-        <div className={css.buttonWrapper}>
-          <button
-            type='submit'
-            className={css.filterButton}
-            disabled={!isValid || isSubmitting}
-            aria-label='Apply filters'>
-            {isSubmitting ? 'Filter...' : 'Filter'}
+        {isAnyFilterSelected && (
+          <button type='button' onClick={onReset} className={css.resetButton}>
+            Reset filters
           </button>
-
-          { isAnyFilterSelected && (
-            <button type='button' onClick={onReset} className={css.resetButton}>
-              Reset filters
-            </button>
-          )}
-        </div>
+        )}
       </div>
     </form>
   );

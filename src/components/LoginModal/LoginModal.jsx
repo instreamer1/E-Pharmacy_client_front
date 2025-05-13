@@ -63,6 +63,8 @@ const LoginModal = () => {
     dispatch(setCloseModals());
     dispatch(setOpenRegisterModal());
   };
+  
+  const inputWrapper=`${css.inputWrapper}`;
 
   return (
     <section className={css.loginPage}>
@@ -75,6 +77,7 @@ const LoginModal = () => {
           <InputField
             name='email'
             placeholder='Email address'
+          
             error={errors.email?.message}
             {...register('email')}
           />
@@ -82,6 +85,7 @@ const LoginModal = () => {
             name='password'
             type={showPassword ? 'text' : 'password'}
             placeholder='Password'
+              inputWrapper={inputWrapper}
             error={errors.password?.message}
             icon={
               showPassword ? (

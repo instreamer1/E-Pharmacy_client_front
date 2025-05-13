@@ -13,6 +13,12 @@ const initialState = {
   searchTerm: '',
   isLoading: false,
   error: null,
+    lastQuery: {
+    category: '',
+    search: '',
+    page: 1,
+    limit: 9,
+  },
 };
 
 const productsSlice = createSlice({
@@ -22,9 +28,9 @@ const productsSlice = createSlice({
     // setCategory(state, action) {
     //   state.category = action.payload;
     // },
-    setSearchTerm(state, action) {
-      state.searchTerm = action.payload;
-    },
+   setLastQuery: (state, action) => {
+    state.lastQuery = action.payload;
+  },
     // resetFilters(state) {
     //     state.category = 'All';
     //     state.searchTerm = '';
@@ -72,5 +78,5 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setSearchTerm, setPage} = productsSlice.actions;
+export const { setLastQuery, setPage} = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

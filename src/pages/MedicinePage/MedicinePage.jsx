@@ -13,6 +13,7 @@ import {
   selectProductsLoading,
   selectTotalPages,
   selectCategories,
+  selectLastQuery,
 } from '../../redux/productsSlice/selectors';
 import {
   getProducts,
@@ -22,7 +23,7 @@ import {
   selectIsLoggedIn,
   selectIsRefreshing,
 } from '../../redux/authSlice/selectors';
-import { setPage } from '../../redux/productsSlice/slice';
+import { setLastQuery, setPage } from '../../redux/productsSlice/slice';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 import { getUser } from '../../redux/authSlice/operations';
 import { useMediaQuery } from 'react-responsive';
@@ -40,13 +41,13 @@ const MedicinePage = () => {
   const categories = useSelector(selectCategories);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
+  const lastQuery = useSelector(selectLastQuery);
 
   const navigate = useNavigate();
   let limit = isDesktop ? 12 : 9;
 
-  // =========================
   // useForm + Filters
-  // =========================
+
   const {
     register,
     handleSubmit,
@@ -64,34 +65,47 @@ const MedicinePage = () => {
   const formValues = watch();
 
   const isAnyFilterSelected =
-  formValues.category !== '' || formValues.search !== '';
+    formValues.category !== '' || formValues.search !== '';
+
+  const applyFilters = (filters = {}) => {
+    setSearchParams(filters);
+    dispatch(setPage(1));
+  };
 
   const handleFilter = () => {
-    if(!isAnyFilterSelected){
-      return
+    if (!isAnyFilterSelected) {
+      return;
     }
     const params = {
       category: formValues.category,
       search: formValues.search,
       page: 1,
     };
-    setSearchParams(params);
-    dispatch(setPage(1));
-    dispatch(getProducts({ ...params, limit }));
+    applyFilters(params);
   };
+
+  useEffect(() => {
+    const params = Object.fromEntries(searchParams);
+    const currentQuery = { ...params, page, limit };
+    const queriesAreEqual =
+      JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
+
+    if (!queriesAreEqual) {
+      dispatch(getProducts(currentQuery));
+      dispatch(setLastQuery(currentQuery));
+    }
+  }, [dispatch, searchParams, page, limit, lastQuery]);
 
   const handleResetFilters = () => {
     reset({ category: '', search: '' });
     setSearchParams({});
-    dispatch(setPage(1));
-    dispatch(getProducts({ page: 1, limit }));
+    applyFilters();
   };
 
   const handlePageChange = newPage => {
     const currentParams = Object.fromEntries(searchParams);
     setSearchParams({ ...currentParams, page: newPage });
     dispatch(setPage(newPage));
-    dispatch(getProducts({ ...currentParams, page: newPage, limit }));
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -101,7 +115,6 @@ const MedicinePage = () => {
       dispatch(setOpenRegisterModal());
       return;
     }
-    // dispatch(addToCart(medicine));
   };
 
   const handleDetails = id => {
@@ -109,19 +122,16 @@ const MedicinePage = () => {
   };
 
   useEffect(() => {
-    dispatch(getCategories());
-  }, [dispatch]);
+    if (categories.length === 0) {
+      dispatch(getCategories());
+    }
+  }, [dispatch, categories]);
 
   useEffect(() => {
     if (isLoggedIn && !isRefreshing) {
       dispatch(getUser());
     }
   }, [dispatch, isLoggedIn, isRefreshing]);
-
-  useEffect(() => {
-    const params = Object.fromEntries(searchParams);
-    dispatch(getProducts({ ...params, page, limit }));
-  }, [dispatch, searchParams, page, limit]);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <div>Error: {error}</div>;

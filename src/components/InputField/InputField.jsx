@@ -12,7 +12,8 @@ const InputField = forwardRef(
       error,
       icon, // если нужна произвольная иконка
       iconAction, // действие при клике на иконку
-      register, // объект регистрации из react-hook-form
+      register,
+      inputWrapper, // объект регистрации из react-hook-form
       ...rest
     },
     ref
@@ -23,7 +24,7 @@ const InputField = forwardRef(
 
     const handleTogglePassword = () => setShowPassword(prev => !prev);
     const inputClassName = `${css.input} ${error ? css.errorInput : ''}`;
-    const wrapperClassName = `${css.inputWrapper} ${
+    const wrapperClassName = `${inputWrapper} ${
       error ? css.errorMargin : ''
     }`;
 
