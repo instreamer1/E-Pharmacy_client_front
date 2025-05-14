@@ -117,17 +117,3 @@ export const getUser = createAsyncThunk(
     }
   }
 );
-
-// export const refresh = createAsyncThunk(
-//   'users/refresh',
-//   async (_, thunkAPI) => {
-//     try {
-//       const { data } = await refreshToken();
-//       console.log('Refreshing', data);
-//       return data;
-//     } catch (error) {
-//       const errorMessage = handleAxiosError(error);
-//       return thunkAPI.rejectWithValue(errorMessage);
-//     }
-//   }
-// );

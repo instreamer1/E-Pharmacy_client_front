@@ -45,8 +45,12 @@ const RegisterModal = () => {
   const togglePassword = () => setShowPassword(prev => !prev);
 
   const onSubmit = async data => {
+    const name = data.name.trim();
+    const email = data.email.trim();
+    const phone = data.phone.trim();
+    const password = data.password.trim();
     try {
-      await dispatch(registerUser(data)).unwrap();
+      await dispatch(registerUser({name, email, phone, password})).unwrap();
       toast.success('Successfully registered!');
       reset();
     } catch (err) {
@@ -61,7 +65,7 @@ const RegisterModal = () => {
     dispatch(setOpenLoginModal());
   };
 
-  const inputWrapper=`${css.inputWrapper}`;
+  const inputWrapper = `${css.inputWrapper}`;
 
   return (
     <section className={css.registerPage}>
@@ -76,7 +80,6 @@ const RegisterModal = () => {
             <InputField
               name='name'
               placeholder='User Name'
-             
               error={errors.name?.message}
               {...register('name')}
             />
@@ -99,7 +102,7 @@ const RegisterModal = () => {
               type={showPassword ? 'text' : 'password'}
               placeholder='Password'
               autoComplete='new-password'
-               inputWrapper={inputWrapper}
+              inputWrapper={inputWrapper}
               error={errors.password?.message}
               icon={
                 showPassword ? (

@@ -52,7 +52,10 @@ const RegisterPage = () => {
   });
 
   const onSubmit = async data => {
-    const { name, email, phone, password } = data;
+    const name = data.name.trim();
+    const email = data.email.trim();
+    const phone = data.phone.trim();
+    const password = data.password.trim();
     try {
       await dispatch(registerUser({ name, email, phone, password })).unwrap();
       toast.success('User registered successfully!');
@@ -147,7 +150,7 @@ const RegisterPage = () => {
                 type='submit'
                 disabled={!isValid || isSubmitting}
                 className={css.submitBtn}>
-               {isSubmitting ? 'Signing up...' : 'Sign up'}
+                {isSubmitting ? 'Signing up...' : 'Sign up'}
               </button>
             </div>
           </form>

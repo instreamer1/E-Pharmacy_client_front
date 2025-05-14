@@ -3,16 +3,7 @@ import css from './SelectField.module.css';
 
 const SelectField = forwardRef(
   (
-    {
-      label,
-      name,
-      options,
-      placeholder,
-      error,
-      register,
-      className,
-      ...rest
-    },
+    { label, name, options, placeholder = 'Select...', defaultValue, error, register, className, ...rest },
     ref
   ) => {
     const wrapperClassName = `${css.selectWrapper} ${
@@ -31,19 +22,25 @@ const SelectField = forwardRef(
           <select
             id={name}
             name={name}
+             defaultValue={defaultValue}
             ref={ref}
             className={`${css.select} ${error ? css.errorInput : ''}`}
             {...(register ? register : {})}
-            {...rest}
-          >
-            <option value="" disabled hidden>
+            {...rest}>
+            <option value='' disabled hidden>
               {placeholder}
             </option>
-            {options.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
+            {options.map(opt =>
+              typeof opt === 'string' ? (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ) : (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              )
+            )}
           </select>
         </div>
 

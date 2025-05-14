@@ -47,7 +47,8 @@ const LoginModal = () => {
   });
 
   const onSubmit = async data => {
-    const { email, password } = data;
+     const email = data.email.trim();
+     const password = data.password.trim();
     try {
       await dispatch(logInUser({ email, password })).unwrap();
       toast.success('User registered successfully!');
