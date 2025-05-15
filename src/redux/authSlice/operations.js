@@ -43,25 +43,20 @@ export const logOutUser = createAsyncThunk(
   'users/logout',
   async (_, thunkAPI) => {
     try {
-      // 1. Серверный logout
       await logout();
 
-      // 2. Очистка кук
       clearAllCookies();
 
-      // 3. Очистка persisted state
       await purgePersistedState();
 
-      // 4. Сброс Redux состояния
       thunkAPI.dispatch({ type: 'RESET_STATE' });
 
-      // 5. Дополнительная очистка (опционально)
       localStorage.clear();
       sessionStorage.clear();
 
       return null;
     } catch (error) {
-      // Принудительная очистка даже при ошибке
+      
       clearAllCookies();
       await purgePersistedState();
       thunkAPI.dispatch({ type: 'RESET_STATE' });
@@ -88,7 +83,7 @@ export const refresh = createAsyncThunk(
       }
 
       isRefreshing = true;
-      refreshPromise = refreshToken(); // здесь запрос на обновление токена
+      refreshPromise = refreshToken(); 
       console.log('Refreshing token...');
       
       const { data } = await refreshPromise;
