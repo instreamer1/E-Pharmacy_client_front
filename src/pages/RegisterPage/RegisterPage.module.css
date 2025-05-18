@@ -62,6 +62,14 @@
   transition: background-color 5000s ease-in-out 0s;
 }
 
+.registerInput::placeholder {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: rgba(29, 30, 33, 0.4);
+}
+
 .error {
   color: red;
   font-size: 8px;
@@ -139,7 +147,7 @@
   color: rgba(29, 30, 33, 0.4);
 }
 
-.lineContainerWrapper{
+.lineContainerWrapper {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -184,13 +192,12 @@
     text-align: center;
   }
 
-  .lineContainerWrapper{
+  .lineContainerWrapper {
     top: 753px;
     left: 491px;
     width: 464px;
     height: 345px;
   }
-  
 }
 
 @media screen and (min-width: 1440px) {

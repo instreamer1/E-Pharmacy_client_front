@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 
-export const selectProductsBase = state => state.products.products;
+export const selectProducts = state => state.products.products;
 
 export const selectProduct = state => state.products.product;
 
@@ -12,7 +12,7 @@ export const selectLimit = state => state.products.limit;
 
 export const selectTotalPages = state => state.products.totalPages;
 
-export const selectCategoriesBase = state => state.products.categories;
+export const selectCategories = state => state.products.categories;
 
 export const selectLastQuery = state => state.products.lastQuery;
 
@@ -23,12 +23,12 @@ export const selectProductsError = state => state.products.error;
 export const selectProductsLoading = state => state.products.isLoading;
 
 
-export const selectCategories = createSelector(
-  [selectCategoriesBase],
-  (categories) => categories
-);
+// export const selectCategories = createSelector(
+//   [selectCategoriesBase],
+//   (categories) => categories
+// );
 
-export const selectProducts = createSelector(
-  [selectProductsBase],
-  (products) => products
-);
+// export const selectProducts = createSelector(
+//   [selectProductsBase],
+//   (products) => products
+// );

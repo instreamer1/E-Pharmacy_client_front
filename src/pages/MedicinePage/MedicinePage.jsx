@@ -87,14 +87,14 @@ const MedicinePage = () => {
   useEffect(() => {
     const params = Object.fromEntries(searchParams);
     const currentQuery = { ...params, page, limit };
+    setSearchParams(currentQuery);
     const queriesAreEqual =
       JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
-
     if (!queriesAreEqual) {
       dispatch(getProducts(currentQuery));
       dispatch(setLastQuery(currentQuery));
     }
-  }, [dispatch, searchParams, page, limit, lastQuery]);
+  }, [dispatch, searchParams, setSearchParams, page, limit, lastQuery]);
 
   const handleResetFilters = () => {
     reset({ category: '', search: '' });

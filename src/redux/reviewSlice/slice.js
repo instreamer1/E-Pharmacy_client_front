@@ -27,7 +27,6 @@ const reviewsSlice = createSlice({
       //   state.error = null;
       // })
       .addCase(getProductById.fulfilled, (state, action) => {
-        // state.accessToken = action.payload.accessToken;
         console.log(action.payload);
         state.reviews = action.payload.reviews.reviews;
         state.userReview = action.payload.userReview;

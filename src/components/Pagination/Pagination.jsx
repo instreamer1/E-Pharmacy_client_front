@@ -36,7 +36,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           '...',
           currentPage - 2,
           currentPage - 1,
-          // totalPages
+          totalPages
         );
       } 
       else if (currentPage < totalPages - 1) {
@@ -56,8 +56,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           '...',
           currentPage - 1,
           currentPage,
-          '...',
-          // totalPages
+          // '...',
+          totalPages
         );
       }
     }
