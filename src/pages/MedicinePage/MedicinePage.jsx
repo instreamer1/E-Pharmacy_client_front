@@ -155,7 +155,7 @@ const MedicinePage = () => {
           />
         </div>
 
-        {products.length > 0 ? (
+        {products && products.length > 0 ? (
           <>
             <ul className={css.medicineList}>
               {products.map(product => (
