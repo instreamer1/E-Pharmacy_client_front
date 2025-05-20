@@ -27,6 +27,7 @@ import { setLastQuery, setPage } from '../../redux/productsSlice/slice';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 import { getUser } from '../../redux/authSlice/operations';
 import { useMediaQuery } from 'react-responsive';
+// import { getQueryParams } from '../../utils/getQueryParams';
 
 const MedicinePage = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,6 @@ const MedicinePage = () => {
 
   const products = useSelector(selectProducts);
   const totalPages = useSelector(selectTotalPages);
-  const page = useSelector(selectPage);
   const isLoading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
   const categories = useSelector(selectCategories);
@@ -44,10 +44,19 @@ const MedicinePage = () => {
   const lastQuery = useSelector(selectLastQuery);
 
   const navigate = useNavigate();
-  let limit = isDesktop ? 12 : 9;
+  const limit = isDesktop ? 12 : 9;
 
-  // useForm + Filters
+  const getQueryParams = (searchParams, limit) => {
+    const params = Object.fromEntries(searchParams);
+    return {
+      category: params.category || '',
+      search: params.search || '',
+      page: Number(params.page) || 1,
+      limit,
+    };
+  };
 
+  // useForm
   const {
     register,
     handleSubmit,
@@ -63,51 +72,31 @@ const MedicinePage = () => {
   });
 
   const formValues = watch();
-
+  
   const isAnyFilterSelected =
     formValues.category !== '' || formValues.search !== '';
 
-  const applyFilters = (filters = {}) => {
-    setSearchParams(filters);
-    dispatch(setPage(1));
+  const applyFilters = filters => {
+    setSearchParams({ ...filters, page: 1 });
   };
 
   const handleFilter = () => {
-    if (!isAnyFilterSelected) {
-      return;
-    }
-    const params = {
+    if (!isAnyFilterSelected) return;
+
+    applyFilters({
       category: formValues.category,
       search: formValues.search,
-      page: 1,
-    };
-    applyFilters(params);
+    });
   };
-
-  useEffect(() => {
-    const params = Object.fromEntries(searchParams);
-    const currentQuery = { ...params, page, limit };
-    setSearchParams(currentQuery);
-    const queriesAreEqual =
-      JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
-    if (!queriesAreEqual) {
-      dispatch(getProducts(currentQuery));
-      dispatch(setLastQuery(currentQuery));
-    }
-  }, [dispatch, searchParams, setSearchParams, page, limit, lastQuery]);
 
   const handleResetFilters = () => {
     reset({ category: '', search: '' });
-    setSearchParams({});
-    applyFilters();
+    applyFilters({});
   };
 
   const handlePageChange = newPage => {
     const currentParams = Object.fromEntries(searchParams);
     setSearchParams({ ...currentParams, page: newPage });
-    dispatch(setPage(newPage));
-
-    // window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAddToCart = medicine => {
@@ -133,6 +122,18 @@ const MedicinePage = () => {
     }
   }, [dispatch, isLoggedIn, isRefreshing]);
 
+  useEffect(() => {
+    const currentQuery = getQueryParams(searchParams, limit);
+    const queriesAreEqual =
+      JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
+
+    if (!queriesAreEqual) {
+      dispatch(getProducts(currentQuery));
+      dispatch(setPage(currentQuery.page));
+      dispatch(setLastQuery(currentQuery));
+    }
+  }, [dispatch, searchParams, limit, lastQuery]);
+
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <div>Error: {error}</div>;
 
@@ -154,7 +155,7 @@ const MedicinePage = () => {
           />
         </div>
 
-        {products && products.length > 0 ? (
+        {products.length > 0 ? (
           <>
             <ul className={css.medicineList}>
               {products.map(product => (
@@ -169,7 +170,7 @@ const MedicinePage = () => {
 
             {totalPages > 1 && (
               <Pagination
-                currentPage={page}
+                currentPage={Number(searchParams.get('page')) || 1}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
               />
