@@ -36,7 +36,7 @@ const MedicinePage = () => {
 
   const products = useSelector(selectProducts);
   const totalPages = useSelector(selectTotalPages);
-  const page = useSelector(selectPage);
+  // const page = useSelector(selectPage);
   const isLoading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
   const categories = useSelector(selectCategories);
@@ -56,6 +56,18 @@ const MedicinePage = () => {
       limit,
     };
   };
+
+    // ✅ Синхронизация URL → Redux
+  useEffect(() => {
+    const params = Object.fromEntries(searchParams.entries());
+    const restoredQuery = {
+      category: params.category || '',
+      search: params.search || '',
+      page: Number(params.page) || 1,
+      limit,
+    };
+    dispatch(setLastQuery(restoredQuery));
+  }, []); 
 
   // useForm
   const {
@@ -77,17 +89,19 @@ const MedicinePage = () => {
   const isAnyFilterSelected =
     formValues.category !== '' || formValues.search !== '';
 
-  const applyFilters = filters => {
-    setSearchParams({ ...filters, page: 1 });
+   const applyFilters = filters => {
+    const query = {
+      ...filters,
+      page: 1,
+      limit,
+    };
+    dispatch(setLastQuery(query));
+    setSearchParams({ ...filters, page: '1' });
   };
 
-   const handleFilter = () => {
+  const handleFilter = () => {
     if (!isAnyFilterSelected) return;
-    const params = {
-      category: formValues.category,
-      search: formValues.search,
-    };
-    applyFilters(params);
+    applyFilters(formValues);
   };
 
   const handleResetFilters = () => {
@@ -95,10 +109,28 @@ const MedicinePage = () => {
     applyFilters({});
   };
 
-  const handlePageChange = newPage => {
-    const currentParams = Object.fromEntries(searchParams);
-    setSearchParams({ ...currentParams, page: newPage });
+   const handlePageChange = newPage => {
+    const query = {
+      ...lastQuery,
+      page: newPage,
+    };
+    dispatch(setLastQuery(query));
+    setSearchParams({
+      category: query.category,
+      search: query.search,
+      page: String(newPage),
+    });
   };
+
+  
+
+
+
+// загрузка продуктов при изменении searchParams
+  useEffect(() => {
+    dispatch(getProducts(lastQuery));
+  }, [dispatch, lastQuery]);
+  /////////////////////////////////////////
 
   const handleAddToCart = medicine => {
     if (!isLoggedIn) {
@@ -112,7 +144,7 @@ const MedicinePage = () => {
     navigate(`/product/${id}`);
   };
 
-  useEffect(() => {
+    useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategories());
     }
@@ -123,30 +155,6 @@ const MedicinePage = () => {
       dispatch(getUser());
     }
   }, [dispatch, isLoggedIn, isRefreshing]);
-
-// загрузка продуктов при изменении searchParams
-  useEffect(() => {
-    const params = Object.fromEntries(searchParams.entries());
-
-    const currentPage = Number(params.page) || 1;
-    const category = params.category || '';
-    const search = params.search || '';
-
-    const currentQuery = {
-      page: currentPage,
-      limit,
-      category,
-      search,
-    };
-
-    const queriesAreEqual = JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
-
-    if (!queriesAreEqual) {
-      dispatch(getProducts(currentQuery));
-      dispatch(setLastQuery(currentQuery));
-      dispatch(setPage(currentPage));
-    }
-  }, [dispatch, searchParams, lastQuery, limit]);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <div>Error: {error}</div>;
