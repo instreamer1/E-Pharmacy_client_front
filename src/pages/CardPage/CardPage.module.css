@@ -123,13 +123,25 @@
 }
 
 .radioLabel {
-  font-size: 1rem;
-  color: #2c3e50;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: rgba(29, 30, 33, 0.6);
+}
+
+.radioInput:checked + .radioLabel {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 129%;
+  color: #1d1e21;
 }
 
 /* orderSection */
 
 .orderSection {
+  margin-bottom: 20px;
 }
 
 .orderTitle {
@@ -165,6 +177,26 @@
   margin-bottom: 20px;
 }
 
+.totalRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 8px;
+  width: 100%;
+  height: 50px;
+  background: #e7f1ed;
+  padding: 14px 18px;
+}
+
+.totalLabel,
+.totalAmount {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  color: #1d1e21;
+}
+
 .submitButton {
   border-radius: 60px;
   padding: 13px 32px;
@@ -176,6 +208,127 @@
   font-size: 14px;
   line-height: 129%;
   color: #fff;
+}
+
+.goodsSection {
+  padding: 20px 0;
+}
+
+.itemsList {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartItem {
+  display: flex;
+}
+
+.cardItem {
+}
+.lineSeparator {
+  stroke-width: 100%;
+  height: 1px;
+  stroke: rgba(29, 30, 33, 0.1);
+}
+.imgWrapper {
+  border: 1.15px solid #f1f1f1;
+  border-radius: 27px;
+  padding: 14px 18px;
+  width: 120px;
+  height: 120px;
+  margin-right: 12px;
+}
+
+.medicineImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.itemInfoWrap {
+  flex-grow: 1;
+}
+
+.itemInfo {
+  margin-bottom: 18px;
+}
+
+.itemName {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 140%;
+  color: #1d1e21;
+  margin-bottom: 8px;
+}
+
+.itemDescription {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 117%;
+  color: #6a6a6f;
+  margin-bottom: 12px;
+}
+
+.itemPrice {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 117%;
+  /* text-align: right; */
+  color: #1d1e21;
+}
+
+.itemActions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.quantityControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid rgba(29, 30, 33, 0.1);
+  border-radius: 60px;
+  width: 95px;
+  height: 32px;
+}
+
+.quantityButton {
+  width: 18px;
+  height: 18px;
+}
+
+.quantityIcon {
+  width: 18px;
+  height: 18px;
+  stroke-width: 1.8px;
+  stroke: #59b17a;
+}
+
+.quantityValue {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 143%;
+  text-align: center;
+  color: #1d1e21;
+}
+
+.removeButton {
+  border-radius: 40px;
+  padding: 8px 12px;
+  width: 89px;
+  height: 32px;
+  background: rgba(232, 80, 80, 0.1);
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.05em;
+  text-align: center;
+  color: #e85050;
 }
 
 @media screen and (min-width: 768px) {

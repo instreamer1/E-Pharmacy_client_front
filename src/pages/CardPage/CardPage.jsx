@@ -1,6 +1,7 @@
 import css from './CardPage.module.css';
 
 import { useState } from 'react';
+import iconSprite from '../../assets/sprite.svg';
 
 const CartPage = () => {
   // Состояние формы
@@ -14,14 +15,14 @@ const CartPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [cartItems, setCartItems] = useState([
     {
-      id: 1,
+      _id: 1,
       name: 'Vitamin C Medicine',
       description: 'Antioxidant Aid for Heart Health',
       price: 90.0,
       quantity: 1,
     },
     {
-      id: 2,
+      _id: 2,
       name: 'Stomach Medicine',
       description: 'Soothes Indigestion, Eases Stomach Pain',
       price: 32.0,
@@ -191,52 +192,69 @@ const CartPage = () => {
             </button>
           </form>
         </div>
-      </div>
-      {/* Секция товаров */}
-      <section className={css.section}>
-        <h2 className={css.sectionTitle}>Your items</h2>
 
-        <div className={css.itemsList}>
-          {cartItems.map(item => (
-            <div key={item.id} className={css.cartItem}>
-              <div className={css.itemInfo}>
-                <h3 className={css.itemName}>{item.name}</h3>
-                <p className={css.itemDescription}>{item.description}</p>
-                <p className={css.itemPrice}>${item.price.toFixed(2)}</p>
-              </div>
+        {/* Секция товаров */}
+        <section className={css.goodsSection}>
+          {/* <h2 className={css.sectionTitle}>Your items</h2> */}
 
-              <div className={css.itemActions}>
-                <div className={css.quantityControl}>
-                  <button
-                    type='button'
-                    onClick={() =>
-                      handleQuantityChange(item.id, item.quantity - 1)
-                    }
-                    className={css.quantityButton}>
-                    -
-                  </button>
-                  <span className={css.quantityValue}>{item.quantity}</span>
-                  <button
-                    type='button'
-                    onClick={() =>
-                      handleQuantityChange(item.id, item.quantity + 1)
-                    }
-                    className={css.quantityButton}>
-                    +
-                  </button>
+          <ul className={css.itemsList}>
+            {cartItems.map(item => (
+              <li key={item._id} className={css.cartItem}>
+                <div className={css.imgWrapper}>
+                  <img
+                    src={item.photo || null}
+                    alt={item.name}
+                    className={css.medicineImage}
+                  />
                 </div>
+                <div className={css.itemInfoWrap}>
+                  <div className={css.itemInfo}>
+                    <h3 className={css.itemName}>{item.name}</h3>
+                    <p className={css.itemDescription}>{item.description}</p>
+                    <p className={css.itemPrice}>${item.price.toFixed(2)}</p>
+                  </div>
 
-                <button
-                  type='button'
-                  onClick={() => removeItem(item.id)}
-                  className={css.removeButton}>
-                  Remove
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+                  <div className={css.itemActions}>
+                    <div className={css.quantityControl}>
+                      <button
+                        type='button'
+                        onClick={() =>
+                          handleQuantityChange(item.id, item.quantity - 1)
+                        }
+                        className={css.quantityButton}>
+                        <svg className={css.quantityIcon}>
+                          <use href={`${iconSprite}#icon-plus`}></use>
+                        </svg>
+                      </button>
+                      <span className={css.quantityValue}>{item.quantity}</span>
+                      <button
+                        type='button'
+                        onClick={() =>
+                          handleQuantityChange(item.id, item.quantity + 1)
+                        }
+                        className={css.quantityButton}>
+                        <svg className={css.quantityIcon}>
+                          <use href={`${iconSprite}#icon-minus`}></use>
+                        </svg>
+                      </button>
+                    </div>
+
+                    <button
+                      type='button'
+                      onClick={() => removeItem(item.id)}
+                      className={css.removeButton}>
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+            <svg className={css.lineSeparator}>
+              <use href={`${iconSprite}#lineSeparator`}></use>
+            </svg>
+          </ul>
+        </section>
+      </div>
     </section>
   );
 };

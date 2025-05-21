@@ -96,7 +96,7 @@ const MedicinePage = () => {
       limit,
     };
     dispatch(setLastQuery(query));
-    setSearchParams({ ...filters, page: '1' });
+    setSearchParams({ ...filters, page: '1', limit });
   };
 
   const handleFilter = () => {
@@ -119,6 +119,7 @@ const MedicinePage = () => {
       category: query.category,
       search: query.search,
       page: String(newPage),
+      limit,
     });
   };
 
