@@ -60,17 +60,19 @@ const productsSlice = createSlice({
       .addCase(getProductById.pending, state => {
         state.isLoading = true;
         state.error = null;
+        state.products = [];
       })
       .addCase(getProductById.fulfilled, (state, action) => {
         // state.accessToken = action.payload.accessToken;
         console.log(action.payload);
-        state.product = action.payload.product
+        state.product = action.payload.product;
         state.isLoggedIn = true;
         state.isLoading = false;
       })
       .addCase(getProductById.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
+        state.product = null;
       })
       .addCase(getCategories.fulfilled, (state, action) => {
         state.categories = action.payload;
