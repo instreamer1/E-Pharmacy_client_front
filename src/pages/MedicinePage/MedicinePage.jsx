@@ -36,6 +36,7 @@ const MedicinePage = () => {
 
   const products = useSelector(selectProducts);
   const totalPages = useSelector(selectTotalPages);
+  const page = useSelector(selectPage);
   const isLoading = useSelector(selectProductsLoading);
   const error = useSelector(selectProductsError);
   const categories = useSelector(selectCategories);
@@ -80,13 +81,13 @@ const MedicinePage = () => {
     setSearchParams({ ...filters, page: 1 });
   };
 
-  const handleFilter = () => {
+   const handleFilter = () => {
     if (!isAnyFilterSelected) return;
-
-    applyFilters({
+    const params = {
       category: formValues.category,
       search: formValues.search,
-    });
+    };
+    applyFilters(params);
   };
 
   const handleResetFilters = () => {
@@ -104,6 +105,7 @@ const MedicinePage = () => {
       dispatch(setOpenRegisterModal());
       return;
     }
+    //
   };
 
   const handleDetails = id => {
@@ -122,17 +124,29 @@ const MedicinePage = () => {
     }
   }, [dispatch, isLoggedIn, isRefreshing]);
 
+// загрузка продуктов при изменении searchParams
   useEffect(() => {
-    const currentQuery = getQueryParams(searchParams, limit);
-    const queriesAreEqual =
-      JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
+    const params = Object.fromEntries(searchParams.entries());
+
+    const currentPage = Number(params.page) || 1;
+    const category = params.category || '';
+    const search = params.search || '';
+
+    const currentQuery = {
+      page: currentPage,
+      limit,
+      category,
+      search,
+    };
+
+    const queriesAreEqual = JSON.stringify(currentQuery) === JSON.stringify(lastQuery);
 
     if (!queriesAreEqual) {
       dispatch(getProducts(currentQuery));
-      dispatch(setPage(currentQuery.page));
       dispatch(setLastQuery(currentQuery));
+      dispatch(setPage(currentPage));
     }
-  }, [dispatch, searchParams, limit, lastQuery]);
+  }, [dispatch, searchParams, lastQuery, limit]);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <div>Error: {error}</div>;
@@ -155,7 +169,7 @@ const MedicinePage = () => {
           />
         </div>
 
-        {products && products.length > 0 ? (
+        {products.length > 0 ? (
           <>
             <ul className={css.medicineList}>
               {products.map(product => (
@@ -185,3 +199,4 @@ const MedicinePage = () => {
 };
 
 export default MedicinePage;
+
