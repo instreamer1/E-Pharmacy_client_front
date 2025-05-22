@@ -75,69 +75,71 @@ const CartPage = () => {
               also send any other location where you send the products.
             </p>
 
-            <div className={css.formGroup}>
-              <label htmlFor='name' className={css.label}>
-                Name
-              </label>
-              <input
-                type='text'
-                id='name'
-                name='name'
-                value={formData.name}
-                onChange={handleInputChange}
-                className={css.input}
-                placeholder='Enter text'
-                required
-              />
-            </div>
+            <section className={css.enterSection}>
+              <div className={css.formGroup}>
+                <label htmlFor='name' className={css.label}>
+                  Name
+                </label>
+                <input
+                  type='text'
+                  id='name'
+                  name='name'
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className={css.input}
+                  placeholder='Enter text'
+                  required
+                />
+              </div>
 
-            <div className={css.formGroup}>
-              <label htmlFor='email' className={css.label}>
-                Email
-              </label>
-              <input
-                type='email'
-                id='email'
-                name='email'
-                value={formData.email}
-                onChange={handleInputChange}
-                className={css.input}
-                placeholder='Enter text'
-                required
-              />
-            </div>
+              <div className={css.formGroup}>
+                <label htmlFor='email' className={css.label}>
+                  Email
+                </label>
+                <input
+                  type='email'
+                  id='email'
+                  name='email'
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className={css.input}
+                  placeholder='Enter text'
+                  required
+                />
+              </div>
 
-            <div className={css.formGroup}>
-              <label htmlFor='phone' className={css.label}>
-                Phone
-              </label>
-              <input
-                type='tel'
-                id='phone'
-                name='phone'
-                value={formData.phone}
-                onChange={handleInputChange}
-                className={css.input}
-                placeholder='Enter text'
-                required
-              />
-            </div>
+              <div className={css.formGroup}>
+                <label htmlFor='phone' className={css.label}>
+                  Phone
+                </label>
+                <input
+                  type='tel'
+                  id='phone'
+                  name='phone'
+                  value={formData.phone}
+                  onChange={handleInputChange}
+                  className={css.input}
+                  placeholder='Enter text'
+                  required
+                />
+              </div>
 
-            <div className={css.formGroup}>
-              <label htmlFor='address' className={css.label}>
-                Address
-              </label>
-              <input
-                type='text'
-                id='address'
-                name='address'
-                value={formData.address}
-                onChange={handleInputChange}
-                className={css.input}
-                placeholder='Enter text'
-                required
-              />
-            </div>
+              <div className={css.formGroup}>
+                <label htmlFor='address' className={css.label}>
+                  Address
+                </label>
+                <input
+                  type='text'
+                  id='address'
+                  name='address'
+                  value={formData.address}
+                  onChange={handleInputChange}
+                  className={css.input}
+                  placeholder='Enter text'
+                  required
+                />
+              </div>
+            </section>
 
             {/* Секция способа оплаты */}
             <section className={css.paymentMethodsSection}>
@@ -155,6 +157,7 @@ const CartPage = () => {
                     onChange={() => setPaymentMethod('cash')}
                     className={css.radioInput}
                   />
+                  <span class={css.customRadio}></span>
                   <span className={css.radioLabel}>Cash On Delivery</span>
                 </label>
 
@@ -166,6 +169,7 @@ const CartPage = () => {
                     onChange={() => setPaymentMethod('bank')}
                     className={css.radioInput}
                   />
+                  <span class={css.customRadio}></span>
                   <span className={css.radioLabel}>Bank</span>
                 </label>
               </div>
@@ -249,9 +253,9 @@ const CartPage = () => {
                 </div>
               </li>
             ))}
-            <svg className={css.lineSeparator}>
+            {/* <svg className={css.lineSeparator}>
               <use href={`${iconSprite}#lineSeparator`}></use>
-            </svg>
+            </svg> */}
           </ul>
         </section>
       </div>

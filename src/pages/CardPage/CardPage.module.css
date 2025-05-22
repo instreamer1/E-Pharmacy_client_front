@@ -1,6 +1,5 @@
 .cartPage {
-  /* width: 335px; */
-  /* height: 1022px; */
+  padding: 39px 0 80px;
 }
 
 .container {
@@ -18,8 +17,6 @@
 
 .cartForm {
   border-radius: 27px;
-  /* width: 335px;
-  height: 1022px; */
   background: #fff;
 }
 
@@ -46,27 +43,37 @@
 }
 
 .formGroup {
-  margin-bottom: 1.5rem;
+  margin-bottom: 18px;
 }
 
 .label {
   display: block;
-  margin-bottom: 0.5rem;
+  margin-bottom: 8px;
+  font-family: var(--font-family);
   font-weight: 600;
-  color: #2c3e50;
+  font-size: 14px;
+  line-height: 129%;
+  color: #1d1e21;
+  padding-left: 18px;
 }
 
 .input {
+  border: 1px solid rgba(29, 30, 33, 0.2);
+  border-radius: 60px;
+  height: 44px;
+
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 13px 0 13px 18px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: rgba(29, 30, 33, 0.6);
   transition: border-color 0.3s;
 }
 
 .input:focus {
-  border-color: #3498db;
+  border: 1px solid #59b17a;
   outline: none;
 }
 
@@ -112,15 +119,66 @@
   margin-bottom: 20px;
 }
 
+.paymentMethods {
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  row-gap: 8px;
+}
+
 .paymentMethod {
   display: flex;
   align-items: center;
+  gap: 8px;
   cursor: pointer;
+  /* font-size: 18px;
+  font-weight: 500; */
 }
 
 .radioInput {
-  margin-right: 0.5rem;
+  /* border-radius: 10px;
+  width: 20px;
+  height: 20px;
+  margin-right: 8px; */
+  display: none;
 }
+
+.customRadio {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(18, 20, 23, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.3s;
+}
+
+.customRadio::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  /* background: #ccc; */
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s, background 0.3s;
+}
+.radioInput:checked + .customRadio {
+  border-color: #59b17a;
+}
+
+.radioInput:checked + .customRadio::after {
+  background: #59b17a;
+  opacity: 1;
+}
+
+/* .radioInput:checked ~ .radioLabel {
+    color: #111;
+  } */
+
+/* .custom-radio:not(:has(input:checked)) .label-text {
+    color: #888;
+  } */
 
 .radioLabel {
   font-family: var(--font-family);
@@ -130,13 +188,16 @@
   color: rgba(29, 30, 33, 0.6);
 }
 
-.radioInput:checked + .radioLabel {
+.radioInput:checked ~ .radioLabel {
   font-family: var(--font-family);
   font-weight: 400;
   font-size: 14px;
   line-height: 129%;
   color: #1d1e21;
 }
+/* .radioInput:checked{
+   color: #59B17A;
+} */
 
 /* orderSection */
 
@@ -211,7 +272,7 @@
 }
 
 .goodsSection {
-  padding: 20px 0;
+  padding-top: 80px;
 }
 
 .itemsList {
@@ -222,14 +283,17 @@
 .cartItem {
   display: flex;
 }
-
-.cardItem {
+.cartItem:not(:last-child) {
+  border-bottom: 1px solid rgba(29, 30, 33, 0.1);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
-.lineSeparator {
+
+/* .lineSeparator {
   stroke-width: 100%;
   height: 1px;
   stroke: rgba(29, 30, 33, 0.1);
-}
+} */
 .imgWrapper {
   border: 1.15px solid #f1f1f1;
   border-radius: 27px;
@@ -332,25 +396,59 @@
 }
 
 @media screen and (min-width: 768px) {
-  .cartContainer {
-    padding: 1rem;
+  .cartPage {
+    padding: 56px 0 120px;
   }
 
-  .cartItem {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+  .container {
+    padding: 0 32px;
   }
 
-  .itemActions {
-    width: 100%;
-    justify-content: space-between;
+  .cartTitle {
+    margin-bottom: 32px;
   }
 
-  .paymentMethods {
-    flex-direction: column;
-    gap: 0.5rem;
+  /* .cartForm {
+  border-radius: 27px;
+  background: #fff;
+} */
+
+  .formTitle {
+    font-size: 20px;
+    line-height: 140%;
+    margin-bottom: 14px;
   }
+
+  .formDescription {
+    font-size: 16px;
+    line-height: 125%;
+  }
+  .form {
+    padding: 40px 78px;
+  }
+
+  .enterSection {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 14px;
+    row-gap: 20px;
+  }
+  .formGroup {
+    flex-basis: calc((100% - 14px) / 2);
+    margin-bottom: 0;
+  }
+  /* .label {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 129%;
+  color: #1d1e21;
+  padding-left: 18px;
+} */
+
+
 }
 
 @media screen and (min-width: 1440px) {
