@@ -1,3 +1,17 @@
+# E-Pharmacy Client Front
+
+![Node](https://img.shields.io/badge/node-18.x-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Stars](https://img.shields.io/github/stars/instreamer1/E-Pharmacy_client_front?style=social)
+![Last Commit](https://img.shields.io/github/last-commit/instreamer1/E-Pharmacy_client_front)
+![Vercel](https://vercelbadge.vercel.app/api/instreamer1/E-Pharmacy_client_front)
+
+## About the project
+
+Interface for an online pharmacy, written using React...
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
