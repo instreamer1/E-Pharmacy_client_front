@@ -102,7 +102,7 @@
   padding: 0 12px;
 }
 
-.addToCart {
+.updateCartItem {
   border-radius: 60px;
   padding: 13px 22px;
   width: 140px;
@@ -116,7 +116,7 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.addToCart:hover {
+.updateCartItem:hover {
   background: #3f945f;
   transform: scale(1.03);
 }
@@ -195,7 +195,6 @@
     margin-bottom: 20px;
   }
 
-
   .infoWrapper {
     border-radius: 20px;
     width: 100%;
@@ -209,15 +208,14 @@
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
     grid-template-areas:
-      "name price"
-      "brand brand";
+      'name price'
+      'brand brand';
     align-items: center;
     margin-bottom: 40px;
   }
 
   .name,
   .medicinePrice {
-
   }
 
   .name {
@@ -227,11 +225,9 @@
     grid-area: price;
     justify-self: end;
     margin-top: 0;
-
   }
 
   .brand {
     grid-column: 1 / -1;
-
   }
 }

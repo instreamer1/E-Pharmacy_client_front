@@ -16,7 +16,7 @@ const initialState = {
     email: null,
     phone: null,
     avatar: null,
-    userId: null,
+    // userId: null,
   },
   accessToken: null,
   isLoggedIn: false,
@@ -114,7 +114,7 @@ const authSlice = createSlice({
           email: null,
           phone: null,
           avatar: null,
-          userId: null,
+          // userId: null,
         };
       })
       .addCase(getUser.pending, (state, action) => {
@@ -128,7 +128,7 @@ const authSlice = createSlice({
           email: action.payload.email,
           phone: action.payload.phone,
           avatar: action.payload.avatar ?? null, // если он есть
-          userId: action.payload.userId,
+          // userId: action.payload.userId,
         };
       })
       .addCase(getUser.rejected, (state, action) => {

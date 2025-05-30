@@ -8,6 +8,7 @@ import AuthModalSwitcher from './components/AuthModalSwitcher/AuthModalSwitcher'
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsRefreshing } from './redux/authSlice/selectors';
 import { refresh } from './redux/authSlice/operations';
+const CartPage = lazy(() => import('./pages/CartPage/CartPage'));
 const ProductPage = lazy(() => import('./pages/ProductPage/ProductPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const RegisterPage = lazy(() => import('./pages/RegisterPage/RegisterPage'));
@@ -19,7 +20,6 @@ const MedicinePage = lazy(() => import('./pages/MedicinePage/MedicinePage'));
 const ChangePasswordPage = lazy(() =>
   import('./components/ChangePasswordPage/ChangePasswordPage')
 );
-const CardPage = lazy(() => import('./pages/CardPage/CardPage'));
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const App = () => {
           <Route path='medicine-store' element={<MedicineStorePage />} />
           <Route path='medicine' element={<MedicinePage />} />
           <Route path='product/:id' element={<ProductPage />} />
-          {/* <Route path='card-page' element={<CardPage/>}/> */}
+          {/* <Route path='cart-page' element={<CardPage/>}/> */}
           {/* <Route
             path='medicine'
             element={
@@ -50,10 +50,10 @@ const App = () => {
             }
           /> */}
           <Route
-            path='card-page'
+            path='cart-page'
             element={
               <PrivateRoute redirectTo='/login'>
-                <CardPage />
+                <CartPage />
               </PrivateRoute>
             }
           />

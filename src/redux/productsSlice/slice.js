@@ -1,5 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getCategories, getProductById, getProducts } from './operations';
+import {
+  getCategories,
+  getProductById,
+  getProducts,
+} from './operations';
 
 const initialState = {
   products: [],
@@ -13,7 +17,7 @@ const initialState = {
   searchTerm: '',
   isLoading: false,
   error: null,
-    lastQuery: {
+  lastQuery: {
     category: '',
     search: '',
     page: 1,
@@ -28,16 +32,16 @@ const productsSlice = createSlice({
     // setCategory(state, action) {
     //   state.category = action.payload;
     // },
-   setLastQuery: (state, action) => {
-    state.lastQuery = action.payload;
-  },
+    setLastQuery: (state, action) => {
+      state.lastQuery = action.payload;
+    },
     // resetFilters(state) {
     //     state.category = 'All';
     //     state.searchTerm = '';
     //   },
-      setPage(state, action) {
-        state.page = action.payload;
-      },
+    setPage(state, action) {
+      state.page = action.payload;
+    },
   },
   extraReducers: builder => {
     builder
@@ -80,5 +84,5 @@ const productsSlice = createSlice({
   },
 });
 
-export const { setLastQuery, setPage} = productsSlice.actions;
+export const { setLastQuery, setPage } = productsSlice.actions;
 export const productsReducer = productsSlice.reducer;

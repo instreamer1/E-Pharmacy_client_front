@@ -1,17 +1,17 @@
-import css from "./NavigationLinks.module.css"
+import css from './NavigationLinks.module.css';
 
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 const links = [
-  { to: "/", text: "Home" },
-  { to: "/medicine-store", text: "Medicine store" },
-  { to: "/medicine", text: "Medicine" },
+  { to: '/', text: 'Home' },
+  { to: '/medicine-store', text: 'Medicine store' },
+  { to: '/medicine', text: 'Medicine' },
 ];
 
 const NavigationLinks = ({ closeSidebar }) => {
   const buildLinkClass = ({ isActive }) => {
-    return `${css.link} ${isActive ? css.active : ""}`;
+    return `${css.link} ${isActive ? css.active : ''}`;
   };
 
   return (
@@ -19,7 +19,10 @@ const NavigationLinks = ({ closeSidebar }) => {
       <ul className={css.navLinksList}>
         {links.map((link, index) => (
           <li key={index}>
-            <NavLink className={buildLinkClass} to={link.to} onClick={closeSidebar}>
+            <NavLink
+              className={buildLinkClass}
+              to={link.to}
+              onClick={closeSidebar}>
               {link.text}
             </NavLink>
           </li>

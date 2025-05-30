@@ -4,11 +4,12 @@ import iconSprite from '../../assets/sprite.svg';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
+import { selectCartItemCount } from '../../redux/cartSlice/selectors';
 
 const UserCart = ({ closeSidebar, isDesktop, isHomePage }) => {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const cartItemsCount = 1;
- const name = "bbbb bbbbb bbb"
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  const cartItemsCount = useSelector(selectCartItemCount);
+  const name = 'bbbb bbbbb bbb';
   const getInitial = name => {
     if (!name) return '';
     return name.trim()[0].toUpperCase();
@@ -16,7 +17,7 @@ const UserCart = ({ closeSidebar, isDesktop, isHomePage }) => {
 
   return (
     <div className={css.userCart}>
-      <Link to='/card-page' aria-label='Shopping cart' className={css.cartLink}>
+      <Link to='/cart-page' aria-label='Shopping cart' className={css.cartLink}>
         <svg
           className={`${css.cartIcon} ${isHomePage ? css.cartIconHome : ''}`}
           aria-hidden='true'
@@ -32,7 +33,7 @@ const UserCart = ({ closeSidebar, isDesktop, isHomePage }) => {
       <div className={css.user}>
         <p className={css.userIndex}> {getInitial(name)}</p>
       </div>
-      {isDesktop &&  (
+      {isDesktop && (
         <LogOutBtn
           closeSidebar={closeSidebar}
           isDesktop={isDesktop}

@@ -27,12 +27,14 @@ import { setLastQuery, setPage } from '../../redux/productsSlice/slice';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 import { getUser } from '../../redux/authSlice/operations';
 import { useMediaQuery } from 'react-responsive';
+import { updateCartItem } from '../../redux/cartSlice/operation';
 // import { getQueryParams } from '../../utils/getQueryParams';
 
 const MedicinePage = () => {
   const dispatch = useDispatch();
   const isDesktop = useMediaQuery({ query: '(min-width: 1440px)' });
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const products = useSelector(selectProducts);
   const totalPages = useSelector(selectTotalPages);
@@ -44,7 +46,6 @@ const MedicinePage = () => {
   const isRefreshing = useSelector(selectIsRefreshing);
   const lastQuery = useSelector(selectLastQuery);
 
-  const navigate = useNavigate();
   const limit = isDesktop ? 12 : 9;
 
   const getQueryParams = (searchParams, limit) => {
@@ -57,7 +58,7 @@ const MedicinePage = () => {
     };
   };
 
-    // ✅ Синхронизация URL → Redux
+  // ✅ Синхронизация URL → Redux
   useEffect(() => {
     const params = Object.fromEntries(searchParams.entries());
     const restoredQuery = {
@@ -67,7 +68,7 @@ const MedicinePage = () => {
       limit,
     };
     dispatch(setLastQuery(restoredQuery));
-  }, []); 
+  }, []);
 
   // useForm
   const {
@@ -85,11 +86,11 @@ const MedicinePage = () => {
   });
 
   const formValues = watch();
-  
+
   const isAnyFilterSelected =
     formValues.category !== '' || formValues.search !== '';
 
-   const applyFilters = filters => {
+  const applyFilters = filters => {
     const query = {
       ...filters,
       page: 1,
@@ -109,7 +110,7 @@ const MedicinePage = () => {
     applyFilters({});
   };
 
-   const handlePageChange = newPage => {
+  const handlePageChange = newPage => {
     const query = {
       ...lastQuery,
       page: newPage,
@@ -123,29 +124,29 @@ const MedicinePage = () => {
     });
   };
 
-  
-
-
-
-// загрузка продуктов при изменении searchParams
+  // загрузка продуктов при изменении searchParams
   useEffect(() => {
     dispatch(getProducts(lastQuery));
   }, [dispatch, lastQuery]);
   /////////////////////////////////////////
 
-  const handleAddToCart = medicine => {
+  const handleupdateCartItem = product => {
     if (!isLoggedIn) {
       dispatch(setOpenRegisterModal());
       return;
     }
-    //
+
+    console.log(product);
+    const { _id, name, photo, price, description } = product;
+    const descGeneral = description?.general || 'write now';
+    dispatch(updateCartItem({ productId: _id, quantity: 1 }));
   };
 
   const handleDetails = id => {
     navigate(`/product/${id}`);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     if (categories.length === 0) {
       dispatch(getCategories());
     }
@@ -185,7 +186,7 @@ const MedicinePage = () => {
                 <MedicineCard
                   key={product._id}
                   medicine={product}
-                  onAddToCart={() => handleAddToCart(product._id)}
+                  onupdateCartItem={() => handleupdateCartItem(product)}
                   onDetails={() => handleDetails(product._id)}
                 />
               ))}
@@ -208,4 +209,3 @@ const MedicinePage = () => {
 };
 
 export default MedicinePage;
-

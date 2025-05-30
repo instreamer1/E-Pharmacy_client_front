@@ -1,6 +1,30 @@
-import css from './MedicineCard.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 
-const MedicineCard = ({ medicine, onAddToCart, onDetails }) => {
+import css from './MedicineCard.module.css';
+import { selectCartItems } from '../../redux/cartSlice/selectors';
+import { useNavigate } from 'react-router-dom';
+import { updateCartItem } from '../../redux/cartSlice/operation';
+import AddToCartButton from '../AddToCartButton/AddToCartButton';
+
+const MedicineCard = ({ medicine, onupdateCartItem, onDetails }) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // const isInCart = useSelector(selectIsItemInCart(medicine._id));
+  const items = useSelector(selectCartItems);
+  const inCart = items.some(item => {
+    return item.productId && item.productId._id === medicine._id;
+  });
+
+  const handleClick = () => {
+    if (inCart) {
+      navigate('/cart-page');
+    } else {
+      dispatch(updateCartItem({ productId: medicine._id, quantity: 1 }));
+    }
+  };
+
+  const style = css.addButton;
+
   return (
     <li className={css.medicineCard}>
       <div className={css.imgWrapper}>
@@ -24,9 +48,12 @@ const MedicineCard = ({ medicine, onAddToCart, onDetails }) => {
         </div>
         <p className={css.medicineText}>{medicine.suppliers} (Fabrication)</p>
         <div className={css.medicineActions}>
-          <button onClick={onAddToCart} className={css.addButton}>
-            Add to cart
-          </button>
+          {/* <button onClick={handleClick} className={css.addButton}>
+            {inCart ? 'Item in Cart' : 'Add to Cart'}
+          </button> */}
+
+          <AddToCartButton productId={medicine._id} style={style}/>
+
           <button onClick={onDetails} className={css.detailsButton}>
             Details
           </button>

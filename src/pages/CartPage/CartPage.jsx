@@ -1,9 +1,13 @@
-import css from './CardPage.module.css';
+import css from './CartPage.module.css';
 
 import { useState } from 'react';
 import iconSprite from '../../assets/sprite.svg';
+import { removeFromCart, updateCartItem } from '../../redux/cartSlice/operation';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCartItems, selectCartTotal } from '../../redux/cartSlice/selectors';
 
 const CartPage = () => {
+  const dispatch = useDispatch();
   // Состояние формы
   const [formData, setFormData] = useState({
     name: '',
@@ -11,6 +15,9 @@ const CartPage = () => {
     phone: '',
     address: '',
   });
+
+   const items = useSelector(selectCartItems);
+   const subtotal =useSelector(selectCartTotal)
 
   const [paymentMethod, setPaymentMethod] = useState('');
   const [cartItems, setCartItems] = useState([
@@ -37,16 +44,22 @@ const CartPage = () => {
   };
 
   const handleQuantityChange = (id, newQuantity) => {
+    console.log('newQuantity', newQuantity);
     if (newQuantity < 1) return;
-    setCartItems(
-      cartItems.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
+    // setCartItems(
+    //   cartItems.map(item =>
+    //     item._id === id ? { ...item, quantity: newQuantity } : item
+    //   )
+    // );
+    console.log('newQuantity', newQuantity);
+    dispatch(updateCartItem({ productId: id, quantity: newQuantity }));
   };
 
   const removeItem = id => {
+    console.log(id);
     setCartItems(cartItems.filter(item => item.id !== id));
+    dispatch(updateCartItem({ productId: id, quantity: 0 }));
+    //  dispatch(removeFromCart(id));
   };
 
   const handleSubmit = e => {
@@ -56,10 +69,10 @@ const CartPage = () => {
   };
 
   // Расчет общей суммы
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
+  // const subtotal = cartItems.reduce(
+  //   (sum, item) => sum + item.price * item.quantity,
+  //   0
+  // );
   const total = subtotal; // Здесь можно добавить расчет доставки
 
   return (
@@ -157,7 +170,7 @@ const CartPage = () => {
                     onChange={() => setPaymentMethod('cash')}
                     className={css.radioInput}
                   />
-                  <span class={css.customRadio}></span>
+                  <span className={css.customRadio}></span>
                   <span className={css.radioLabel}>Cash On Delivery</span>
                 </label>
 
@@ -169,7 +182,7 @@ const CartPage = () => {
                     onChange={() => setPaymentMethod('bank')}
                     className={css.radioInput}
                   />
-                  <span class={css.customRadio}></span>
+                  <span className={css.customRadio}></span>
                   <span className={css.radioLabel}>Bank</span>
                 </label>
               </div>
@@ -202,28 +215,29 @@ const CartPage = () => {
           {/* <h2 className={css.sectionTitle}>Your items</h2> */}
 
           <ul className={css.itemsList}>
-            {cartItems.map(item => (
-              <li key={item._id} className={css.cartItem}>
+            {items.map(item => (
+              <li key={item.productId._id} className={css.cartItem}>
                 <div className={css.imgWrapper}>
                   <img
-                    src={item.photo || null}
+                    src={item.productId.photo || null}
                     alt={item.name}
                     className={css.medicineImage}
                   />
                 </div>
                 <div className={css.itemInfoWrap}>
                   <div className={css.itemInfo}>
-                    <h3 className={css.itemName}>{item.name}</h3>
+                    <h3 className={css.itemName}>{item.productId.name}</h3>
                     <p className={css.itemDescription}>{item.description}</p>
-                    <p className={css.itemPrice}>${item.price.toFixed(2)}</p>
+                    <p className={css.itemPrice}>${item.productId.price}</p>
                   </div>
 
                   <div className={css.itemActions}>
                     <div className={css.quantityControl}>
                       <button
                         type='button'
+                        aria-label='increase'
                         onClick={() =>
-                          handleQuantityChange(item.id, item.quantity - 1)
+                          handleQuantityChange(item.productId._id, item.quantity + 1)
                         }
                         className={css.quantityButton}>
                         <svg className={css.quantityIcon}>
@@ -233,8 +247,9 @@ const CartPage = () => {
                       <span className={css.quantityValue}>{item.quantity}</span>
                       <button
                         type='button'
+                        aria-label='decrease'
                         onClick={() =>
-                          handleQuantityChange(item.id, item.quantity + 1)
+                          handleQuantityChange(item.productId._id, item.quantity - 1)
                         }
                         className={css.quantityButton}>
                         <svg className={css.quantityIcon}>
@@ -245,7 +260,7 @@ const CartPage = () => {
 
                     <button
                       type='button'
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeItem(item.productId._id)}
                       className={css.removeButton}>
                       Remove
                     </button>
