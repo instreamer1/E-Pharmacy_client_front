@@ -1,13 +1,24 @@
 import css from './CartPage.module.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import iconSprite from '../../assets/sprite.svg';
-import { removeFromCart, updateCartItem } from '../../redux/cartSlice/operation';
+import {
+  fetchCart,
+  removeFromCart,
+  updateCartItem,
+} from '../../redux/cartSlice/operation';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCartItems, selectCartTotal } from '../../redux/cartSlice/selectors';
+import {
+  selectCartItems,
+  selectCartTotal,
+} from '../../redux/cartSlice/selectors';
 
 const CartPage = () => {
   const dispatch = useDispatch();
+
+  // useEffect(()=> {
+  //   dispatch(fetchCart())
+  // },[dispatch])
   // Состояние формы
   const [formData, setFormData] = useState({
     name: '',
@@ -16,26 +27,26 @@ const CartPage = () => {
     address: '',
   });
 
-   const items = useSelector(selectCartItems);
-   const subtotal =useSelector(selectCartTotal)
+  const items = useSelector(selectCartItems);
+  const subtotal = useSelector(selectCartTotal);
 
   const [paymentMethod, setPaymentMethod] = useState('');
-  const [cartItems, setCartItems] = useState([
-    {
-      _id: 1,
-      name: 'Vitamin C Medicine',
-      description: 'Antioxidant Aid for Heart Health',
-      price: 90.0,
-      quantity: 1,
-    },
-    {
-      _id: 2,
-      name: 'Stomach Medicine',
-      description: 'Soothes Indigestion, Eases Stomach Pain',
-      price: 32.0,
-      quantity: 1,
-    },
-  ]);
+  // const [cartItems, setCartItems] = useState([
+  //   {
+  //     _id: 1,
+  //     name: 'Vitamin C Medicine',
+  //     description: 'Antioxidant Aid for Heart Health',
+  //     price: 90.0,
+  //     quantity: 1,
+  //   },
+  //   {
+  //     _id: 2,
+  //     name: 'Stomach Medicine',
+  //     description: 'Soothes Indigestion, Eases Stomach Pain',
+  //     price: 32.0,
+  //     quantity: 1,
+  //   },
+  // ]);
 
   // Обработчики изменений
   const handleInputChange = e => {
@@ -57,7 +68,7 @@ const CartPage = () => {
 
   const removeItem = id => {
     console.log(id);
-    setCartItems(cartItems.filter(item => item.id !== id));
+    // setCartItems(cartItems.filter(item => item.id !== id));
     dispatch(updateCartItem({ productId: id, quantity: 0 }));
     //  dispatch(removeFromCart(id));
   };
@@ -65,7 +76,7 @@ const CartPage = () => {
   const handleSubmit = e => {
     e.preventDefault();
     // Здесь будет запрос к бэкенду
-    console.log('Order placed:', { formData, paymentMethod, cartItems });
+    // console.log('Order placed:', { formData, paymentMethod, cartItems });
   };
 
   // Расчет общей суммы
@@ -78,136 +89,139 @@ const CartPage = () => {
   return (
     <section className={css.cartPage}>
       <div className={css.container}>
-        <h1 className={css.cartTitle}>Cart</h1>
-        {/* Секция информации о доставке */}
-        <div className={css.cartForm}>
-          <form onSubmit={handleSubmit} className={css.form}>
-            <h2 className={css.formTitle}>Enter shipping info</h2>
-            <p className={css.formDescription}>
-              Enter your delivery address where you get the product. You can
-              also send any other location where you send the products.
-            </p>
-
-            <section className={css.enterSection}>
-              <div className={css.formGroup}>
-                <label htmlFor='name' className={css.label}>
-                  Name
-                </label>
-                <input
-                  type='text'
-                  id='name'
-                  name='name'
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className={css.input}
-                  placeholder='Enter text'
-                  required
-                />
-              </div>
-
-              <div className={css.formGroup}>
-                <label htmlFor='email' className={css.label}>
-                  Email
-                </label>
-                <input
-                  type='email'
-                  id='email'
-                  name='email'
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className={css.input}
-                  placeholder='Enter text'
-                  required
-                />
-              </div>
-
-              <div className={css.formGroup}>
-                <label htmlFor='phone' className={css.label}>
-                  Phone
-                </label>
-                <input
-                  type='tel'
-                  id='phone'
-                  name='phone'
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className={css.input}
-                  placeholder='Enter text'
-                  required
-                />
-              </div>
-
-              <div className={css.formGroup}>
-                <label htmlFor='address' className={css.label}>
-                  Address
-                </label>
-                <input
-                  type='text'
-                  id='address'
-                  name='address'
-                  value={formData.address}
-                  onChange={handleInputChange}
-                  className={css.input}
-                  placeholder='Enter text'
-                  required
-                />
-              </div>
-            </section>
-
-            {/* Секция способа оплаты */}
-            <section className={css.paymentMethodsSection}>
-              <h2 className={css.paymentMethodsTitle}>Payment method</h2>
-              <p className={css.paymentMethodsDescription}>
-                You can pay us in a multiple way in our payment gateway system.
+        <div className={css.firstBlock}>
+          <h1 className={css.cartTitle}>Cart</h1>
+          {/* Секция информации о доставке */}
+          <div className={css.cartForm}>
+            <form onSubmit={handleSubmit} className={css.form}>
+              <h2 className={css.formTitle}>Enter shipping info</h2>
+              <p className={css.formDescription}>
+                Enter your delivery address where you get the product. You can
+                also send any other location where you send the products.
               </p>
 
-              <div className={css.paymentMethods}>
-                <label className={css.paymentMethod}>
+              <section className={css.enterSection}>
+                <div className={css.formGroup}>
+                  <label htmlFor='name' className={css.label}>
+                    Name
+                  </label>
                   <input
-                    type='radio'
-                    name='payment'
-                    checked={paymentMethod === 'cash'}
-                    onChange={() => setPaymentMethod('cash')}
-                    className={css.radioInput}
+                    type='text'
+                    id='name'
+                    name='name'
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className={css.input}
+                    placeholder='Enter text'
+                    required
                   />
-                  <span className={css.customRadio}></span>
-                  <span className={css.radioLabel}>Cash On Delivery</span>
-                </label>
-
-                <label className={css.paymentMethod}>
-                  <input
-                    type='radio'
-                    name='payment'
-                    checked={paymentMethod === 'bank'}
-                    onChange={() => setPaymentMethod('bank')}
-                    className={css.radioInput}
-                  />
-                  <span className={css.customRadio}></span>
-                  <span className={css.radioLabel}>Bank</span>
-                </label>
-              </div>
-            </section>
-
-            {/* Секция итогов */}
-            <section className={css.orderSection}>
-              <h2 className={css.orderTitle}>Order details</h2>
-              <p className={css.orderDescription}>
-                Shipping and additional costs are calculated based on values you
-                have entered.
-              </p>
-
-              <div className={css.orderSummary}>
-                <div className={css.totalRow}>
-                  <span className={css.totalLabel}>Total:</span>
-                  <span className={css.totalAmount}>${total.toFixed(2)}</span>
                 </div>
-              </div>
-            </section>
 
-            <button type='submit' className={css.submitButton}>
-              Place order
-            </button>
-          </form>
+                <div className={css.formGroup}>
+                  <label htmlFor='email' className={css.label}>
+                    Email
+                  </label>
+                  <input
+                    type='email'
+                    id='email'
+                    name='email'
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className={css.input}
+                    placeholder='Enter text'
+                    required
+                  />
+                </div>
+
+                <div className={css.formGroup}>
+                  <label htmlFor='phone' className={css.label}>
+                    Phone
+                  </label>
+                  <input
+                    type='tel'
+                    id='phone'
+                    name='phone'
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className={css.input}
+                    placeholder='Enter text'
+                    required
+                  />
+                </div>
+
+                <div className={css.formGroup}>
+                  <label htmlFor='address' className={css.label}>
+                    Address
+                  </label>
+                  <input
+                    type='text'
+                    id='address'
+                    name='address'
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    className={css.input}
+                    placeholder='Enter text'
+                    required
+                  />
+                </div>
+              </section>
+
+              {/* Секция способа оплаты */}
+              <section className={css.paymentMethodsSection}>
+                <h2 className={css.paymentMethodsTitle}>Payment method</h2>
+                <p className={css.paymentMethodsDescription}>
+                  You can pay us in a multiple way in our payment gateway
+                  system.
+                </p>
+
+                <div className={css.paymentMethods}>
+                  <label className={css.paymentMethod}>
+                    <input
+                      type='radio'
+                      name='payment'
+                      checked={paymentMethod === 'cash'}
+                      onChange={() => setPaymentMethod('cash')}
+                      className={css.radioInput}
+                    />
+                    <span className={css.customRadio}></span>
+                    <span className={css.radioLabel}>Cash On Delivery</span>
+                  </label>
+
+                  <label className={css.paymentMethod}>
+                    <input
+                      type='radio'
+                      name='payment'
+                      checked={paymentMethod === 'bank'}
+                      onChange={() => setPaymentMethod('bank')}
+                      className={css.radioInput}
+                    />
+                    <span className={css.customRadio}></span>
+                    <span className={css.radioLabel}>Bank</span>
+                  </label>
+                </div>
+              </section>
+
+              {/* Секция итогов */}
+              <section className={css.orderSection}>
+                <h2 className={css.orderTitle}>Order details</h2>
+                <p className={css.orderDescription}>
+                  Shipping and additional costs are calculated based on values
+                  you have entered.
+                </p>
+
+                <div className={css.orderSummary}>
+                  <div className={css.totalRow}>
+                    <span className={css.totalLabel}>Total:</span>
+                    <span className={css.totalAmount}>${total.toFixed(2)}</span>
+                  </div>
+                </div>
+              </section>
+
+              <button type='submit' className={css.submitButton}>
+                Place order
+              </button>
+            </form>
+          </div>
         </div>
 
         {/* Секция товаров */}
@@ -237,7 +251,10 @@ const CartPage = () => {
                         type='button'
                         aria-label='increase'
                         onClick={() =>
-                          handleQuantityChange(item.productId._id, item.quantity + 1)
+                          handleQuantityChange(
+                            item.productId._id,
+                            item.quantity + 1
+                          )
                         }
                         className={css.quantityButton}>
                         <svg className={css.quantityIcon}>
@@ -249,7 +266,10 @@ const CartPage = () => {
                         type='button'
                         aria-label='decrease'
                         onClick={() =>
-                          handleQuantityChange(item.productId._id, item.quantity - 1)
+                          handleQuantityChange(
+                            item.productId._id,
+                            item.quantity - 1
+                          )
                         }
                         className={css.quantityButton}>
                         <svg className={css.quantityIcon}>

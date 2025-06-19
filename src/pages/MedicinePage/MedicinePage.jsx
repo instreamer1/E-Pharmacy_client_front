@@ -27,7 +27,7 @@ import { setLastQuery, setPage } from '../../redux/productsSlice/slice';
 import { setOpenRegisterModal } from '../../redux/authSlice/slice';
 import { getUser } from '../../redux/authSlice/operations';
 import { useMediaQuery } from 'react-responsive';
-import { updateCartItem } from '../../redux/cartSlice/operation';
+import { fetchCart, updateCartItem } from '../../redux/cartSlice/operation';
 // import { getQueryParams } from '../../utils/getQueryParams';
 
 const MedicinePage = () => {
@@ -155,6 +155,7 @@ const MedicinePage = () => {
   useEffect(() => {
     if (isLoggedIn && !isRefreshing) {
       dispatch(getUser());
+      dispatch(fetchCart());
     }
   }, [dispatch, isLoggedIn, isRefreshing]);
 

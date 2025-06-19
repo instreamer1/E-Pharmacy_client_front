@@ -447,9 +447,53 @@
   color: #1d1e21;
   padding-left: 18px;
 } */
-
-
 }
 
 @media screen and (min-width: 1440px) {
+  .cartPage {
+    padding: 120px 128px;
+  }
+  .container {
+    display: flex;
+    column-gap: 96px;
+  }
+  .cartTitle {
+    margin-bottom: 40px;
+  }
+  .form {
+    width: 628px;
+    padding: 40px;
+  }
+
+  .goodsSection {
+    flex-grow: 1;
+    padding-top: 120px;
+  }
+  .itemsList {
+    width: 100%;
+  }
+  .cartItem:not(:last-child) {
+    border-bottom: 1px solid rgba(29, 30, 33, 0.1);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  .imgWrapper {
+    border: 1.15px solid #f1f1f1;
+    border-radius: 27px;
+    padding: 14px 18px;
+    width: 122px;
+    height: 133px;
+    margin-right: 20px;
+  }
+  .itemInfoWrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .itemInfo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: auto;
+  }
 }

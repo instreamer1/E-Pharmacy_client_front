@@ -1,5 +1,8 @@
 // cartSlice.js
+
 export const selectCartItems = state => state.cart.items;
+export const selectCartLoading = state => state.cart.isLoading;
+export const selectCartError = state => state.cart.error;
 
 export const selectCartTotal = state => {
   return state.cart.items.reduce((total, item) => {
@@ -7,8 +10,7 @@ export const selectCartTotal = state => {
   }, 0);
 };
 
-export const selectCartLoading = state => state.cart.isLoading;
-export const selectCartError = state => state.cart.error;
+
 
 export const selectCartItemCount = state =>
   state.cart.items.reduce((sum, item) => sum + item.quantity, 0);
