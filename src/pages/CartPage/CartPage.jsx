@@ -31,22 +31,7 @@ const CartPage = () => {
   const subtotal = useSelector(selectCartTotal);
 
   const [paymentMethod, setPaymentMethod] = useState('');
-  // const [cartItems, setCartItems] = useState([
-  //   {
-  //     _id: 1,
-  //     name: 'Vitamin C Medicine',
-  //     description: 'Antioxidant Aid for Heart Health',
-  //     price: 90.0,
-  //     quantity: 1,
-  //   },
-  //   {
-  //     _id: 2,
-  //     name: 'Stomach Medicine',
-  //     description: 'Soothes Indigestion, Eases Stomach Pain',
-  //     price: 32.0,
-  //     quantity: 1,
-  //   },
-  // ]);
+ 
 
   // Обработчики изменений
   const handleInputChange = e => {
@@ -217,7 +202,7 @@ const CartPage = () => {
                 </div>
               </section>
 
-              <button type='submit' className={css.submitButton}>
+              <button type='submit' className={css.submitButton} aria-label='submit'>
                 Place order
               </button>
             </form>

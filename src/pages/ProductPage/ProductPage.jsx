@@ -54,7 +54,7 @@ const user= useSelector(selectUser)
     if (product.userReview) {
       dispatch(updateUserReview({ productId: id, reviewData: data }));
     } else {
-      const credentials = { ...data, productId: id, userId: user.userId };
+      const credentials = { ...data, productId: id };
       console.log(credentials);
       dispatch(createUserReview(credentials));
     }
