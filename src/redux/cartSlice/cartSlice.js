@@ -1,21 +1,32 @@
 // cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import { updateCartItem, fetchCart, removeFromCart } from './operation';
+import { updateCartItem, fetchCart, checkoutCart } from './operation';
 
 const initialState = {
+    shippingInfo: {
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+  },
+  paymentMethod: 'Cash On Delivery',
   items: [],
   isLoading: false,
   error: null,
+  checkoutSuccess: false,
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    // removeFromCart: (state, action) => {
-    //   state.items = state.items.filter(item => item._id !== action.payload);
-    // },
-    clearCart: state => {
+    setShippingInfo(state, action) {
+      state.shippingInfo = action.payload;
+    },
+    setPaymentMethod(state, action) {
+      state.paymentMethod = action.payload;
+    },
+    clearCart(state) {
       state.items = [];
     },
   },
@@ -33,10 +44,10 @@ const cartSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       })
-      .addCase(updateCartItem.pending, state => {
-        // state.isLoading = true;
-        // state.error = null;
-      })
+      // .addCase(updateCartItem.pending, state => {
+      //   state.isLoading = true;
+      //   state.error = null;
+      // })
       .addCase(updateCartItem.fulfilled, (state, action) => {
         // const existingIndex = state.items.findIndex(
         //   item => item._id === action.payload._id
@@ -50,15 +61,27 @@ const cartSlice = createSlice({
         // state.isLoading = false;
         state.items = action.payload.items;
       })
-      .addCase(updateCartItem.rejected, (state, action) => {
+      // .addCase(updateCartItem.rejected, (state, action) => {
         // state.isLoading = false;
         // state.error = action.payload;
+      // })
+          .addCase(checkoutCart.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.checkoutSuccess = false;
       })
-      .addCase(removeFromCart.fulfilled, (state, action) => {
-        state.items = action.payload.items;
+      .addCase(checkoutCart.fulfilled, (state) => {
+        state.isLoading = false;
+        state.items = [];
+        state.checkoutSuccess = true;
+      })
+      .addCase(checkoutCart.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.checkoutSuccess = false;
       });
   },
 });
 
-export const { clearCart } = cartSlice.actions;
+export const { setShippingInfo, setPaymentMethod, clearCart } = cartSlice.actions;
 export const cartReducer = cartSlice.reducer;

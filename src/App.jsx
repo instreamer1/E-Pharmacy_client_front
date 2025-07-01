@@ -6,8 +6,9 @@ import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute';
 import AuthModalSwitcher from './components/AuthModalSwitcher/AuthModalSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsRefreshing } from './redux/authSlice/selectors';
-import { refresh } from './redux/authSlice/operations';
+import { selectIsLoggedIn, selectIsRefreshing } from './redux/authSlice/selectors';
+import { getUser, refresh } from './redux/authSlice/operations';
+import { fetchCart } from './redux/cartSlice/operation';
 const CartPage = lazy(() => import('./pages/CartPage/CartPage'));
 const ProductPage = lazy(() => import('./pages/ProductPage/ProductPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
@@ -24,10 +25,23 @@ const ChangePasswordPage = lazy(() =>
 const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+   
 
-  // useEffect(() => {
+  useEffect(() => {
   //   dispatch(refresh()); // при монтировании приложения пытаемся восстановить сессию
-  // }, [dispatch]);
+    if (isLoggedIn && !isRefreshing) {
+      dispatch(getUser());
+      dispatch(fetchCart());
+    }
+  }, [dispatch, isLoggedIn, isRefreshing]);
+
+  //   useEffect(() => {
+  //   if (isLoggedIn && !isRefreshing) {
+  //     dispatch(getUser());
+  //     dispatch(fetchCart());
+  //   }
+  // }, [dispatch, isLoggedIn, isRefreshing]);
 
   if (isRefreshing) {
     return <p>Loading...</p>; // или ваш Loader

@@ -24,6 +24,6 @@ export const addProductToCart = credentials => {
   return privateInstance.put('cart/update', credentials);
 };
 
-export const removeProductFromCart = productId => {
-  return privateInstance.delete(`/cart/${productId}`);
+export const addProductToOrder = credentials => {
+  return privateInstance.post(`cart/checkout`, credentials);
 };

@@ -5,9 +5,10 @@ export const selectCartLoading = state => state.cart.isLoading;
 export const selectCartError = state => state.cart.error;
 
 export const selectCartTotal = state => {
-  return state.cart.items.reduce((total, item) => {
-    return total + item.productId.price * item.quantity;
+  const total = state.cart.items.reduce((sum, item) => {
+    return sum + item.productId.price * item.quantity;
   }, 0);
+  return Number(total.toFixed(2));  
 };
 
 

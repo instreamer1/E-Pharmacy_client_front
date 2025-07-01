@@ -130,7 +130,7 @@ const MedicinePage = () => {
   }, [dispatch, lastQuery]);
   /////////////////////////////////////////
 
-  const handleupdateCartItem = product => {
+  const handleUpdateCartItem = product => {
     if (!isLoggedIn) {
       dispatch(setOpenRegisterModal());
       return;
@@ -152,12 +152,12 @@ const MedicinePage = () => {
     }
   }, [dispatch, categories]);
 
-  useEffect(() => {
-    if (isLoggedIn && !isRefreshing) {
-      dispatch(getUser());
-      dispatch(fetchCart());
-    }
-  }, [dispatch, isLoggedIn, isRefreshing]);
+  // useEffect(() => {
+  //   if (isLoggedIn && !isRefreshing) {
+  //     dispatch(getUser());
+  //     dispatch(fetchCart());
+  //   }
+  // }, [dispatch, isLoggedIn, isRefreshing]);
 
   if (isLoading) return <p>Loading ...</p>;
   if (error) return <div>Error: {error}</div>;
@@ -187,7 +187,7 @@ const MedicinePage = () => {
                 <MedicineCard
                   key={product._id}
                   medicine={product}
-                  onupdateCartItem={() => handleupdateCartItem(product)}
+                  onupdateCartItem={() => handleUpdateCartItem(product)}
                   onDetails={() => handleDetails(product._id)}
                 />
               ))}

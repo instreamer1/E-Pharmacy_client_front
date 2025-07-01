@@ -2,7 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   addProductToCart,
   fetchCartFromServer,
-  removeProductFromCart,
+  addProductToOrder,
 } from '../../api/auth.api';
 import { handleAxiosError } from '../../utils/errorUtils';
 
@@ -27,38 +27,14 @@ export const updateCartItem = createAsyncThunk(
   }
 );
 
-// export const addToCard = createAsyncThunk(
-//   "cart/update",
-//     async (product, thunkAPI) => {
-//     try {
-//       const response = await putToCart(product);
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(handleAxiosError(error));
-//     }
-//   }
-// )
-
-// export const updateCartItem = createAsyncThunk(
-//   'cart/update',
-//   async ({ productId, quantity }, thunkAPI) => {
-//     try {
-//       const response = await updateCartItemQuantity(productId, quantity);
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.message);
-//     }
-//   }
-// );
-
-export const removeFromCart = createAsyncThunk(
-  'cart/remove',
-  async (productId, thunkAPI) => {
+export const checkoutCart = createAsyncThunk(
+  'cart/checkoutCart',
+  async (orderData, { rejectWithValue }) => {
     try {
-      const response = await removeProductFromCart(productId);
+      const response = await addProductToOrder(orderData);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(handleAxiosError(error));
+      return rejectWithValue(error.response?.data || 'Checkout failed');
     }
   }
 );
