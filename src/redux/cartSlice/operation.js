@@ -34,7 +34,7 @@ export const checkoutCart = createAsyncThunk(
       const response = await addProductToOrder(orderData);
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || 'Checkout failed');
+      return rejectWithValue(handleAxiosError(error));
     }
   }
 );

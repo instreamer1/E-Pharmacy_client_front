@@ -4,9 +4,13 @@ import SharedLayout from './components/SharedLayout/SharedLayout';
 import { Route, Routes } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import PrivateRoute from './pages/PrivateRoute';
+import RestrictedRoute from './pages/RestrictedRoute';
 import AuthModalSwitcher from './components/AuthModalSwitcher/AuthModalSwitcher';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoggedIn, selectIsRefreshing } from './redux/authSlice/selectors';
+import {
+  selectIsLoggedIn,
+  selectIsRefreshing,
+} from './redux/authSlice/selectors';
 import { getUser, refresh } from './redux/authSlice/operations';
 import { fetchCart } from './redux/cartSlice/operation';
 const CartPage = lazy(() => import('./pages/CartPage/CartPage'));
@@ -18,6 +22,9 @@ const MedicineStorePage = lazy(() =>
   import('./pages/MedicineStorePage/MedicineStorePage')
 );
 const MedicinePage = lazy(() => import('./pages/MedicinePage/MedicinePage'));
+const OrderSuccessPage = lazy(() =>
+  import('./pages/OrderSuccessPage/OrderSuccessPage')
+);
 const ChangePasswordPage = lazy(() =>
   import('./components/ChangePasswordPage/ChangePasswordPage')
 );
@@ -25,11 +32,10 @@ const ChangePasswordPage = lazy(() =>
 const App = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-    const isLoggedIn = useSelector(selectIsLoggedIn);
-   
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
-  //   dispatch(refresh()); // при монтировании приложения пытаемся восстановить сессию
+    //   dispatch(refresh()); // при монтировании приложения пытаемся восстановить сессию
     if (isLoggedIn && !isRefreshing) {
       dispatch(getUser());
       dispatch(fetchCart());
@@ -79,13 +85,31 @@ const App = () => {
               </RestrictedRoute>
             }
           /> */}
+          <Route path='order-success' element={<OrderSuccessPage />} />
         </Route>
-        <Route path='register' element={<RegisterPage />} />
-        <Route path='login' element={<LoginPage />} />
+        <Route
+          path='register'
+          element={
+            <RestrictedRoute redirectTo='login'>
+              <RegisterPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path='login'
+          element={
+            <RestrictedRoute redirectTo='medicine'>
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
+
+        {/* <Route path='register' element={<RegisterPage />} />
+        <Route path='login' element={<LoginPage />} /> */}
         <Route path='change-password' element={<ChangePasswordPage />} />
       </Routes>
       <AuthModalSwitcher />
-      <Toaster />
+      <Toaster position="top-center" autoClose={3000}  />
     </Suspense>
   );
 };

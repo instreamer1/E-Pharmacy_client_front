@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
-import { selectIsLoggedIn } from '../redux/users/selectors';
+import { selectIsLoggedIn } from '../redux/authSlice/selectors';
+
 
 
 const RestrictedRoute = ({ children, redirectTo }) => {

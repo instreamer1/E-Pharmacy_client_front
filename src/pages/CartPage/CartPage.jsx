@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import iconSprite from '../../assets/sprite.svg';
 
 import { useDispatch, useSelector } from 'react-redux';
-
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import {
   checkoutCart,
@@ -58,20 +58,34 @@ const CartPage = () => {
     dispatch({ type: 'cart/setPaymentMethod', payload: value });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    dispatch(
-      checkoutCart({
-        items: items.map(item => ({
-          productId: item.productId._id,
-          quantity: item.quantity,
-        })),
-        shippingInfo,
-        paymentMethod,
-        total,
-        createdAt: new Date().toISOString(),
-      })
-    );
+    const orderData = {
+      items: items.map(item => ({
+        productId: item.productId._id,
+        quantity: item.quantity,
+      })),
+      shippingInfo,
+      paymentMethod,
+      total,
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      await dispatch(checkoutCart(orderData)).unwrap();
+      toast.success('Order placed successfully!');
+      navigate('/order-success'); // или показать success внутри страницы
+    } catch (error) {
+      console.log("error", error);
+      // Проверка ошибки от сервера
+      if (error.code === 'PRICE_MISMATCH') {
+        toast.error(error.message);
+        // toast.error('Prices have changed. Cart will be updated.');
+        dispatch(fetchCart()); // Обновить корзину с сервера
+      } else {
+        toast.error(error.message || 'Something went wrong. Try again later.');
+      }
+    }
   };
 
   return (

@@ -4,21 +4,26 @@ import { logOutUser, refresh } from '../redux/authSlice/operations';
 
 let store;
 
-
-
 export const tokenService = {
   setStore: reduxStore => {
     store = reduxStore;
   },
+  getAccessToken() {
+    if (store) {
+      return store.getState().auth.accessToken;
+    }
 
-  getAccessToken: () => {
-    if (!store) return null;
-    const state = store.getState();
-    const accessToken = state.auth.accessToken;
-    console.log('✅ Using token:', accessToken);
-
-    return accessToken;
+    try {
+      const persistedAuth = localStorage.getItem('persist:auth');
+      if (!persistedAuth) return null;
+      const parsed = JSON.parse(persistedAuth);
+      return JSON.parse(parsed.accessToken);
+    } catch {
+      return null;
+    }
   },
+
+ 
 
   refreshToken: async () => {
     console.log('🔄 Refreshing token...');
@@ -38,10 +43,9 @@ export const tokenService = {
       throw new Error('Failed to refresh token');
     }
   },
-
-  clearTokensFast: () => {
+  clearTokensFast() {
     if (store) {
-      store.dispatch({ type: 'user/logout' });
+      store.dispatch(logOutUser());
     }
   },
 
@@ -55,17 +59,4 @@ export const tokenService = {
       }
     }
   },
-};
-
-
-export const getAuthToken = () => {
-  try {
-    const persistedAuth = localStorage.getItem('persist:auth');
-    if (!persistedAuth) return null;
-
-    const parsed = JSON.parse(persistedAuth);
-    return JSON.parse(parsed.accessToken); // теперь вернёт без лишних кавычек
-  } catch (error) {
-    return null;
-  }
 };
