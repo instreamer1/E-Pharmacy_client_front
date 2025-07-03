@@ -7,7 +7,7 @@ import {
   refreshToken,
   getUserInfo,
 } from '../../api/auth.api';
-import { handleAxiosError } from '../../utils/errorUtils';
+import { normalizeError } from '../../utils/errorHandler';
 import { clearAllCookies } from '../../utils/cookieUtils';
 import { purgePersistedState } from '../../utils/persistUtils';
 
@@ -20,7 +20,7 @@ export const registerUser = createAsyncThunk(
       const response = await register(newUser);
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error);
+      const errorMessage = normalizeError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
   }
@@ -33,7 +33,7 @@ export const logInUser = createAsyncThunk(
       const response = await signin(credentials);
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error);
+      const errorMessage = normalizeError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
   }
@@ -56,49 +56,16 @@ export const logOutUser = createAsyncThunk(
 
       return null;
     } catch (error) {
-      
       clearAllCookies();
       await purgePersistedState();
       thunkAPI.dispatch({ type: 'RESET_STATE' });
 
-      const errorMessage = handleAxiosError(error);
+      const errorMessage = normalizeError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
 
-let isRefreshing = false;
-let refreshPromise = null;
-
-export const refresh = createAsyncThunk(
-  'user/refresh',
-  async (_, thunkApi) => {
-    console.log('Start refreshing token...');
-    
-    try {
-      if (isRefreshing && refreshPromise) {
-        console.log('Using existing refresh promise');
-        const { data } = await refreshPromise;
-        return data;
-      }
-
-      isRefreshing = true;
-      refreshPromise = refreshToken(); 
-      console.log('Refreshing token...');
-      
-      const { data } = await refreshPromise;
-      console.log('Received refreshed token:', data);
-
-      return data;
-    } catch (error) {
-      console.error('Failed to refresh token:', error);
-      return thunkApi.rejectWithValue(error.message);
-    } finally {
-      isRefreshing = false;
-      refreshPromise = null;
-    }
-  }
-);
 
 export const getUser = createAsyncThunk(
   'users/user-info',
@@ -108,7 +75,46 @@ export const getUser = createAsyncThunk(
       console.log(response.data);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(handleAxiosError(error));
+      return thunkAPI.rejectWithValue(normalizeError(error));
     }
   }
 );
+
+let isRefreshing = false;
+let refreshPromise = null;
+
+export const refresh = createAsyncThunk('user/refresh', async (_, thunkApi) => {
+  console.log('Start refreshing token...');
+
+  try {
+    if (isRefreshing && refreshPromise) {
+      console.log('Using existing refresh promise');
+      const { data } = await refreshPromise;
+      if (!data?.accessToken) {
+        throw new Error('No access token in refresh response');
+      }
+
+      return data;
+    }
+
+    isRefreshing = true;
+    refreshPromise = refreshToken();
+    console.log('Refreshing token...');
+
+    const { data } = await refreshPromise;
+    console.log('Received refreshed token:', data);
+
+    return data;
+  } catch (error) {
+    console.error('Failed to refresh token:', error);
+    return thunkApi.rejectWithValue(normalizeError(error));
+  } finally {
+    isRefreshing = false;
+    refreshPromise = null;
+  }
+});
+
+
+
+
+

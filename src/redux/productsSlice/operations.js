@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { handleAxiosError } from '../../utils/errorUtils';
+import { normalizeError } from '../../utils/errorHandler';
 import publicInstance from '../../api/axios/publicInstance';
 
 export const getProducts = createAsyncThunk(
@@ -12,7 +12,7 @@ export const getProducts = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error);
+      const errorMessage = normalizeError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
   }
@@ -26,7 +26,7 @@ export const getProductById = createAsyncThunk(
       const response = await publicInstance.get(`/products/${productId}`);
       return response.data;
     } catch (error) {
-      const errorMessage = handleAxiosError(error);
+      const errorMessage = normalizeError(error);
       return thunkAPI.rejectWithValue(errorMessage);
     }
   }
@@ -39,9 +39,7 @@ export const getCategories = createAsyncThunk(
       const response = await publicInstance.get('/products/categories');
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(handleAxiosError(error));
+      return thunkAPI.rejectWithValue(normalizeError(error));
     }
   }
 );
-
-
