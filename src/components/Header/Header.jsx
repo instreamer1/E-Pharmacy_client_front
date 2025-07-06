@@ -10,12 +10,10 @@ import iconSprite from '../../assets/sprite.svg';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/authSlice/selectors';
 import UserCart from '../UserCart/UserCart';
-// import { selectCartLoading } from '../../redux/cartSlice/selectors';
 
 const Header = () => {
   const location = useLocation();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const isLoadingCart= useSelector(selectCartLoading)
   const isHomePage = location.pathname === '/';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isDesktop = useMediaQuery({ query: '(min-width: 1440px)' });

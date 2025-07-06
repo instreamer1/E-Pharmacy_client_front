@@ -25,24 +25,23 @@ const MedicineStorePage = () => {
   const page = useSelector(selectStoresPage);
   const isLoading = useSelector(selectStoresLoading);
   const error = useSelector(selectStoresError);
-const limit = useSelector(selectLimit);
+  const limit = useSelector(selectLimit);
   // const page =1;
 
   useEffect(() => {
-  const urlPage = Number(searchParams.get('page')) || 1;
+    const urlPage = Number(searchParams.get('page')) || 1;
 
-  if (page !== urlPage) {
-    dispatch(setStorePage(urlPage));
-  }
+    if (page !== urlPage) {
+      dispatch(setStorePage(urlPage));
+    }
 
-  dispatch(getStores({ page: urlPage, limit }));
-}, [dispatch, searchParams, limit]);
+    dispatch(getStores({ page: urlPage, limit }));
+  }, [dispatch, searchParams, limit]);
 
-const handlePageChange = (newPage) => {
-  setSearchParams({ page: newPage,limit}); // обновляем URL
-  dispatch(setStorePage(newPage));    // обновляем Redux
-};
-
+  const handlePageChange = newPage => {
+    setSearchParams({ page: newPage, limit }); // обновляем URL
+    dispatch(setStorePage(newPage)); // обновляем Redux
+  };
 
   // useEffect(() => {
   //   const urlPage = Number(searchParams.get('page')) || 1;
@@ -50,8 +49,6 @@ const handlePageChange = (newPage) => {
   //   dispatch(setStorePage(urlPage));
   //   dispatch(getStores({ page: urlPage }));
   // }, [dispatch, searchParams]);
-
-
 
   // const handlePageChange = newPage => {
   //   setSearchParams({ page: newPage });
@@ -101,10 +98,10 @@ const handlePageChange = (newPage) => {
                     <p className={css.rating}>{store.rating}</p>
                     <div
                       className={`${css.storeStatus} ${
-                        open ? css.openStore : css.closeStore
+                        store.isOpenNow ? css.openStore : css.closeStore
                       }`}>
-                      <p className={open ? css.open : css.close}>
-                        {open ? 'OPEN' : 'CLOSED'}
+                      <p className={store.isOpenNow ? css.open : css.close}>
+                        {store.isOpenNow ? 'OPEN' : 'CLOSED'}
                       </p>
                     </div>
                   </div>

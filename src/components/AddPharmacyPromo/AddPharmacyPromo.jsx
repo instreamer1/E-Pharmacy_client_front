@@ -19,16 +19,15 @@ const AddPharmacyPromo = () => {
     const checkScreenSize = () => {
       setIsWideScreen(window.innerWidth >= 1440);
     };
-    
+
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
+
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
-  // Обработчик клика по кнопке
   const handleBuyMedicineClick = () => {
-    navigate('/medicine-store'); // Перенаправление на страницу MedicineStorePage
+    navigate('/medicine-store');
   };
 
   return (
@@ -67,8 +66,6 @@ const AddPharmacyPromo = () => {
                 srcSet={`${imageMobile1x} 1x, ${imageMobile2x} 2x`}
                 alt='Add the medicines you need online now'
                 loading='lazy'
-                // width='295'
-                // height='634'
               />
             </picture>
           </div>
@@ -81,8 +78,7 @@ const AddPharmacyPromo = () => {
           style={{ animationPlayState: isPaused ? 'paused' : 'running' }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}>
-        
-        {[...Array(isWideScreen ? 1 : 3)].map((_, i) =>(
+          {[...Array(isWideScreen ? 1 : 3)].map((_, i) => (
             <ul key={`original-${i}`} className={css.features}>
               <li className={css.featureItem}>
                 <svg className={css.featureIcon}>

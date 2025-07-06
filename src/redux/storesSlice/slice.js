@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getStores } from './operations';
-
+import { getNearestStores, getStores } from './operations';
 
 const initialState = {
   stores: [],
@@ -11,15 +10,18 @@ const initialState = {
   totalPages: null,
   isLoading: false,
   error: null,
+  geoDenied: false,
 };
-
 
 const storeSlice = createSlice({
   name: 'stores',
   initialState,
   reducers: {
-   setStorePage(state, action) {
+    setStorePage(state, action) {
       state.page = action.payload;
+    },
+        setGeoDenied(state, action) {
+      state.geoDenied = action.payload;
     },
   },
   extraReducers: builder => {
@@ -39,10 +41,25 @@ const storeSlice = createSlice({
       .addCase(getStores.rejected, (state, action) => {
         state.error = action.payload;
         state.isLoading = false;
+      })
+
+      
+      .addCase(getNearestStores.pending, state => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getNearestStores.fulfilled, (state, action) => {
+        // console.log(action.payload.totalPages);
+        state.nearestStores = action.payload;
+        state.isLoading = false;
+      })
+      .addCase(getNearestStores.rejected, (state, action) => {
+        state.error = action.payload;
+        state.isLoading = false;
       });
   },
 });
 
-export const {setStorePage} = storeSlice.actions;
+export const { setStorePage, setGeoDenied } = storeSlice.actions;
 
 export const storeReducer = storeSlice.reducer;

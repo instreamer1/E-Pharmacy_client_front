@@ -1,59 +1,49 @@
 import css from './MedicineStores.module.css';
 import iconSprite from '../../assets/sprite.svg';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getNearestStores } from '../../redux/storesSlice/operations';
+import {
+  selectNearestStores,
+  selectStoresError,
+  selectStoresLoading,
+} from '../../redux/storesSlice/selectors';
+import { setGeoDenied } from '../../redux/storesSlice/slice';
 
 const MedicineStores = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const nearestStores = useSelector(selectNearestStores);
+  const storesIsLoading = useSelector(selectStoresLoading);
+  const storesError = useSelector(selectStoresError);
 
-  // Пример данных (в реальном приложении данные будут получены через API)
-  const stores = [
-    {
-      id: 1,
-      name: 'Huge Sale',
-      address: 'Albenia G83, Seoul',
-      phone: '717-24-2429',
-      status: 'OPEN',
-      rating: 5,
-    },
-    {
-      id: 2,
-      name: 'Baumbach LLC',
-      address: 'Pretoria F11, Houxiang',
-      phone: '132-90-3868',
-      status: 'OPEN',
-    },
-    {
-      id: 3,
-      name: 'Tremblay and...',
-      address: 'Kretoria F45, Castierea',
-      phone: '595-08-2102',
-      status: 'OPEN',
-      rating: 3,
-    },
-    {
-      id: 4,
-      name: 'Howell Group',
-      address: 'Porto 4785-103, Abelheira',
-      phone: '279-16-6959',
-      status: 'CLOSE',
-      rating: 3
-    },
-    {
-      id: 5,
-      name: 'Fahey-Batz',
-      address: 'Kretoria 11007, Champerico',
-      phone: '506-84-9725',
-      status: 'CLOSE',
-      rating: 3
-    },
-    {
-      id: 6,
-      name: 'Williamson-G...',
-      address: 'Albaira 6233, Arrufo',
-      phone: '792-44-1782',
-      status: 'OPEN',
-    },
-  ];
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      console.warn('Геолокация не поддерживается');
+      dispatch(getNearestStores());
+      dispatch(setGeoDenied(true));
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        const { latitude, longitude } = pos.coords;
+        dispatch(getNearestStores({ lat: latitude, lng: longitude }));
+      },
+      error => {
+        console.warn('Геолокация недоступна: ', error.message);
+        dispatch(getNearestStores());
+        if (error.code === error.PERMISSION_DENIED) {
+          dispatch(setGeoDenied(true));
+        }
+      },
+      {
+        timeout: 5000,
+      }
+    );
+  }, [dispatch]);
+
 
   return (
     <div className={css.medicineStores}>
@@ -65,47 +55,48 @@ const MedicineStores = () => {
       </div>
 
       <ul className={css.storeList}>
-        {stores.map(store => (
-          <li key={store.id} className={css.storeCard}>
-            <div className={css.blockOne}>
-              <h2 className={css.storeName}>{store.name}</h2>
-              <div className={css.addrWrapper}>
-                <svg className={css.addrIcon}>
-                  <use href={`${iconSprite}#icon-map-pin`}></use>
-                </svg>
-                <div className={css.locationWrapper}>
-                  <p className={css.storeAddress}>{store.address}</p>
-                  <p className={css.storeCity}>{store.city}</p>
+        {!storesIsLoading &&
+          nearestStores.map(store => (
+            <li key={store._id} className={css.storeCard}>
+              <div className={css.blockOne}>
+                <h2 className={css.storeName}>{store.name}</h2>
+                <div className={css.addrWrapper}>
+                  <svg className={css.addrIcon}>
+                    <use href={`${iconSprite}#icon-map-pin`}></use>
+                  </svg>
+                  <div className={css.locationWrapper}>
+                    <p className={css.storeAddress}>{store.address}</p>
+                    <p className={css.storeCity}>{store.city}</p>
+                  </div>
+                </div>
+                <div className={css.phoneWrapper}>
+                  <svg className={css.addrIcon}>
+                    <use href={`${iconSprite}#icon-phone`}></use>
+                  </svg>
+                  <p className={css.storePhone}>{store.phone}</p>
                 </div>
               </div>
-              <div className={css.phoneWrapper}>
-                <svg className={css.addrIcon}>
-                  <use href={`${iconSprite}#icon-phone`}></use>
+              <div className={css.blockTwo}>
+                <svg className={css.starIcon}>
+                  <use href={`${iconSprite}#icon-star`}></use>
                 </svg>
-                <p className={css.storePhone}>{store.phone}</p>
+                <p className={css.rating}>{store.rating}</p>
+                <div
+                  className={`${css.storeStatus} ${
+                    store.isOpenNow ? css.openStore : css.closeStore
+                  }`}>
+                  <p className={store.isOpenNow ? css.open : css.close}>
+                     {store.isOpenNow ? 'OPEN' : 'CLOSED'}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className={css.blockTwo}>
-              <svg className={css.starIcon}>
-                <use href={`${iconSprite}#icon-star`}></use>
-              </svg>
-              <p className={css.rating}>{store.rating}</p>
-              <div
-                className={`${css.storeStatus} ${
-                  store.status === 'OPEN' ? css.openStore : css.closeStore
-                }`}>
-                <p className={store.status === 'OPEN' ? css.open : css.close}>
-                  {store.status}
-                </p>
+              <div className={css.linesContainer}>
+                <div className={css.line}></div>
+                <div className={css.line}></div>
+                <div className={css.line}></div>
               </div>
-            </div>
-            <div className={css.linesContainer}>
-              <div className={css.line}></div>
-              <div className={css.line}></div>
-              <div className={css.line}></div>
-            </div>
-          </li>
-        ))}
+            </li>
+          ))}
       </ul>
     </div>
   );

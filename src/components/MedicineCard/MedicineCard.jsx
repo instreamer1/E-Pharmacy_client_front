@@ -42,7 +42,7 @@ const MedicineCard = ({ medicine, onupdateCartItem, onDetails }) => {
             $
             {
               medicine.price
-              //   .toFixed(2)
+                .toFixed(2)
             }
           </p>
         </div>
