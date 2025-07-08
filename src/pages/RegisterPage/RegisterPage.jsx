@@ -62,7 +62,6 @@ const RegisterPage = () => {
     const email = data.email.trim();
     const phone = normalizePhoneNumber(data.phone);
     const password = data.password.trim();
-    console.log(phone);
     try {
       await dispatch(registerUser({ name, email, phone, password })).unwrap();
       toast.success('User registered successfully!');

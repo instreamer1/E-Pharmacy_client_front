@@ -11,8 +11,6 @@ import { normalizeError } from '../../utils/errorHandler';
 import { clearAllCookies } from '../../utils/cookieUtils';
 import { purgePersistedState } from '../../utils/persistUtils';
 
-console.log('Loading operations.js');
-
 export const registerUser = createAsyncThunk(
   'users/signup',
   async (newUser, thunkAPI) => {
@@ -66,13 +64,11 @@ export const logOutUser = createAsyncThunk(
   }
 );
 
-
 export const getUser = createAsyncThunk(
   'users/user-info',
   async (_, thunkAPI) => {
     try {
       const response = await getUserInfo();
-      console.log(response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(normalizeError(error));
@@ -84,11 +80,8 @@ let isRefreshing = false;
 let refreshPromise = null;
 
 export const refresh = createAsyncThunk('user/refresh', async (_, thunkApi) => {
-  console.log('Start refreshing token...');
-
   try {
     if (isRefreshing && refreshPromise) {
-      console.log('Using existing refresh promise');
       const { data } = await refreshPromise;
       if (!data?.accessToken) {
         throw new Error('No access token in refresh response');
@@ -99,22 +92,14 @@ export const refresh = createAsyncThunk('user/refresh', async (_, thunkApi) => {
 
     isRefreshing = true;
     refreshPromise = refreshToken();
-    console.log('Refreshing token...');
 
     const { data } = await refreshPromise;
-    console.log('Received refreshed token:', data);
 
     return data;
   } catch (error) {
-    console.error('Failed to refresh token:', error);
     return thunkApi.rejectWithValue(normalizeError(error));
   } finally {
     isRefreshing = false;
     refreshPromise = null;
   }
 });
-
-
-
-
-

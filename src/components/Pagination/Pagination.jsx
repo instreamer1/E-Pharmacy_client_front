@@ -24,39 +24,27 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       } else if (currentPage < totalPages - 1) {
         visiblePages.push(currentPage - 1, currentPage, '...');
       }
-    } 
-    else {
+    } else {
       if (currentPage === 1) {
         visiblePages.push(1, 2, 3, '...');
       } else if (currentPage === 2) {
         visiblePages.push(1, currentPage, currentPage + 1, '...');
       } else if (currentPage === totalPages) {
+        visiblePages.push('...', currentPage - 2, currentPage - 1, totalPages);
+      } else if (currentPage < totalPages - 1) {
         visiblePages.push(
-          // 1,
-          '...',
-          currentPage - 2,
-          currentPage - 1,
-          totalPages
-        );
-      } 
-      else if (currentPage < totalPages - 1) {
-        visiblePages.push(
-          // 1,
           '...',
           currentPage - 1,
           currentPage,
           currentPage + 1,
           '...'
-          ,
-          // totalPages
         );
       } else if (currentPage === totalPages - 1) {
         visiblePages.push(
-          // 1,
           '...',
           currentPage - 1,
           currentPage,
-          // '...',
+
           totalPages
         );
       }
@@ -119,7 +107,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           </svg>
         </button>
 
-      
         <button
           className={css.pageButton}
           onClick={() => onPageChange(totalPages)}

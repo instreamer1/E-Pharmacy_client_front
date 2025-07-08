@@ -26,7 +26,7 @@ const MedicineStorePage = () => {
   const isLoading = useSelector(selectStoresLoading);
   const error = useSelector(selectStoresError);
   const limit = useSelector(selectLimit);
-  // const page =1;
+  
 
   useEffect(() => {
     const urlPage = Number(searchParams.get('page')) || 1;
@@ -39,22 +39,11 @@ const MedicineStorePage = () => {
   }, [dispatch, searchParams, limit]);
 
   const handlePageChange = newPage => {
-    setSearchParams({ page: newPage, limit }); // обновляем URL
-    dispatch(setStorePage(newPage)); // обновляем Redux
+    setSearchParams({ page: newPage, limit }); 
+    dispatch(setStorePage(newPage)); 
   };
 
-  // useEffect(() => {
-  //   const urlPage = Number(searchParams.get('page')) || 1;
-  //   setSearchParams({ page: urlPage });
-  //   dispatch(setStorePage(urlPage));
-  //   dispatch(getStores({ page: urlPage }));
-  // }, [dispatch, searchParams]);
 
-  // const handlePageChange = newPage => {
-  //   setSearchParams({ page: newPage });
-  //   // dispatch(setStorePage(newPage ));
-  //   dispatch(setStorePage(newPage));
-  // };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;

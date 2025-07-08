@@ -29,16 +29,9 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    // setCategory(state, action) {
-    //   state.category = action.payload;
-    // },
     setLastQuery: (state, action) => {
       state.lastQuery = action.payload;
     },
-    // resetFilters(state) {
-    //     state.category = 'All';
-    //     state.searchTerm = '';
-    //   },
     setPage(state, action) {
       state.page = action.payload;
     },
@@ -67,8 +60,6 @@ const productsSlice = createSlice({
         state.products = [];
       })
       .addCase(getProductById.fulfilled, (state, action) => {
-        // state.accessToken = action.payload.accessToken;
-        console.log(action.payload);
         state.product = action.payload.product;
         state.isLoggedIn = true;
         state.isLoading = false;

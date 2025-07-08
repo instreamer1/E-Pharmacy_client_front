@@ -31,7 +31,6 @@ const storeSlice = createSlice({
         state.error = null;
       })
       .addCase(getStores.fulfilled, (state, action) => {
-        // console.log(action.payload.totalPages);
         state.stores = action.payload.stores;
         state.total = action.payload.total;
         state.page = action.payload.page;
@@ -49,7 +48,6 @@ const storeSlice = createSlice({
         state.error = null;
       })
       .addCase(getNearestStores.fulfilled, (state, action) => {
-        // console.log(action.payload.totalPages);
         state.nearestStores = action.payload;
         state.isLoading = false;
       })

@@ -17,6 +17,5 @@ export const selectCartItemCount = state =>
   state.cart.items.reduce((sum, item) => sum + item.quantity, 0);
 
 
-// export const selectIsItemInCart = (productId) => (state) =>
-//   state.cart.items.some((item) => item.productId._id === productId);
+
 

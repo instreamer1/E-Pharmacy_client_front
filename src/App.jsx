@@ -60,7 +60,6 @@ const App = () => {
           <Route path='medicine-store' element={<MedicineStorePage />} />
           <Route path='medicine' element={<MedicinePage />} />
           <Route path='product/:id' element={<ProductPage />} />
-          {/* <Route path='cart-page' element={<CardPage/>}/> */}
           {/* <Route
             path='medicine'
             element={
@@ -77,14 +76,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          {/* <Route
-            path='/register'
-            element={
-              <RestrictedRoute redirectTo='/profile'>
-                <RegistrationPage />
-              </RestrictedRoute>
-            }
-          /> */}
+
           <Route path='order-success' element={<OrderSuccessPage />} />
         </Route>
         <Route
@@ -104,12 +96,10 @@ const App = () => {
           }
         />
 
-        {/* <Route path='register' element={<RegisterPage />} />
-        <Route path='login' element={<LoginPage />} /> */}
         <Route path='change-password' element={<ChangePasswordPage />} />
       </Routes>
       <AuthModalSwitcher />
-      <Toaster position="top-center" autoClose={3000}  />
+      <Toaster position='top-center' autoClose={3000} />
     </Suspense>
   );
 };

@@ -38,21 +38,11 @@ const MedicineCard = ({ medicine, onupdateCartItem, onDetails }) => {
         <div className={css.medicineNameBlock}>
           <h3 className={css.medicineName}>{medicine.name}</h3>
 
-          <p className={css.medicinePrice}>
-            $
-            {
-              medicine.price
-                .toFixed(2)
-            }
-          </p>
+          <p className={css.medicinePrice}>${medicine.price.toFixed(2)}</p>
         </div>
         <p className={css.medicineText}>{medicine.suppliers} (Fabrication)</p>
         <div className={css.medicineActions}>
-          {/* <button onClick={handleClick} className={css.addButton}>
-            {inCart ? 'Item in Cart' : 'Add to Cart'}
-          </button> */}
-
-          <AddToCartButton productId={medicine._id} style={style}/>
+          <AddToCartButton productId={medicine._id} style={style} />
 
           <button onClick={onDetails} className={css.detailsButton}>
             Details

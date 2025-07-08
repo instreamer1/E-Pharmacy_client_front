@@ -21,7 +21,6 @@ export const getProducts = createAsyncThunk(
 export const getProductById = createAsyncThunk(
   'products/productId',
   async (productId, thunkAPI) => {
-    console.log('productId', productId);
     try {
       const response = await publicInstance.get(`/products/${productId}`);
       return response.data;

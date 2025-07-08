@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { updateCartItem, fetchCart, checkoutCart } from './operation';
 
 const initialState = {
-    shippingInfo: {
+  shippingInfo: {
     name: '',
     email: '',
     phone: '',
@@ -44,33 +44,15 @@ const cartSlice = createSlice({
         state.error = action.payload;
         state.isLoading = false;
       })
-      // .addCase(updateCartItem.pending, state => {
-      //   state.isLoading = true;
-      //   state.error = null;
-      // })
       .addCase(updateCartItem.fulfilled, (state, action) => {
-        // const existingIndex = state.items.findIndex(
-        //   item => item._id === action.payload._id
-        // );
-        // if (existingIndex !== -1) {
-        //   // обновить количество
-        //   state.items[existingIndex].quantity = action.payload.quantity;
-        // } else {
-        //   state.items.push(action.payload);
-        // }
-        // state.isLoading = false;
         state.items = action.payload.items;
       })
-      // .addCase(updateCartItem.rejected, (state, action) => {
-        // state.isLoading = false;
-        // state.error = action.payload;
-      // })
-          .addCase(checkoutCart.pending, (state) => {
+      .addCase(checkoutCart.pending, state => {
         state.isLoading = true;
         state.error = null;
         state.checkoutSuccess = false;
       })
-      .addCase(checkoutCart.fulfilled, (state) => {
+      .addCase(checkoutCart.fulfilled, state => {
         state.isLoading = false;
         state.items = [];
         state.checkoutSuccess = true;
@@ -83,5 +65,6 @@ const cartSlice = createSlice({
   },
 });
 
-export const { setShippingInfo, setPaymentMethod, clearCart } = cartSlice.actions;
+export const { setShippingInfo, setPaymentMethod, clearCart } =
+  cartSlice.actions;
 export const cartReducer = cartSlice.reducer;
